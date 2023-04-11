@@ -174,7 +174,7 @@ h5.subtitle {
   font-family: 'Lexend';
   font-style: normal;
   font-weight: 500;
-  font-size: 
+  font-size: 24px;
 }
 
 `;
