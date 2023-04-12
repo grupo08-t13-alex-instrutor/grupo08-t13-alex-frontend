@@ -177,6 +177,66 @@ h5.subtitle {
   font-size: 24px;
 }
 
+/* Heading-6-600 */
+.heading-6-600 {
+    width: 152px;
+    height: 25px;
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #212529;
+    flex: none;
+    order: 8;
+    flex-grow: 0;
+  }
+
+/* Heading-6-500 */
+.heading-6-500 {
+  width: 149px;
+  height: 25px;
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 25px;
+  color: #212529;
+  flex: none;
+  order: 9;
+  flex-grow: 0;
+}
+
+/* Heading-7-600 */
+.heading-7-600 {
+  width: 121px;
+  height: 20px;
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #212529;
+  flex: none;
+  order: 10;
+  flex-grow: 0;
+}
+
+/* Heading-7-500 */
+.heading-7-500 {
+  width: 119px;
+  height: 20px;
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #212529;
+  flex: none;
+  order: 11;
+  flex-grow: 0;
+}
+
 `;
 
 export default GlobalStyle;
