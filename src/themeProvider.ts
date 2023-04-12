@@ -43,7 +43,6 @@ const theme = {
 
     whiteFixed: '#FFFFFF',
 
-    
 };
 
 export default theme
