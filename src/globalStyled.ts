@@ -1,5 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
-
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -209,6 +208,12 @@ button{
   border:none;
   cursor:pointer;
 } 
+
+html, body{
+  margin: 0;
+  padding: 0;
+  width: 1vw;
+}
 
 `;
 
