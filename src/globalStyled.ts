@@ -81,6 +81,7 @@ h4 {
   flex: none;
   order: 4;
   flex-grow: 0;
+  margin: 0;
 }
 
 /* Heading-4-500 */
@@ -150,7 +151,7 @@ h5.subtitle {
   font-weight: 500;
   font-size: 20px;
   line-height: 25px;
-  color: #212529;
+  color: #868E96;;
   flex: none;
   order: 9;
   flex-grow: 0;
@@ -203,6 +204,11 @@ article{
 div{
   margin:0;
 }
+
+button{
+  border:none;
+  cursor:pointer;
+} 
 
 `;
 
