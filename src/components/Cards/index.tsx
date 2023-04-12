@@ -1,10 +1,8 @@
 import { IcardData } from "../../interfaces"
 import Li from "./styled"
 
-
-
 const Cards = ({ src, marca, descricao, km, name, ano, preco }: IcardData) => {
-    
+
     return (
         <Li>
             <div className="teste">
