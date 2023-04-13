@@ -1,23 +1,32 @@
-import { HeaderStyled, Menu } from "./styled";
+import { HeaderStyled, MenuDesktopStyled, MenuStyled } from "./styled";
 import { useState } from "react";
 import MotorsShop from "../../assets/MotorsShop.png";
 import { IoMenu, IoClose } from "react-icons/io5";
 
+interface iAdvertisement {
+    name: string
+}
+
 interface iUser {
     name: string,
-    description: string
+    description: string,
+    advertisement: iAdvertisement[];
 }
 
 const Header = () => {
     const [openMenu, setOpenMenu] = useState(false);
     const [userLogged, setUserLogged] = useState<null | iUser>(null);
+    const [mobile, setMobile] = useState(false);
 
     let user: iUser = {
         name: "Samuel Leão",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
+        advertisement: [
+            { name: "car" }
+        ]
     }
 
-    const { name, description } = user;
+    const { name, description, advertisement } = user;
         
     return(
         <>
@@ -31,10 +40,10 @@ const Header = () => {
                 </button>
                 <div>
                     <hr />
-                    { userLogged ? 
+                    { userLogged ?
                             <button onClick={ event => {
                                 event.preventDefault();
-                                setUserLogged(null);
+                                setOpenMenu(!openMenu);
                             }}>
                                 <div>
                                     <span className="profile-picture">
@@ -56,7 +65,7 @@ const Header = () => {
                     }
                 </div>
             </HeaderStyled>
-            <Menu topPosition={ openMenu ? "none" : "-400px" }>
+            <MenuStyled topPosition={ openMenu ? "none" : "-400px" }>
                 <div className={ openMenu ? "input" : "" }>
                     <button className="body-1-600">Carros</button>
                     <button className="body-1-600">Motos</button>
@@ -68,7 +77,7 @@ const Header = () => {
                                     event.preventDefault();
                                     setUserLogged(null);
                                 }}>
-                                    Logout
+                                    Sair
                                 </button>
                             </>
                         :
@@ -83,7 +92,19 @@ const Header = () => {
                             </>
                     }
                 </div>
-            </Menu>
+            </MenuStyled >
+            <MenuDesktopStyled height={ openMenu ? "auto" : "0" } padding={ openMenu ? "16px 22px" : "0" }>
+                <button>Editar Perfil</button>
+                <button>Editar Endereço</button>
+                { advertisement.length > 0 ? <button>Meus Anúncios</button> : "" }
+                <button onClick={ event => {
+                    event.preventDefault();
+                    setUserLogged(null);
+                    setOpenMenu(!openMenu);
+                }}>
+                    Sair
+                </button>
+            </MenuDesktopStyled>
         </>
     )
 }

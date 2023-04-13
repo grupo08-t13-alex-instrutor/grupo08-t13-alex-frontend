@@ -113,6 +113,10 @@ export const HeaderStyled = styled.header`
                     font-weight: 700;
                     font-size: 14px;
                     color: #ffffff;
+
+                    :hover {
+                        color: #000000;
+                    }
                 }
             }
 
@@ -128,7 +132,7 @@ export const HeaderStyled = styled.header`
 `;
 
 
-export const Menu = styled.div<iMenuProps>`
+export const MenuStyled = styled.div<iMenuProps>`
     @keyframes input {
         0% {
             transform: translateY( -400px );
@@ -201,9 +205,59 @@ export const Menu = styled.div<iMenuProps>`
         }
     }
 
-    @media (min-width: 720px) {
+    @media ( min-width: 720px ) {
         visibility: hidden;
         width: 0;
         height: 0;
+    }
+`;
+
+interface iMenuDesktopProps {
+    height: string,
+    padding: string
+}
+
+export const MenuDesktopStyled = styled.div<iMenuDesktopProps>`
+    width: 0;
+    height: 0;
+    visibility: hidden;
+
+    @media ( min-width: 720px ) {
+        width: 200px;
+        height: ${ props => props.height };
+        padding: ${ props => props.padding };
+        gap: 16px;
+        border-radius: 4px;
+        box-shadow: 0px 4px 40px -10px rgba(0, 0, 0, 0.25);
+        background-color: #F8F9FA;
+        
+        visibility: visible;
+        
+        box-sizing: border-box;
+        overflow: hidden;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+
+        position: absolute;
+        z-index: 3;
+        right: 5px;
+        top: 70px;
+
+        button {
+            width: 100%;
+            background-color: transparent;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 28px;
+            color: #495057;
+            text-align: start;
+
+            :hover {
+                color: #000000;
+            }
+        }
     }
 `;
