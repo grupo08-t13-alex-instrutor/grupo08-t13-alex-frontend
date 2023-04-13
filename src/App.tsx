@@ -1,18 +1,22 @@
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from './globalStyled';
+
+import GlobalStyle from "./globalStyled";
+import { ThemeProvider } from "styled-components";
+import theme from "./themeProvider";
+import { Banner } from "./components/Banner";
+import { ImageVehicleModal } from "./components/ImageVehicleModal";
 import { RoutesMain } from './routes';
 import { Section, Ul } from './styled';
-import theme from './themeProvider';
 import { AsideHomePage, Cards, CreationCommentPageProduct, FooterHomePage , Header} from './components';
 import { Ul, Section } from './styled';
-
 
 function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+
         <Header/>
+
         <Section>
           <AsideHomePage />
           <Ul>
