@@ -1,5 +1,5 @@
-import { Header, AsideHomePage, Cards, FooterHomePage } from "../components";
-import { Section, Ul } from "../styled";
+import { AsideHomePage, Cards, FooterHomePage, Header } from '../components';
+import { Section, Ul } from '../styled';
 
 export const Homepage = () => {
     return (
