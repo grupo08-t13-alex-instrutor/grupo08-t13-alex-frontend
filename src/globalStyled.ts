@@ -192,9 +192,7 @@ li{
 }
 
 ul{
-  display: flex;
-  gap: 1rem;
-  
+  padding: 0;
 }
 
 article{
@@ -209,6 +207,10 @@ button{
   border:none;
   cursor:pointer;
 } 
+
+body{
+  margin:0;
+}
 
 `;
 
