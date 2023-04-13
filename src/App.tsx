@@ -6,6 +6,7 @@ import { Home } from "./pages";
 import { Ul, Section } from "./styled";
 import { AsideHomePage, Cards, Header, FooterHomePage } from "./components";
 import { Description } from "./components/Description";
+import { ImageCarModal } from "./components/ImageCarModal";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 
         <Header />
         <Banner />
+        <ImageCarModal />
 
         <Section>
           <AsideHomePage />
