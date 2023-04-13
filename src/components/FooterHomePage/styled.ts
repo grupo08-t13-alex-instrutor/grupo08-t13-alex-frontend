@@ -10,6 +10,7 @@ align-items: center;
 width: 100%;
 justify-content: space-around;
 margin-top: 1.5rem;
+box-sizing: border-box;
 
 @media (max-width: 512px) {
     font-size: 1rem;
@@ -33,6 +34,10 @@ div{
     justify-content: center;
     strong{
         font-size: 1.5rem;
+        a{
+            color: ${props => props.theme.whiteFixed};
+         }
+       
     }
 }
 
