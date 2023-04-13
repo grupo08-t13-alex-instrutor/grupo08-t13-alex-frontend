@@ -11,6 +11,7 @@ import {
   CreationCommentPageProduct,
   FooterHomePage,
   Header,
+  Comment,
 } from "./components";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Header />
 
         <Section>
+          <Comment />
           <AsideHomePage />
           <Ul>
             <Cards
