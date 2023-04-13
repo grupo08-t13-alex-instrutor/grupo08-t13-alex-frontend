@@ -191,16 +191,14 @@ li{
 }
 
 ul{
-  display: flex;
-  gap: 1rem;
-  
+  padding: 0;
 }
 
 article{
   margin:0;
 }
 
-div{
+body, div {
   margin:0;
 }
 
@@ -208,6 +206,7 @@ button{
   border:none;
   cursor:pointer;
 } 
+
 
 html, body{
   margin: 0;

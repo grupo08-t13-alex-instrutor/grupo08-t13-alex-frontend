@@ -22,10 +22,10 @@ const Cards = ({ src, marca, descricao, km, name, ano, preco }: IcardData) => {
 
             <div>
                 <div>
-                    <div > {km}</div>
+                    <div > {km} KM</div>
                     <div>{ano} </div>
                 </div>
-                <strong>{preco}</strong>
+                <strong>R$ {preco}</strong>
             </div>
         </Li>
     )

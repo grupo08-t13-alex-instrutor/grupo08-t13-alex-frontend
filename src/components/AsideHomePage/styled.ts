@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Aside = styled.aside`
 
-width: 454px;
+width: 281px;
 margin-left: 2rem;
 
 #cleanFilter{
@@ -20,6 +20,7 @@ h4{
 div{
    margin-left: 1.5rem;
    margin-top: 1.5rem;
+   width: 258px ;
 }
 
 div{
@@ -29,6 +30,7 @@ div{
     span{
        color:${props => props.theme.gray2};
        cursor: pointer;
+       width:30px ;
     }
 }
 
