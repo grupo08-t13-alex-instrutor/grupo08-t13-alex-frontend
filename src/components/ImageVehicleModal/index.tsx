@@ -2,7 +2,7 @@ import { StyledImageCarModal } from "./styled";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 
-export const ImageCarModal = () => {
+export const ImageVehicleModal = () => {
   const [modalIsOpen, setModalIsOpen] = useState(true);
 
   function openModal() {
