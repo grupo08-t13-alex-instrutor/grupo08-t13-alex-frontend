@@ -2,16 +2,15 @@ import styled from "styled-components";
 
 export const StyledBanner = styled.div`
   width: 100vw;
+  height: 100vh;
   min-width: 375px;
-  height: 625.33px;
-  /* position: fixed; */
 
   .container {
     width: 100vw;
     height: 100vh;
     top: 0;
     left: 0;
-    position: fixed;
+    position: relative;
     z-index: -1;
     display: flex;
     flex-direction: column;
@@ -54,7 +53,24 @@ export const StyledBanner = styled.div`
     }
   }
 
-  @media (min-width: 180px) {
-    height: 537px;
+  @media (min-width: 720px) {
+    height: 573px;
+    .container {
+      height: 573px;
+
+      .bannerText {
+        height: 573px;
+        top: 0;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h3 {
+          margin: 8px;
+        }
+      }
+    }
   }
 `;
