@@ -72,7 +72,7 @@ export const StyledBanner = styled.div`
         top: 20px;
 
         h3 {
-          margin: 4px;
+          margin: 30px;
         }
       }
     }
