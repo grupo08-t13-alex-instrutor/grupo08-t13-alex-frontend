@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Homepage } from '../pages';
 import { AdDetailsPage } from '../pages/AdDetailsPage';
+import { Homepage } from '../pages/Homepage';
 
 export const RoutesMain = () => (
     <Routes>

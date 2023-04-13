@@ -1,10 +1,14 @@
-import { Header } from '../../components';
+import { Comment, FooterHomePage, Header } from '../../components';
+import { Description } from '../../components/Description';
 
 export const AdDetailsPage = () => {
     return (
         <>
             <Header />
-            <h1>TESTE</h1>
+            <Description />
+            <Comment />
+
+            <FooterHomePage />
         </>
     );
 };
