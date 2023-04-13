@@ -1,17 +1,21 @@
-import GlobalStyle from './globalStyled'
-import { ThemeProvider } from 'styled-components';
-import theme from './themeProvider';
+import GlobalStyle from "./globalStyled";
+import { ThemeProvider } from "styled-components";
+import theme from "./themeProvider";
+import { Banner } from "./components/Banner";
+import { Home } from "./pages";
 import  { Ul, Section } from './styled';
 import { AsideHomePage, Cards, Header, FooterHomePage } from './components';
 
-
 function App() {
-
   return (
     <>
       <ThemeProvider theme={theme}>
-       <GlobalStyle />
+
+        <GlobalStyle />
+
         <Header />
+        <Banner />
+       
         <Section>
           <AsideHomePage />
           <Ul>
@@ -22,10 +26,10 @@ function App() {
           </Ul>
         </Section>
         <FooterHomePage />
+
       </ThemeProvider>
     </>
-  )
-
+  );
 }
 
-export default App
+export default App;
