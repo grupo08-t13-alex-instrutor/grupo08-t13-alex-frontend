@@ -30,7 +30,7 @@ export const Section = styled.section`
     }
 
     @media (min-width: 750px) {
-        margin: 0 auto;
+        margin: 10px auto;
     }
 `;
 

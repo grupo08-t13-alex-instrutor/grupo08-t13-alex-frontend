@@ -4,7 +4,7 @@ import theme from "./themeProvider";
 import { Banner } from "./components/Banner";
 import { Home } from "./pages";
 import { Ul, Section } from "./styled";
-import { AsideHomePage, Cards, Header, FooterHomePage } from "./components";
+import { AsideHomePage, Cards, Header, FooterHomePage, Comment } from "./components";
 import { Description } from "./components/Description";
 
 function App() {
@@ -14,9 +14,10 @@ function App() {
         <GlobalStyle />
 
         <Header />
-        <Banner />
+        {/* <Banner /> */}
 
         <Section>
+          <Comment />
           <AsideHomePage />
           <Ul>
             <Cards
