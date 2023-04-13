@@ -11,12 +11,11 @@ const Cards = ({ src, marca, descricao, km, name, ano, preco }: IcardData) => {
       <section>
         <h2 className="heading-7-600">{marca}</h2>
 
-        <p className="text-body-2">{descricao} </p>
+        <p>{descricao} </p>
       </section>
 
       <article>
-        <article>{name[0].toUpperCase()}</article>{" "}
-        <span className="text-body-2-500">{name}</span>
+        <article>{name[0].toUpperCase()}</article> <span>{name}</span>
       </article>
 
       <div>
