@@ -186,6 +186,48 @@ h5.subtitle {
   flex-grow: 0;
 }
 
+/* Text/body-1-400 */
+.text-body-1{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  color: #495057;
+}
+
+/* Text/body-1-600 */
+.text-body-1-600{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 28px;
+  color: #495057;
+}
+
+/* Text/body-2-400 */
+
+.text-body-2{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #495057;
+}
+
+/* Text/body-2-500 */
+.text-body-2-500{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #495057;
+}
+
+
 li{
   list-style: none;
 }
