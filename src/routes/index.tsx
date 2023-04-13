@@ -4,7 +4,7 @@ import { AdDetailsPage } from '../pages/AdDetailsPage';
 
 export const RoutesMain = () => (
     <Routes>
-        <Route path="/adDetails" element={<AdDetailsPage />} />
+        <Route path="/ad" element={<AdDetailsPage />} />
         <Route path="/homepage" element={<Homepage />} />
 
         <Route path="*" element={<Navigate to="/homepage" />} />
