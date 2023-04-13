@@ -1,15 +1,18 @@
-import GlobalStyle from './globalStyled'
 import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './globalStyled';
+import { RoutesMain } from './routes';
+import { Section, Ul } from './styled';
 import theme from './themeProvider';
-import { AsideHomePage, Cards, CreationCommentPageProduct, FooterHomePage } from './components';
+import { AsideHomePage, Cards, CreationCommentPageProduct, FooterHomePage , Header} from './components';
 import { Ul, Section } from './styled';
 
-function App() {
 
+function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+        <Header/>
         <Section>
           <AsideHomePage />
           <Ul>
@@ -20,10 +23,10 @@ function App() {
           </Ul>
         </Section>
         <FooterHomePage />
+       <RoutesMain/>
       </ThemeProvider>
     </>
-  )
-
+  );
 }
 
-export default App
+export default App;
