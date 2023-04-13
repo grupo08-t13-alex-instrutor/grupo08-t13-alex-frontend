@@ -11,7 +11,7 @@ const FooterHomePage = () => {
 
             <div>
                 <strong>
-                    ^
+                    <a href="#">^</a>
                 </strong>
             </div>
 
