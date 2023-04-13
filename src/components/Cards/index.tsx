@@ -1,17 +1,8 @@
+import { IcardData } from "../../interfaces"
 import Li from "./styled"
 
-interface IcardData {
-    src: string,
-    marca: string,
-    name: string;
-    descricao: string,
-    km: string,
-    ano: string,
-    preco: string,
-}
-
 const Cards = ({ src, marca, descricao, km, name, ano, preco }: IcardData) => {
-    
+
     return (
         <Li>
             <div className="teste">

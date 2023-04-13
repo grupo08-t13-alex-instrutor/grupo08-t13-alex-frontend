@@ -1,4 +1,5 @@
+import AsideHomePage from "./AsideHomePage";
 import Cards from "./Cards";
-import { Header } from "./header";
+import Header from "./header";
 
-export { Cards, Header }
+export { Cards, AsideHomePage, Header }

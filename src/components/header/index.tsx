@@ -8,7 +8,7 @@ interface iUser {
     description: string
 }
 
-export const Header = () => {
+const Header = () => {
     const [openMenu, setOpenMenu] = useState(false);
     const [userLogged, setUserLogged] = useState<null | iUser>(null);
 
@@ -87,3 +87,5 @@ export const Header = () => {
         </>
     )
 }
+
+export default Header
