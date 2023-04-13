@@ -4,7 +4,6 @@ import theme from './themeProvider';
 import  { Ul, Section } from './styled';
 import { AsideHomePage, Cards, Header, FooterHomePage } from './components';
 
-
 function App() {
 
   return (
@@ -25,7 +24,6 @@ function App() {
       </ThemeProvider>
     </>
   )
-
 }
 
 export default App
