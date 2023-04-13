@@ -1,14 +1,15 @@
 import { AsideHomePage, Cards, FooterHomePage, Header } from "../components";
 import { Banner } from "../components/Banner";
 import { Section, Ul } from "../styled";
+import { StyledHome } from "./styled";
 
 export const Homepage = () => {
   return (
-    <>
+    <StyledHome>
       <Header />
       <Banner />
       <Section>
-        <AsideHomePage />
+        {window.screen.width > 450 ? <AsideHomePage /> : null}
         <Ul>
           <Cards
             src={
@@ -57,6 +58,6 @@ export const Homepage = () => {
         </Ul>
       </Section>
       <FooterHomePage />
-    </>
+    </StyledHome>
   );
 };
