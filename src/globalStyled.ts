@@ -199,7 +199,7 @@ article{
   margin:0;
 }
 
-div{
+body, div {
   margin:0;
 }
 

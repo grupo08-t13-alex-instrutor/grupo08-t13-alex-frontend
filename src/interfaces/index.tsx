@@ -7,3 +7,4 @@ export interface IcardData {
     ano: string,
     preco: string,
 }
+
