@@ -39,7 +39,7 @@ div{
     div{ 
         gap: 10px;
         div{  
-            background-color:${props => props.theme.brand4};
+            background-color:${props => props.theme.brand4}};
             border-radius: 4px;
             color: ${props => props.theme.brand1};
             padding: 2px;
@@ -56,7 +56,28 @@ article{
     margin-bottom: 5px;
 
     article{
-        background-color: ${props => props.theme.random1};
+        background-color: ${(props) => {
+        const colorsRandom = [
+            props.theme.random1,
+            props.theme.random2,
+            props.theme.random3,
+            props.theme.random4,
+            props.theme.random5,
+            props.theme.random6,
+            props.theme.random7,
+            props.theme.random8,
+            props.theme.random9,
+            props.theme.random10,
+            props.theme.random11,
+            props.theme.random12
+        ]
+        
+        const randomColorIndex = Math.floor(Math.random() * 12)
+
+        const color = colorsRandom[randomColorIndex]
+
+        return color
+    }};
         color: ${props => props.theme.whiteFixed};
         border-radius: 100%;
         height: 2rem;
