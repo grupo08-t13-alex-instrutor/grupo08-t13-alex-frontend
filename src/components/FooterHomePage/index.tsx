@@ -1,6 +1,5 @@
-import Footer from "./styled"
-
 import MotorsShopFooter from "../../assets/MotorsShopFooter.png";
+import Footer from "./styled"
 
 const FooterHomePage = () => {
     return (

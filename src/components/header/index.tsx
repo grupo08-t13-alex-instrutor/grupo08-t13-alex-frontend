@@ -1,17 +1,9 @@
 import { HeaderStyled, MenuDesktopStyled, MenuStyled } from "./styled";
-import { useState } from "react";
 import MotorsShop from "../../assets/MotorsShop.png";
 import { IoMenu, IoClose } from "react-icons/io5";
+import { iUser } from "../../interfaces";
+import { useState } from "react";
 
-interface iAdvertisement {
-    name: string
-}
-
-interface iUser {
-    name: string,
-    description: string,
-    advertisement: iAdvertisement[];
-}
 
 const Header = () => {
     const [openMenu, setOpenMenu] = useState(false);

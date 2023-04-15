@@ -7,7 +7,6 @@ export const AdDetailsPage = () => {
             <Header />
             <Description />
             <Comment />
-
             <FooterHomePage />
         </>
     );
