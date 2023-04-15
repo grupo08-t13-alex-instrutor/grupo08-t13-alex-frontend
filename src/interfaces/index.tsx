@@ -8,3 +8,12 @@ export interface IcardData {
     preco: string,
 }
 
+export interface iAdvertisement {
+    name: string
+}
+
+export interface iUser {
+    name: string,
+    description: string,
+    advertisement: iAdvertisement[];
+}
