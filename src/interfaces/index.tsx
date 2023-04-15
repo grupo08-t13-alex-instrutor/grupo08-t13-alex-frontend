@@ -6,4 +6,5 @@ export interface IcardData {
     km: string,
     ano: string,
     preco: string,
+
 }
