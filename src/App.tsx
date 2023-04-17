@@ -1,18 +1,16 @@
 import { ThemeProvider } from 'styled-components';
-import { AsideHomePage, Cards, FooterHomePage, Header } from './components';
 import GlobalStyle from './globalStyled';
 import { RoutesMain } from './routes';
-import { Section, Ul } from './styled';
 import theme from './themeProvider';
+import { RegisterFormAds } from './components';
 
 
 function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-       <GlobalStyle />
-       <RoutesMain/>
-        
+        <GlobalStyle />
+        <RoutesMain />
       </ThemeProvider>
     </>
   );

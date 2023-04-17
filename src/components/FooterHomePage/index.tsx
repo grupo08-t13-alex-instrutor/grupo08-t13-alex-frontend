@@ -1,4 +1,4 @@
-import MotorsShopFooter from "../../assets/MotorsShopFooter.png";
+import MotorsShopFooter from "../../assets/png/MotorsShopFooter.png";
 import Footer from "./styled"
 
 const FooterHomePage = () => {

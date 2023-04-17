@@ -1,5 +1,5 @@
 import { HeaderStyled, MenuDesktopStyled, MenuStyled } from "./styled";
-import MotorsShop from "../../assets/MotorsShop.png";
+import MotorsShop from "../../assets/png/MotorsShop.png";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { iUser } from "../../interfaces";
 import { useState } from "react";
