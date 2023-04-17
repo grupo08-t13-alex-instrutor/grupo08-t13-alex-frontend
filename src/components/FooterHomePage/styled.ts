@@ -31,6 +31,7 @@ div{
     align-items: center;
     display: flex;
     justify-content: center;
+
     a{
         font-size: 1.9rem;
         text-decoration:none;

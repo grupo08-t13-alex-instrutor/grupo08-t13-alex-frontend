@@ -276,9 +276,14 @@ textarea:focus, input:focus {
 } 
 
 
-/* *{
-outline: 2px solid red;
-} */
+/* * {
+ outline: 2px solid red;
+}  */
+
+a{
+  text-decoration: none;
+}
+
 `;
 
 export default GlobalStyle;

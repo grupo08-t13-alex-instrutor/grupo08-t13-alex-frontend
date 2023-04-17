@@ -1,4 +1,3 @@
-
 import { AsideHomePage, Cards, FooterHomePage, Header, EditFormAds, RegisterFormAds, Banner } from '../../components';
 import { Section, Ul } from '../../styled';
 
@@ -57,8 +56,8 @@ export const Homepage = () => {
                         preco={'50.000,00'}
                     />
                 </Ul>
-            </Section>
+            </Section >
             <FooterHomePage />
         </>
     );
-};
+}

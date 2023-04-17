@@ -1,14 +1,23 @@
-import { Comment, FooterHomePage, Header } from '../../components';
-import { Banner } from '../../components';
+import { BackgroundBrand1, Comment, CreationCommentPageProduct, FooterHomePage, Header, TitleAd } from '../../components';
 import { Description } from '../../components/Description';
+import { ImageVehicleModal } from '../../components/ImageVehicleModal';
+import StyledHome from './styled';
 
-export const AdDetailsPage = () => {
+const AdDetailsPage = () => {
     return (
         <>
             <Header />
-            <Description />
-            <Comment />
+            <BackgroundBrand1 />
+            <StyledHome>
+                <TitleAd />
+                <Description />
+                <Comment />
+                <CreationCommentPageProduct />
+            </StyledHome>
+
             <FooterHomePage />
         </>
     );
 };
+
+export default AdDetailsPage
