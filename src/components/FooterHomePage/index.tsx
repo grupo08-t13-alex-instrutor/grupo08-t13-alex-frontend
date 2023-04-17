@@ -9,9 +9,7 @@ const FooterHomePage = () => {
             <span>@ 2022 todos os direitos reservados</span>
 
             <div>
-                <strong>
-                    ^
-                </strong>
+                <a href="#">^</a>
             </div>
 
         </Footer>

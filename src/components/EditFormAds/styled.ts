@@ -4,7 +4,7 @@ import styled from "styled-components";
 const SectionBgForm = styled.section`
 
 width: 100vw;
-height: 225vh;
+height: 310vh;
 position: absolute;
 top: 0;
 z-index: 10;

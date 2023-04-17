@@ -1,5 +1,5 @@
 
-import { AsideHomePage, Cards, FooterHomePage, Header, EditFormAds, RegisterFormAds } from '../../components';
+import { AsideHomePage, Cards, FooterHomePage, Header, EditFormAds, RegisterFormAds, Banner } from '../../components';
 import { Section, Ul } from '../../styled';
 
 export const Homepage = () => {
@@ -8,6 +8,7 @@ export const Homepage = () => {
 
         <>
             <Header />
+            <Banner />
             <Section>
                 <AsideHomePage />
                 <Ul>
@@ -57,7 +58,6 @@ export const Homepage = () => {
                     />
                 </Ul>
             </Section>
-            <RegisterFormAds />
             <FooterHomePage />
         </>
     );
