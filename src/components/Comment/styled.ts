@@ -29,9 +29,6 @@ export const Section = styled.section`
         color: #495057;
     }
 
-    @media (min-width: 750px) {
-        margin: 10px auto;
-    }
 `;
 
 interface iCardComment {
@@ -39,7 +36,6 @@ interface iCardComment {
 }
 
 export const CardComment = styled.li<iCardComment>`
-    margin: 10px 0;
 
     .headerComment {
         width: 100%;

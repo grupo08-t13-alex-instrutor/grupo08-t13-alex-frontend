@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 
 const Footer = styled.footer`
@@ -32,12 +31,11 @@ div{
     align-items: center;
     display: flex;
     justify-content: center;
-    strong{
-        font-size: 1.5rem;
-        a{
-            color: ${props => props.theme.whiteFixed};
-         }
-       
+
+    a{
+        font-size: 1.9rem;
+        text-decoration:none;
+        color: ${props => props.theme.whiteFixed};
     }
 }
 

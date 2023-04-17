@@ -52,7 +52,7 @@ export const TitleAdContainer = styled.div`
   }
 
   @media (min-width: 750px) {
-    margin: 10px auto;
+   
 
     div h2 {
       margin: 0 0 40px 0;
