@@ -8,7 +8,6 @@ display: flex;
 align-items: center;
 width: 100%;
 justify-content: space-around;
-margin-top: 1.5rem;
 box-sizing: border-box;
 
 @media (max-width: 512px) {
