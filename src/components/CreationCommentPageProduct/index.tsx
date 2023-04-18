@@ -7,7 +7,7 @@ const CreationCommentPageProduct = () => {
 
     return (
         <>
-            <SectionComment>
+            <SectionComment className="createComment">
                 <article>
                     <article>S</article> <span>Samuel</span>
                 </article>
@@ -16,7 +16,7 @@ const CreationCommentPageProduct = () => {
                     <textarea ></textarea>
                     <div>
                         <button>
-                                Comentar
+                            Comentar
                         </button>
                     </div>
                 </form>
