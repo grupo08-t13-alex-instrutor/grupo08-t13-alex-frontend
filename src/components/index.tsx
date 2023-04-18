@@ -8,11 +8,17 @@ import FooterHomePage from "./FooterHomePage";
 import EditFormAds from "./EditFormAds";
 import RegisterFormAds from "./RegisterFormAds";
 import Header from "./Header";
+import EditFormAds from "./EditFormAds";
+import RegisterFormAds from "./RegisterFormAds";
+import Banner from "./Banner";
 import TitleAd from "./titleAd";
+import BackgroundBrand1 from "./BackgroundBrand1";
 
 export {
-  Cards,
+
+  BackgroundBrand1,
   TitleAd,
+  Cards,
   AsideHomePage,
   FooterHomePage,
   CreationCommentPageProduct,
@@ -22,4 +28,5 @@ export {
   BackgroundBrand1,
   EditFormAds,
   RegisterFormAds,
+
 };
