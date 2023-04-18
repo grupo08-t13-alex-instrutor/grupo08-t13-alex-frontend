@@ -20,4 +20,6 @@ export {
   Comment,
   Banner,
   BackgroundBrand1,
+  EditFormAds,
+  RegisterFormAds,
 };
