@@ -1,4 +1,4 @@
-import banner1 from "../../assets/banner-image.png";
+import banner1 from "../../assets/png/banner-image.png";
 import { StyledBanner } from "./styled";
 
 const Banner = () => {
@@ -18,4 +18,8 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default Banner
+
+
+
+

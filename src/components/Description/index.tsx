@@ -2,7 +2,7 @@ import { StyledDescription } from "./styled";
 
 export const Description = () => {
   return (
-    <StyledDescription>
+    <StyledDescription className="descriptionAdds">
       <h6 className="heading-6-600">Descrição</h6>
       <p className="text-body-1">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium

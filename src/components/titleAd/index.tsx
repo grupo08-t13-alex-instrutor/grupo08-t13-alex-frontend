@@ -17,16 +17,16 @@ const TitleAd = () => {
 
     const { name, year, mileage, price } = carInformation;
 
-    return(
-        <TitleAdContainer>
+    return (
+        <TitleAdContainer className="TitleAdContainer">
             <div>
-                <h2 className="heading-6-600">{ name }</h2>
+                <h2 className="heading-6-600">{name}</h2>
                 <div className="container">
                     <div>
-                        <Tag>{ year }</Tag>
-                        <Tag>{ `${ mileage} KM` }</Tag>
+                        <Tag>{year}</Tag>
+                        <Tag>{`${mileage} KM`}</Tag>
                     </div>
-                    <p>{ `R$ ${ price }` }</p>
+                    <p>{`R$ ${price}`}</p>
                 </div>
             </div>
             <ButtonBlue>Comprar</ButtonBlue>

@@ -1,8 +1,6 @@
 import styled from "styled-components";
+import { iMenuProps } from "../../interfaces";
 
-interface iMenuProps {
-  topPosition: string;
-}
 
 export const HeaderStyled = styled.header`
   width: 100%;
@@ -15,6 +13,7 @@ export const HeaderStyled = styled.header`
   z-index: 2;
   position: fixed;
   background-color: white;
+  margin-top: -1rem;
 
   button {
     padding: 0;

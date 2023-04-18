@@ -249,11 +249,36 @@ button{
   cursor:pointer;
 } 
 
+fieldset {
+  border:0 none;
+  padding:0;
+}
 
 html, body{
   margin: 0;
   padding: 0;
+  font-family: 'Inter', sans-serif;
 }
+
+form{
+  margin: 0;
+}
+
+textarea {
+  resize: none;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  box-shadow: 0 0 0 0;
+  border: 0 none;
+  outline: 0;
+} 
+
+
+/* * {
+ outline: 2px solid red;
+}  */
 
 a{
   text-decoration: none;
