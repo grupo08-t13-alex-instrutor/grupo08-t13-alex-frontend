@@ -9,7 +9,15 @@ import RegisterFormAds from "./RegisterFormAds";
 import Banner from "./Banner";
 import TitleAd from "./titleAd";
 import BackgroundBrand1 from "./BackgroundBrand1";
+import Header from "./Header";
+import Banner from "./Banner";
 
-
-export { BackgroundBrand1, TitleAd, Cards, AsideHomePage, FooterHomePage, CreationCommentPageProduct, Header, Comment, EditFormAds, RegisterFormAds, Banner }
-
+export {
+  Cards,
+  AsideHomePage,
+  FooterHomePage,
+  CreationCommentPageProduct,
+  Header,
+  Comment,
+  Banner,
+};
