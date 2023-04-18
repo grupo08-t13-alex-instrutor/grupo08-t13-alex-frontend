@@ -3,9 +3,15 @@ import Cards from "./Cards";
 import CreationCommentPageProduct from "./CreationCommentPageProduct";
 import Comment from "./Comment";
 import FooterHomePage from "./FooterHomePage";
-import Header from "./header";
-import TitleAd from "./titleAd";
+import Header from "./Header";
+import Banner from "./Banner";
 
-
-export { Cards, AsideHomePage, FooterHomePage, CreationCommentPageProduct, Header, Comment }
-
+export {
+  Cards,
+  AsideHomePage,
+  FooterHomePage,
+  CreationCommentPageProduct,
+  Header,
+  Comment,
+  Banner,
+};

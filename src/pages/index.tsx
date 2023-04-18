@@ -1,5 +1,5 @@
 import { AsideHomePage, Cards, FooterHomePage, Header } from "../components";
-import { Banner } from "../components/Banner";
+import { Banner } from "../components";
 import { Section, Ul } from "../styled";
 import { StyledHome } from "./styled";
 

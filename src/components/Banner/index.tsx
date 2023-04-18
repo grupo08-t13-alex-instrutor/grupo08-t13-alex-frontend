@@ -1,7 +1,7 @@
 import banner1 from "../../assets/banner-image.png";
 import { StyledBanner } from "./styled";
 
-export const Banner = () => {
+const Banner = () => {
   return (
     <StyledBanner>
       <div className="container">
@@ -17,3 +17,5 @@ export const Banner = () => {
     </StyledBanner>
   );
 };
+
+export default Banner;
