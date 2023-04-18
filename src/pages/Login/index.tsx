@@ -9,7 +9,7 @@ const Login = () => {
     <>
       <Header />
       <StyledLogin>
-        <div className="container">
+        <form className="container">
           <div className="form-header">
             <h5>Login</h5>
           </div>
@@ -39,7 +39,7 @@ const Login = () => {
               Cadastrar
             </button>
           </div>
-        </div>
+        </form>
       </StyledLogin>
     </>
   );
