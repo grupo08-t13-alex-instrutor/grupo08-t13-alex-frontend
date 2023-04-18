@@ -1,4 +1,4 @@
-import { AsideHomePage, Cards, FooterHomePage, Header, EditFormAds, RegisterFormAds, Banner } from '../../components';
+import { AsideHomePage, Cards, FooterHomePage, Header, Banner } from '../../components';
 import { Section, Ul } from '../../styled';
 
 export const Homepage = () => {
