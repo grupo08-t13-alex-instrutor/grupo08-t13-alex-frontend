@@ -1,10 +1,7 @@
-import SectionComment from "./styled"
-
-SectionComment
+import { ButtonBlue } from "../titleAd/styled"
+import { ButtonGrey, SectionComment } from "./styled"
 
 const CreationCommentPageProduct = () => {
-
-
     return (
         <>
             <SectionComment className="createComment">
@@ -13,24 +10,18 @@ const CreationCommentPageProduct = () => {
                 </article>
 
                 <form action="">
-                    <textarea ></textarea>
-                    <div>
-                        <button>
-                            Comentar
-                        </button>
-                    </div>
+                    <textarea >asdkjjfjasdjflasdjlfajds askldjdfflajsd alsldjdflkajsdlkfjça sdslkkfjalksdja çssdkfljadsk</textarea>
+                    <ButtonBlue>Comentar</ButtonBlue>
                 </form>
 
                 <div>
-                    <button id="gosteiMuito">Gostei muito!</button>
-                    <button id="incrivel">Incrível</button>
-                    <button id="recomendarei">Recomendarei para meus amigos!</button>
+                    <ButtonGrey>Gostei muito!</ButtonGrey>
+                    <ButtonGrey>Incrível</ButtonGrey>
+                    <ButtonGrey>Recomendarei para meus amigos!</ButtonGrey>
                 </div>
             </SectionComment>
         </>
     )
-
-
 }
 
 export default CreationCommentPageProduct

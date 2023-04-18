@@ -10,7 +10,7 @@ const RegisterFormAds = () => {
         { id: 2, label: "2ª Imagem da galeria", value: "" }
     ]);
 
-    const handleAddImageField = (event) => {
+    const handleAddImageField = (event: React.FormEvent<HTMLInputElement>) => {
 
         event.preventDefault();
 
@@ -23,9 +23,9 @@ const RegisterFormAds = () => {
         setGalleryImages([...galleryImages, newImageField]);
     };
 
-    const handleChangeImage = (event, id: number) => {
+    const handleChangeImage = (event: React.FormEvent<HTMLInputElement>, id: number) => {
 
-        const { value } = event.target;
+        const { value }: any = event.target;
 
         const updatedGalleryImages = galleryImages.map(image => {
             if (image.id === id) {
@@ -107,7 +107,7 @@ const RegisterFormAds = () => {
                         </React.Fragment>
                     ))}
 
-                    <button onClick={handleAddImageField}>
+                    <button onClick={ () => handleAddImageField }>
                         Adicionar campo para imagem da galeria
                     </button>
                 </div>
