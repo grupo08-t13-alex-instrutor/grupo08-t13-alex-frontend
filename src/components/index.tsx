@@ -5,6 +5,8 @@ import Cards from "./Cards";
 import Comment from "./Comment";
 import CreationCommentPageProduct from "./CreationCommentPageProduct";
 import FooterHomePage from "./FooterHomePage";
+import EditFormAds from "./EditFormAds";
+import RegisterFormAds from "./RegisterFormAds";
 import Header from "./Header";
 import EditFormAds from "./EditFormAds";
 import RegisterFormAds from "./RegisterFormAds";
@@ -13,6 +15,7 @@ import TitleAd from "./titleAd";
 import BackgroundBrand1 from "./BackgroundBrand1";
 
 export {
+
   BackgroundBrand1,
   TitleAd,
   Cards,
@@ -21,7 +24,9 @@ export {
   CreationCommentPageProduct,
   Header,
   Comment,
+  Banner,
+  BackgroundBrand1,
   EditFormAds,
   RegisterFormAds,
-  Banner,
+
 };
