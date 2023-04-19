@@ -4,9 +4,10 @@ const StyledAdPage = styled.div`
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
     padding: 5.87rem 0 0.625rem 0;
 
+   
     /* div,
     section {
         width: 50%;
@@ -59,10 +60,7 @@ const StyledAdPage = styled.div`
     }
 `;
 
-const StyledAside = styled.aside`
-    float: right;
-    > div {
-    }
-`;
 
-export { StyledAdPage, StyledAside };
+
+export { StyledAdPage };
+

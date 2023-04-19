@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledAdvertiserCard = styled.div`
 
-    width: 350px;
+    width: auto;
     height: 400px;
     border-radius: 4px;
 
@@ -69,6 +69,7 @@ const StyledAdvertiserCard = styled.div`
         line-height: 0px;
         color: #ffffff;
     }
+    
     @media (min-width: 720px) {
         /* position: absolute; */
         width: 450px;

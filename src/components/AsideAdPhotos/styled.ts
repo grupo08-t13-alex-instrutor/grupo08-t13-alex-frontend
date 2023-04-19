@@ -14,7 +14,10 @@ export const ContainerAsidePhotos = styled.div`
         margin: 1rem 0;
     }
 
-   
+    @media (max-width: 720px) {
+        width: 90%;
+        padding: 1rem;
+    }
 `;
 
 export const UlAdAside = styled.ul`
