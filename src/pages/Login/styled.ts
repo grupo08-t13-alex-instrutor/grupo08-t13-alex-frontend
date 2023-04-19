@@ -6,6 +6,7 @@ const StyledLogin = styled.section`
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  padding: 46px 0;
   background-color: ${(props) => props.theme.gray8};
 
   .container {

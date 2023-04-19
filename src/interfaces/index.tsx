@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface IcardData {
     src: string,
     marca: string,
@@ -6,6 +8,7 @@ export interface IcardData {
     km: string,
     ano: string,
     preco: string,
+    children: ReactNode
 }
 
 export interface iAdvertisement {

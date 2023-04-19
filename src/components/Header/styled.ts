@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { iMenuProps } from "../../interfaces";
 
-
 export const HeaderStyled = styled.header`
   width: 100%;
   min-width: 300px;
@@ -11,9 +10,14 @@ export const HeaderStyled = styled.header`
   justify-content: space-between;
   box-sizing: border-box;
   z-index: 2;
+  top: 0;
   position: fixed;
   background-color: white;
 
+  #btnlogin{
+    color:${props => props.theme.brand1}
+  }
+  
   button {
     padding: 0;
     border: none;

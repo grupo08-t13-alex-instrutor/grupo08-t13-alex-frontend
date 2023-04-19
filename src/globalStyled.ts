@@ -107,7 +107,7 @@ h5 {
   font-family: 'Lexend';
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 30px;
   color: #212529;
   flex: none;
@@ -227,7 +227,6 @@ h5.subtitle {
   color: #495057;
 }
 
-
 li{
   list-style: none;
 }
@@ -236,11 +235,7 @@ ul{
   padding: 0;
 }
 
-article{
-  margin:0;
-}
-
-body, div {
+body, div ,article{
   margin:0;
 }
 
@@ -275,8 +270,7 @@ textarea:focus, input:focus {
   outline: 0;
 } 
 
-
-/* * {
+/*  * {
  outline: 2px solid red;
 }  */
 
