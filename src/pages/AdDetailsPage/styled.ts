@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const StyledHome = styled.div`
   
-padding-top: 5rem;
+padding: 5.87rem 0 0.625rem 0; 
 
 div, section{
 width:  50%;
@@ -46,6 +46,12 @@ div{
     margin-left:0;
   }
 
+}
+
+.backgroundBrand1{
+  background-color: ${props => props.theme.brand1};
+
+  width: 100%;  
 }
 `;
 

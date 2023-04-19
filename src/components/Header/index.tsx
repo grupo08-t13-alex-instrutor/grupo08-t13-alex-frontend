@@ -4,7 +4,6 @@ import { IoMenu, IoClose } from "react-icons/io5";
 import { iUser } from "../../interfaces";
 import { useState } from "react";
 
-
 const Header = () => {
     const [openMenu, setOpenMenu] = useState(false);
     const [userLogged, setUserLogged] = useState<null | iUser>(null);
@@ -101,4 +100,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default Header;

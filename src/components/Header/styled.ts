@@ -13,7 +13,6 @@ export const HeaderStyled = styled.header`
   z-index: 2;
   position: fixed;
   background-color: white;
-  margin-top: -1rem;
 
   button {
     padding: 0;
