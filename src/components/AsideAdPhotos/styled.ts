@@ -1,20 +1,40 @@
 import styled from "styled-components";
 
-export const UlAdAside = styled.ul`
+export const ContainerAsidePhotos = styled.div`
+    background-color: ${(props) => props.theme.gray10};
+
+    display: flex;
+    flex-direction: column-reverse;
     width: 450px;
+    height: 400px;
+    border-radius: 4px;
+    padding: 2rem;
+
+    h5 {
+        margin: 1rem 0;
+    }
+
+   
+`;
+
+export const UlAdAside = styled.ul`
+    width: 100%;
     height: 380px;
 
     display: flex;
     flex-flow: row wrap;
-    gap: 2rem;
-    padding: 2rem;
+    justify-content: space-between;
+    align-content: space-around;
+    overflow: hidden;
 
-    background-color: aliceblue;
+    gap: 1rem;
 `;
 
 export const LiAdsAside = styled.li`
     width: 108px;
     height: 108px;
+
+    background-color: ${(props) => props.theme.gray7};
 
     img {
         width: 108px;
@@ -24,3 +44,4 @@ export const LiAdsAside = styled.li`
 
 export default LiAdsAside;
 UlAdAside;
+ContainerAsidePhotos;

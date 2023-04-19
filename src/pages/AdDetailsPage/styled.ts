@@ -1,68 +1,68 @@
 import styled from "styled-components";
 
-const StyledHome = styled.div`
-  
-padding: 5.87rem 0 0.625rem 0; 
+const StyledAdPage = styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
 
-div, section{
-width:  50%;
-margin-left: 1rem;
-}
+    padding: 5.87rem 0 0.625rem 0;
 
-ul{
-  li{
-    .bodyComment{
-      width: 100%;
+    /* div,
+    section {
+        width: 50%;
+    } */
+
+    ul {
+        li {
+            .bodyComment {
+                width: 100%;
+            }
+        }
     }
-  }
-}
 
-.descriptionAdds{
-width: 23.6rem;
-}
-
-.createComment{
-  margin-left: 1rem;
-
-  form{
-    width: 96%;
-    div{
-      width: 25%;
+    .descriptionAdds {
+        width: 23.6rem;
     }
-  }
 
-div{
-  width: 95%;
-}
-}
+    .createComment {
+        margin-left: 1rem;
 
-.TitleAdContainer{
+        form {
+            width: 96%;
+            div {
+                width: 25%;
+            }
+        }
 
-  div{
-    width: 100%;
-  }
+        div {
+            width: 95%;
+        }
+    }
 
-  .container{
-    margin-left:0;
-  }
+    .TitleAdContainer {
+        div {
+            width: 100%;
+        }
 
-}
+        .container {
+            margin-left: 0;
+        }
+    }
 
-.backgroundBrand1{
-  background-color: ${props => props.theme.brand1};
+    .backgroundBrand1 {
+        background-color: ${(props) => props.theme.brand1};
 
-  width: 100%;  
-}
-
-
+        width: 100%;
+    }
+    @media (max-width: 720px) {
+        flex-direction: column-reverse;
+    }
 `;
 
 const StyledAside = styled.aside`
-  float: right;
->div {
+    float: right;
+    > div {
+    }
+`;
 
-}
-
-`
-
-export { StyledHome, StyledAside}
+export { StyledAdPage, StyledAside };

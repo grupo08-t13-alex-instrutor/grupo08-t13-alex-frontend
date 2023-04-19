@@ -1,19 +1,16 @@
 import styled from "styled-components";
 
 const AsideAdPageStyled = styled.aside`
-    width: 30%;
-    margin: 1rem 2rem;
+    height: 85vh;
     float: right;
-    background-color: red;
+    display: flex;
+    justify-content: center;
 
-    h4 {
-        margin-top: 1.5rem;
-    }
+    margin: 0.5rem 2rem;
 
-    div {
-        margin-left: 1.5rem;
-        margin-top: 1.5rem;
-        width: 258px;
+    @media (max-width: 720px) {
+        float: under;
+        margin: 0.5rem;
     }
 `;
 

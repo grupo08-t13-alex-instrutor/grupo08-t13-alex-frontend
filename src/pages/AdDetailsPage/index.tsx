@@ -9,21 +9,23 @@ import {
 import MainPhotoAdComponent from "../../components/AdMainPhoto";
 import AsideAdPage from "../../components/AsideAdPage";
 import { Description } from "../../components/Description";
-import { StyledHome } from "./styled";
+import { StyledAdPage } from "./styled";
 
 const AdDetailsPage = () => {
     return (
         <>
             <Header />
             <BackgroundBrand1 />
-            <StyledHome>
+            <StyledAdPage>
                 <AsideAdPage />
-                <MainPhotoAdComponent />
-                <TitleAd />
-                <Description />
-                <Comment />
-                <CreationCommentPageProduct />
-            </StyledHome>
+                <div>
+                    <MainPhotoAdComponent />
+                    <TitleAd />
+                    <Description />
+                    <Comment />
+                    <CreationCommentPageProduct />
+                </div>
+            </StyledAdPage>
 
             <FooterHomePage />
         </>
