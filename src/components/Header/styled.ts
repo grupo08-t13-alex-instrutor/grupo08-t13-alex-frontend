@@ -14,6 +14,10 @@ export const HeaderStyled = styled.header`
   position: fixed;
   background-color: white;
 
+  #btnlogin{
+    color:${props => props.theme.brand1}
+  }
+  
   button {
     padding: 0;
     border: none;
