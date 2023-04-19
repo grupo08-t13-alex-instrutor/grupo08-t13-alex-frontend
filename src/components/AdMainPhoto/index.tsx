@@ -1,37 +1,15 @@
-// import { TitleAdContainer, ButtonBlue, Tag } from "../titleAd/styled"
+import MainPhotoAdDiv from "./styled";
 
-// interface iCarInformation {
-//     name: string
-//     year: string
-//     mileage: string
-//     price: string
-// }
-
-// const TitleAd = () => {
-//     let carInformation: iCarInformation = {
-//         name: "Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200 ",
-//         year: "2013",
-//         mileage: "0",
-//         price: "00.000,00"
-//     }
-
-//     const { name, year, mileage, price } = carInformation;
-
-//     return (
-//         <TitleAdContainer className="TitleAdContainer">
-//             <div>
-//                 <h2 className="heading-6-600">{name}</h2>
-//                 <div className="container">
-//                     <div>
-//                         <Tag>{year}</Tag>
-//                         <Tag>{`${mileage} KM`}</Tag>
-//                     </div>
-//                     <p>{`R$ ${price}`}</p>
-//                 </div>
-//             </div>
-//             <ButtonBlue>Comprar</ButtonBlue>
-//         </TitleAdContainer>
-//     )
-// }
-
-// export default TitleAd
+const MainPhotoAdComponent = () => {
+    return (
+        <>
+            <MainPhotoAdDiv>
+                <img
+                    src="https://otrentino.com.br/wp-content/uploads/WhatsApp-Image-2019-12-12-at-12.13.45-1.jpeg"
+                    alt="car-image"
+                />{" "}
+            </MainPhotoAdDiv>
+        </>
+    );
+};
+export default MainPhotoAdComponent;

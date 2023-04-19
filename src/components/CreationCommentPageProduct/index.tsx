@@ -10,7 +10,7 @@ const CreationCommentPageProduct = () => {
                 </article>
 
                 <form action="">
-                    <textarea >asdkjjfjasdjflasdjlfajds askldjdfflajsd alsldjdflkajsdlkfjça sdslkkfjalksdja çssdkfljadsk</textarea>
+                    <textarea placeholder="Digite seu comentário"></textarea>
                     <ButtonBlue>Comentar</ButtonBlue>
                 </form>
 
