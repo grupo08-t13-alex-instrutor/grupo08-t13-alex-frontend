@@ -1,16 +1,18 @@
 import { IcardData } from "../../interfaces";
 import Li from "./styled";
 
-const Cards = ({ src, marca, descricao, km, name, ano, preco }: IcardData) => {
+const Cards = ({ children, src, marca, descricao, km, name, ano, preco }: IcardData) => {
+
   return (
     <Li>
+      {children}
+
       <div className="teste">
         <img src={src} alt="" />
       </div>
-
       <section>
         <h2 className="heading-7-600">{marca}</h2>
-
+        
         <p>{descricao} </p>
       </section>
 

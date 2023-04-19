@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Header } from "../../components";
+import { FooterHomePage, Header } from "../../components";
 import StyledLogin from "./styled";
-
 const Login = () => {
   const navigate = useNavigate();
 
@@ -41,6 +40,8 @@ const Login = () => {
           </div>
         </form>
       </StyledLogin>
+      <FooterHomePage />
+
     </>
   );
 };
