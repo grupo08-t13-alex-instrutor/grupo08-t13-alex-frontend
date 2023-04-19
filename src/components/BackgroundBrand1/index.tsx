@@ -1,12 +1,11 @@
-import Article from "./styled"
-
+import BackgroundBrandDiv from "./styled";
 
 const BackgroundBrand1 = () => {
-
-
     return (
-        <Article  className="backgroundBrand1"/>
-    )
-}
+        <>
+            <BackgroundBrandDiv></BackgroundBrandDiv>
+        </>
+    );
+};
 
-export default BackgroundBrand1
+export default BackgroundBrand1;

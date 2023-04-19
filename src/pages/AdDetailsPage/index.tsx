@@ -1,7 +1,14 @@
-import { BackgroundBrand1, Comment, CreationCommentPageProduct, FooterHomePage, Header, TitleAd } from '../../components';
-import { Description } from '../../components/Description';
-import { ImageVehicleModal } from '../../components/ImageVehicleModal';
-import StyledHome from './styled';
+import {
+    BackgroundBrand1,
+    Comment,
+    CreationCommentPageProduct,
+    FooterHomePage,
+    Header,
+    TitleAd,
+} from "../../components";
+import MainPhotoAdComponent from "../../components/AdMainPhoto";
+import { Description } from "../../components/Description";
+import StyledHome from "./styled";
 
 const AdDetailsPage = () => {
     return (
@@ -9,6 +16,7 @@ const AdDetailsPage = () => {
             <Header />
             <BackgroundBrand1 />
             <StyledHome>
+                <MainPhotoAdComponent />
                 <TitleAd />
                 <Description />
                 <Comment />
@@ -20,4 +28,4 @@ const AdDetailsPage = () => {
     );
 };
 
-export default AdDetailsPage
+export default AdDetailsPage;
