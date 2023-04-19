@@ -45,7 +45,7 @@ const Header = () => {
                             </button>
                         :
                             <>
-                                <button className="body-1-600 margin" onClick={ event => {
+                                <button className="body-1-600 margin" id="btnlogin" onClick={ event => {
                                     event.preventDefault();
                                     setUserLogged(user);
                                 }}>
