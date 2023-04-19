@@ -1,0 +1,98 @@
+[
+    {
+        "id": "eec9d452-9fc3-4679-b331-3806215edd9a",
+        "name": "bolt ev premier 203cv (elétrico)",
+        "brand": "chevrolet",
+        "year": "2022",
+        "fuel": 3,
+        "value": 282045
+    },
+    {
+        "id": "82c08fa4-e311-4ba6-974f-c758d87564a3",
+        "name": "camaro ss 6.2 v8 16v",
+        "brand": "chevrolet",
+        "year": "2022",
+        "fuel": 1,
+        "value": 486002
+    },
+    {
+        "id": "ca68938a-6737-4a89-9b57-520adbbb931a",
+        "name": "camaro ss conversível 6.2 v8 16v",
+        "brand": "chevrolet",
+        "year": "2022",
+        "fuel": 1,
+        "value": 533458
+    },
+    {
+        "id": "d0f679fe-e13e-45bb-800e-6191c6f34bb8",
+        "name": "cobalt 1.8 8v econo.flex 4p aut.",
+        "brand": "chevrolet",
+        "year": "2020",
+        "fuel": 1,
+        "value": 73787
+    },
+    {
+        "id": "52d120b4-3d91-42ad-8555-403c3e14a6b3",
+        "name": "cobalt elite 1.8 8v econo.flex 4p aut.",
+        "brand": "chevrolet",
+        "year": "2019",
+        "fuel": 1,
+        "value": 68599
+    },
+    {
+        "id": "878d8aa8-cb3e-4340-82d5-b24702b3bff9",
+        "name": "cobalt lt 1.4 8v flexpower/econoflex 4p",
+        "brand": "chevrolet",
+        "year": "2020",
+        "fuel": 1,
+        "value": 67790
+    },
+    {
+        "id": "cff58269-01b7-4aaf-a1d9-e0bfadf49723",
+        "name": "cobalt ltz 1.4 8v flexpower/econoflex 4p",
+        "brand": "chevrolet",
+        "year": "2020",
+        "fuel": 1,
+        "value": 76963
+    },
+    {
+        "id": "6853edc5-1fa7-43b3-bd0f-812607ce9bff",
+        "name": "cobalt ltz 1.8 8v econo.flex 4p aut.",
+        "brand": "chevrolet",
+        "year": "2020",
+        "fuel": 1,
+        "value": 78829
+    },
+    {
+        "id": "60d4ac6f-a190-449c-9a1a-40a0eb95289e",
+        "name": "cobalt ltz 1.8 8v econo.flex 4p mec.",
+        "brand": "chevrolet",
+        "year": "2020",
+        "fuel": 1,
+        "value": 76036
+    },
+    {
+        "id": "f1750104-c7f1-4c29-ab0e-381b78bdd6bb",
+        "name": "cruze black bow tie 1.4 tb flex 4p aut",
+        "brand": "chevrolet",
+        "year": "2019",
+        "fuel": 1,
+        "value": 94906
+    },
+    {
+        "id": "b2a35946-dce5-4381-81f6-b221170a5fc4",
+        "name": "cruze hb black bow tie 1.4 tb flex aut.",
+        "brand": "chevrolet",
+        "year": "2019",
+        "fuel": 1,
+        "value": 95830
+    },
+    {
+        "id": "90004189-550e-4922-82ac-9b65b949ac43",
+        "name": "cruze lt 1.4 16v turbo flex 4p aut.",
+        "brand": "chevrolet",
+        "year": "2022",
+        "fuel": 1,
+        "value": 140627
+    }
+]

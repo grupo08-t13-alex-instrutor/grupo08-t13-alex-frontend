@@ -4,7 +4,7 @@ const StyledAdPage = styled.div`
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
-
+    gap: 2rem;
     padding: 5.87rem 0 0.625rem 0;
 
     /* div,

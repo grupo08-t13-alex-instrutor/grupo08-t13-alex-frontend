@@ -9,6 +9,7 @@ import EditFormAds from "./EditFormAds";
 import FooterHomePage from "./FooterHomePage";
 import Header from "./Header";
 import RegisterFormAds from "./RegisterFormAds";
+import { AdvertiserCard } from "./advertiserCard";
 import TitleAd from "./titleAd";
 
 export {
@@ -24,4 +25,5 @@ export {
     EditFormAds,
     RegisterFormAds,
     MainPhotoAd,
+    AdvertiserCard
 };

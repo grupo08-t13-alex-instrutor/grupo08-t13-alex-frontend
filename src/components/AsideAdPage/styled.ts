@@ -5,6 +5,7 @@ const AsideAdPageStyled = styled.aside`
     float: right;
     display: flex;
     justify-content: center;
+    flex-direction: column;
 
     margin: 0.5rem 2rem;
 

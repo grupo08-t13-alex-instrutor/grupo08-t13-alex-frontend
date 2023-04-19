@@ -1,5 +1,6 @@
 import AsideAdCards from "../AsideAdPhotos";
 import { ContainerAsidePhotos, UlAdAside } from "../AsideAdPhotos/styled";
+import { AdvertiserCard } from "../advertiserCard";
 import AsideAdPageStyled from "./styled";
 
 const AsideAdPage = () => {
@@ -41,6 +42,7 @@ const AsideAdPage = () => {
                         />
                     </UlAdAside>
                 </ContainerAsidePhotos>
+                <AdvertiserCard/>
             </>
         </AsideAdPageStyled>
     );
