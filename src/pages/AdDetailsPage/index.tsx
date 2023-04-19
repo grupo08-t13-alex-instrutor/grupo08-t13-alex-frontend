@@ -7,8 +7,9 @@ import {
     TitleAd,
 } from "../../components";
 import MainPhotoAdComponent from "../../components/AdMainPhoto";
+import AsideAdPage from "../../components/AsideAdPage";
 import { Description } from "../../components/Description";
-import StyledHome from "./styled";
+import { StyledHome } from "./styled";
 
 const AdDetailsPage = () => {
     return (
@@ -16,6 +17,7 @@ const AdDetailsPage = () => {
             <Header />
             <BackgroundBrand1 />
             <StyledHome>
+                <AsideAdPage />
                 <MainPhotoAdComponent />
                 <TitleAd />
                 <Description />

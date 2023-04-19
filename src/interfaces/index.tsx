@@ -21,3 +21,7 @@ export interface iUser {
 export interface iMenuProps {
     topPosition: string
 }
+
+export interface IcardAdData {
+    src: string
+}

@@ -57,4 +57,12 @@ div{
 
 `;
 
-export default StyledHome
+const StyledAside = styled.aside`
+  float: right;
+>div {
+
+}
+
+`
+
+export { StyledHome, StyledAside}
