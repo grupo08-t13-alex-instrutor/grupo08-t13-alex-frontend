@@ -53,8 +53,6 @@ div{
 
   width: 100%;  
 }
-
-
 `;
 
 export default StyledHome

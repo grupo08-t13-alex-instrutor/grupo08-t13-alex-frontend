@@ -1,4 +1,4 @@
-import { BackgroundBrand1, Comment, CreationCommentPageProduct, FooterHomePage, Header, TitleAd } from '../../components';
+import { Comment, CreationCommentPageProduct, FooterHomePage, Header, TitleAd } from '../../components';
 import { Description } from '../../components/Description';
 import { ImageVehicleModal } from '../../components/ImageVehicleModal';
 import StyledHome from './styled';
@@ -7,7 +7,6 @@ const AdDetailsPage = () => {
     return (
         <>
             <Header />
-            <BackgroundBrand1 />
             <StyledHome>
                 <TitleAd />
                 <Description />

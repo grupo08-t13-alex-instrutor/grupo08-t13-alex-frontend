@@ -1,4 +1,4 @@
-import { Header } from "../../components";
+import { FooterHomePage, Header } from "../../components";
 import StyledRegister from "./styled";
 
 const Register = () => {
@@ -102,6 +102,7 @@ const Register = () => {
           </div>
         </form>
       </StyledRegister>
+      <FooterHomePage />
     </>
   );
 };
