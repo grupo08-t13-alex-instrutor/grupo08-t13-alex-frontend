@@ -1,6 +1,5 @@
+import MotorsShopFooter from "../../assets/png/MotorsShopFooter.png";
 import Footer from "./styled"
-
-import MotorsShopFooter from "../../assets/MotorsShopFooter.png";
 
 const FooterHomePage = () => {
     return (
@@ -10,9 +9,7 @@ const FooterHomePage = () => {
             <span>@ 2022 todos os direitos reservados</span>
 
             <div>
-                <strong>
-                    <a href="#">^</a>
-                </strong>
+                <a href="#">^</a>
             </div>
 
         </Footer>

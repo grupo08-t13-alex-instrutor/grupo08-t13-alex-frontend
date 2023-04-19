@@ -4,17 +4,19 @@ export const StyledBanner = styled.div`
   width: 100vw;
   height: 620px;
   min-width: 300px;
-
+  
   .container {
     width: 100vw;
     height: 100vh;
-    top: 0;
-    left: 0;
-    position: fixed;
+    top: 0px;
+    left: 0px;
+    position: absolute;
     z-index: -1;
     display: flex;
     flex-direction: column;
+    -webkit-box-align: center;
     align-items: center;
+    -webkit-box-pack: center;
     justify-content: center;
     overflow: hidden;
     gap: 50px;

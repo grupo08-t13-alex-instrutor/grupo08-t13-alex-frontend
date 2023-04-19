@@ -1,7 +1,7 @@
-import GlobalStyle from "./globalStyled";
-import { ThemeProvider } from "styled-components";
-import theme from "./themeProvider";
-import { RoutesMain } from "./routes";
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './globalStyled';
+import { RoutesMain } from './routes';
+import theme from './themeProvider';
 
 function App() {
   return (

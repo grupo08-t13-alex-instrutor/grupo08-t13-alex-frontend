@@ -1,36 +1,27 @@
-import SectionComment from "./styled"
-
-SectionComment
+import { ButtonBlue } from "../titleAd/styled"
+import { ButtonGrey, SectionComment } from "./styled"
 
 const CreationCommentPageProduct = () => {
-
-
     return (
         <>
-            <SectionComment>
+            <SectionComment className="createComment">
                 <article>
                     <article>S</article> <span>Samuel</span>
                 </article>
 
                 <form action="">
-                    <textarea ></textarea>
-                    <div>
-                        <button>
-                                Comentar
-                        </button>
-                    </div>
+                    <textarea placeholder="Digite seu comentário"></textarea>
+                    <ButtonBlue>Comentar</ButtonBlue>
                 </form>
 
                 <div>
-                    <button id="gosteiMuito">Gostei muito!</button>
-                    <button id="incrivel">Incrível</button>
-                    <button id="recomendarei">Recomendarei para meus amigos!</button>
+                    <ButtonGrey>Gostei muito!</ButtonGrey>
+                    <ButtonGrey>Incrível</ButtonGrey>
+                    <ButtonGrey>Recomendarei para meus amigos!</ButtonGrey>
                 </div>
             </SectionComment>
         </>
     )
-
-
 }
 
 export default CreationCommentPageProduct

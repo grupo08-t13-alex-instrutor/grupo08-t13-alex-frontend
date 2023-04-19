@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 
 const Footer = styled.footer`
@@ -9,7 +8,6 @@ display: flex;
 align-items: center;
 width: 100%;
 justify-content: space-around;
-margin-top: 1.5rem;
 box-sizing: border-box;
 
 @media (max-width: 512px) {
@@ -32,12 +30,11 @@ div{
     align-items: center;
     display: flex;
     justify-content: center;
-    strong{
-        font-size: 1.5rem;
-        a{
-            color: ${props => props.theme.whiteFixed};
-         }
-       
+
+    a{
+        font-size: 1.9rem;
+        text-decoration:none;
+        color: ${props => props.theme.whiteFixed};
     }
 }
 

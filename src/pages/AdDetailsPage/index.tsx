@@ -1,12 +1,35 @@
-import { Header } from '../../components';
-import { AdvertiserCard } from '../../components/advertiserCard';
+import {
+    BackgroundBrand1,
+    Comment,
+    CreationCommentPageProduct,
+    FooterHomePage,
+    Header,
+    TitleAd,
+} from "../../components";
+import MainPhotoAdComponent from "../../components/AdMainPhoto";
+import AsideAdPage from "../../components/AsideAdPage";
+import { Description } from "../../components/Description";
+import { StyledAdPage } from "./styled";
 
-export const AdDetailsPage = () => {
+const AdDetailsPage = () => {
     return (
         <>
             <Header />
-            <h1>TESTE</h1>
-            <AdvertiserCard/>
+            <BackgroundBrand1 />
+            <StyledAdPage>
+                <AsideAdPage />
+                <div>
+                    <MainPhotoAdComponent />
+                    <TitleAd />
+                    <Description />
+                    <Comment />
+                    <CreationCommentPageProduct />
+                </div>
+            </StyledAdPage>
+
+            <FooterHomePage />
         </>
     );
 };
+
+export default AdDetailsPage;

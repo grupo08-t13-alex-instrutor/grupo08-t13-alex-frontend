@@ -22,18 +22,28 @@ export const ButtonBlue = styled.button`
   font-size: 14px;
   line-height: 0px;
   color: #ffffff;
+
+  @media (min-width: 720px) {
+    :hover {
+      color: #4529E6;
+      border-color: #4529E6;
+      background-color: #EDEAFD;
+    }
+  }
 `;
 
 export const TitleAdContainer = styled.div`
   min-width: 300px;
   max-width: 750px;
+  width: auto !important;
   padding: 25px 15px;
-  margin: 10px;
+  margin: 10px !important;
   border-radius: 4px;
   background: #fdfdfd;
   box-sizing: border-box;
 
   div {
+    margin-left: 0 !important;
     h2 {
       height: auto;
     }
@@ -51,11 +61,11 @@ export const TitleAdContainer = styled.div`
     }
   }
 
-  @media (min-width: 750px) {
-    margin: 10px auto;
+  @media (min-width: 720px) {
+    margin: 10px auto !important;
 
     div h2 {
-      margin: 0 0 40px 0;
+      margin: 0 0 40px 0 !important;
     }
 
     div .container {

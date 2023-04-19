@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const Section = styled.section`
     min-width: 300px;
-    width: 100%;
     max-width: 750px;
-    padding: 25px 15px 0;
-    margin: 10px;
+    width: auto !important;
+    padding: 25px 15px;
+    margin: 10px !important;
     border-radius: 4px;
     background: #FDFDFD;
     box-sizing: border-box;
@@ -29,8 +29,8 @@ export const Section = styled.section`
         color: #495057;
     }
 
-    @media (min-width: 750px) {
-        margin: 10px auto;
+    @media (min-width: 720px) {
+        margin: 10px auto !important;
     }
 `;
 
@@ -39,11 +39,12 @@ interface iCardComment {
 }
 
 export const CardComment = styled.li<iCardComment>`
-    margin: 10px 0;
+    margin: 10px 0 !important;
 
     .headerComment {
         width: 100%;
         padding: 0 0 10px 0;
+        margin-left: 0;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -78,6 +79,7 @@ export const CardComment = styled.li<iCardComment>`
     }
 
     .bodyComment {
+        margin-left: 0;
         .body-2-400 {
             font-style: normal;
             font-weight: 400;

@@ -8,6 +8,7 @@ export const ImageVehicleModal = () => {
   function openModal() {
     setModalIsOpen(true);
   }
+  
   function closeModal() {
     setModalIsOpen(false);
   }
