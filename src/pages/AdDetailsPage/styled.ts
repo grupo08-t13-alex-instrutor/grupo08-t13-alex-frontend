@@ -47,14 +47,6 @@ div{
   }
 
 }
-
-.backgroundBrand1{
-  background-color: ${props => props.theme.brand1}
-
-  width: 100%;  
-}
-
-
 `;
 
 export default StyledHome
