@@ -22,6 +22,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const navigate = useNavigate();
     const [infoUserLogin, setInfoUserLogin] = useState({})
+    const [idAdressUser, setIdAdressUser] = useState("")
 
     const sessionUser = async (data: IBodySession) => {
 
@@ -75,22 +76,35 @@ function ContextDadosUser({ children }: iInfoUser) {
             "addressId": responseAdress.data.id
         }
 
-        const responseUser = await instanceAxios.post("user", registerUser);
+        await instanceAxios.post("user", registerUser);
 
         navigate("/login")
     }
 
     const getUseInfoData = async () => {
         if (token) {
-            instanceAxios.defaults.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
+            setIdAdressUser(responseUser.data.addressId)
         }
     }
 
-    useEffect(() => {
-        getUseInfoData();
-    }, [token]);
+    const getIdAdressUser = async () => {
+        if (token && idAdressUser !== "") {
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+            const adressData = await instanceAxios.get(`adress/${idAdressUser}`);
+            console.log(adressData.data)
+        }
+    }
+
+    if (token) {
+        useEffect(() => {
+            getUseInfoData();
+            getIdAdressUser();
+        }, [token]);
+
+    }
 
     return (
         <User.Provider
