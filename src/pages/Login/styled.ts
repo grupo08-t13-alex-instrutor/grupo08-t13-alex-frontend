@@ -9,6 +9,10 @@ const StyledLogin = styled.section`
   padding: 46px 0;
   background-color: ${(props) => props.theme.gray8};
 
+p{
+  color: red;
+}
+
   .container {
     width: 50%;
     min-width: 287px;
