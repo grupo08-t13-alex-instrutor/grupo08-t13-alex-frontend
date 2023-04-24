@@ -10,6 +10,9 @@ const StyledRegister = styled.section`
   padding: 46px 0;
   min-width: 350px;
 
+p{
+  color: red;
+}
   .register-form {
     width: 50%;
     height: auto;
