@@ -17,56 +17,7 @@ const ProfilePageAdmin = () => {
   return (
     <Section className="profile">
       <Header />
-      <Modal teste={"sds"}>
-        <Form>
-          <div className="form-inputs">
-            <span className="text-body-2-500">Informações pessoais</span>
 
-            <label htmlFor="name">Nome</label>
-            <input name="name" type="text" placeholder="Ex: Fulano Silva" />
-
-            <label htmlFor="email">Email</label>
-            <input
-              name="email"
-              type="text"
-              placeholder="Ex: fulano@email.com"
-            />
-
-            <label htmlFor="cpf">Cpf</label>
-            <input name="cpf" type="text" placeholder="000.000.000-00" />
-
-            <label htmlFor="telephone">Celular</label>
-            <input
-              name="telephone"
-              type="text"
-              placeholder="(DDD) 90000-0000"
-            />
-
-            <label htmlFor="birth">Data de nascimento</label>
-            <input name="birth" type="text" placeholder="00/00/00" />
-
-            <label htmlFor="description">Descrição</label>
-            <textarea
-              name="description"
-              placeholder="Digitar descrição"
-              maxLength={300}
-            />
-          </div>
-          <div className="form-footer">
-            <button
-              className="cancel"
-              onClick={(el) => {
-                el.preventDefault;
-                const modal = document.querySelector(".modal");
-                modal?.classList.toggle("");
-              }}
-            >
-              Cancelar
-            </button>
-            <button className="submit">Salvar alteracões</button>
-          </div>
-        </Form>
-      </Modal>
       <div className="bg"></div>
 
       <article className="infoUser">

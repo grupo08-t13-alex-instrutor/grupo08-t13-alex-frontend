@@ -2,15 +2,7 @@ import StyledModal from "./styled";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-const Modal = ({ teste, children }: any) => {
-  const [modalIsOpen, setModalIsOpen] = useState(true);
-
-  const blur = document.querySelector(".blur");
-
-  function openModal() {
-    setModalIsOpen(true);
-  }
-
+const Modal = ({ modalIsOpen, setModalIsOpen, children }: any) => {
   function closeModal() {
     setModalIsOpen(false);
   }
@@ -21,7 +13,12 @@ const Modal = ({ teste, children }: any) => {
           <div className="container">
             <div className="modal-header">
               <h5 className="form-title">Editar perfil</h5>
-              <button className="close-modal" onClick={() => closeModal()}>
+              <button
+                className="close-modal"
+                onClick={() => {
+                  closeModal();
+                }}
+              >
                 <IoClose />
               </button>
             </div>
