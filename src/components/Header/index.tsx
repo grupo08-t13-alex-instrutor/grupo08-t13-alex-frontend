@@ -123,7 +123,6 @@ const Header = () => {
         </button>
       </MenuDesktopStyled>
       <Modal
-        classname="editProfile"
         modalIsOpen={eiditProfileIsOpen}
         setModalIsOpen={setEditProfileIsOpen}
       >

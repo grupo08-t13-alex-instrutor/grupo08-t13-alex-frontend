@@ -2,7 +2,13 @@ import StyledModal from "./styled";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 
-const Modal = ({ modalIsOpen, setModalIsOpen, children }: any) => {
+interface IModal {
+  modalIsOpen: boolean;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  children: JSX.Element;
+}
+
+const Modal = ({ modalIsOpen, setModalIsOpen, children }: IModal) => {
   function closeModal() {
     setModalIsOpen(false);
   }
