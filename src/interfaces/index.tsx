@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+
 export interface IcardData {
     src: string,
     marca: string,
