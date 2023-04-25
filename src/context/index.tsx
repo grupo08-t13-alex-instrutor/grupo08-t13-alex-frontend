@@ -1,9 +1,11 @@
 import { createContext, useEffect, useState } from "react";
 import { IBodySession } from "../interfaces/session";
 import { iAdressRequest } from "../interfaces/adresses";
-import { iUserRegisterReq } from "../interfaces/register";
-import { useNavigate } from "react-router-dom";
+import { iUserInfoUserLogin, iUserRegisterReq } from "../interfaces/register";
+import { useNavigate, useLocation } from "react-router-dom";
 import instanceAxios from "../services";
+import { iUserUpate } from "../interfaces/register";
+import { IAdversamentsGet } from "../interfaces";
 
 export interface iInfoUser {
     children: React.ReactNode;
@@ -12,16 +14,18 @@ export interface iInfoUser {
 export interface UserProviderData {
     registerUser: (data: iUserRegisterReq) => void,
     sessionUser: (data: IBodySession) => void,
+    updateUser: (data: iUserUpate) => void,
+    infoUserLogin: iUserInfoUserLogin | undefined,
 }
-
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
 
 
 function ContextDadosUser({ children }: iInfoUser) {
 
+
     const navigate = useNavigate();
-    const [infoUserLogin, setInfoUserLogin] = useState({})
+    const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
 
     const sessionUser = async (data: IBodySession) => {
@@ -81,6 +85,14 @@ function ContextDadosUser({ children }: iInfoUser) {
         navigate("/login")
     }
 
+    const updateUser = async (data: iUserUpate) => {
+        if (token) {
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+            const responseUser = await instanceAxios.patch(`user`, { ...infoUserLogin, ...data });
+            setInfoUserLogin(responseUser.data)
+        }
+    }
+
     const getUseInfoData = async () => {
         if (token) {
             instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
@@ -93,24 +105,30 @@ function ContextDadosUser({ children }: iInfoUser) {
     const getIdAdressUser = async () => {
         if (token && idAdressUser !== "") {
             instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
-            const adressData = await instanceAxios.get(`adress/${idAdressUser}`);
-            console.log(adressData.data)
+            const responseAdress = await instanceAxios.get(`adress/${idAdressUser}`);
+            console.log(responseAdress.data)
         }
     }
 
-    if (token) {
-        useEffect(() => {
+
+    useEffect(() => {
+
+    
+        if (token) {
             getUseInfoData();
             getIdAdressUser();
-        }, [token]);
+        }
 
-    }
+    }, [token]);
+
 
     return (
         <User.Provider
             value={{
                 sessionUser,
-                registerUser
+                registerUser,
+                updateUser,
+                infoUserLogin,
             }}
         >
             {children}

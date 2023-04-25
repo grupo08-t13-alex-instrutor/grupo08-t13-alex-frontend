@@ -9,7 +9,9 @@ export interface IcardData {
     km: string,
     ano: string,
     preco: string,
-    children: ReactNode
+    siglaNanme: string,
+    children: ReactNode,
+    onClick?: () => void,
 }
 
 export interface iAdvertisement {
@@ -28,4 +30,34 @@ export interface iMenuProps {
 
 export interface IcardAdData {
     src: string
+}
+
+interface img {
+    id: string,
+    link: string
+}
+
+export interface IAdversamentsGet {
+    user: {
+        buyer: boolean,
+        description: boolean,
+        date_of_birth: boolean,
+        telephone: boolean,
+        email: boolean,
+        cpf: boolean,
+        name: boolean,
+        id: boolean,
+    },
+    images: img[],
+    createdAt: string,
+    published: boolean,
+    description: string,
+    price: number,
+    color: string,
+    mileage: number,
+    fuel: number,
+    year: string,
+    model: string,
+    brand: string,
+    id: string
 }

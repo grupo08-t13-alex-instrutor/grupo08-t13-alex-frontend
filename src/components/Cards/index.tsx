@@ -1,10 +1,10 @@
 import { IcardData } from "../../interfaces";
 import Li from "./styled";
 
-const Cards = ({ children, src, marca, descricao, km, name, ano, preco }: IcardData) => {
+const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNanme, onClick }: IcardData) => {
 
   return (
-    <Li>
+    <Li onClick={onClick}>
       {children}
 
       <div className="teste">
@@ -12,12 +12,12 @@ const Cards = ({ children, src, marca, descricao, km, name, ano, preco }: IcardD
       </div>
       <section>
         <h2 className="heading-7-600">{marca}</h2>
-        
+
         <p>{descricao} </p>
       </section>
 
       <article>
-        <article>{name[0].toUpperCase()}</article> <span>{name}</span>
+        <article>{siglaNanme}</article> <span>{name}</span>
       </article>
 
       <div>

@@ -5,7 +5,7 @@ const SectionHome = styled.section`
 
 li{
     position: relative;
-
+    cursor: pointer;
     .cifrao{
         position: absolute;
         padding: 4px;
