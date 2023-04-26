@@ -37,7 +37,7 @@ const Aside = styled.aside`
   .km {
     display: block;
 
-    button {
+    input {
       color: ${(props) => props.theme.gray2};
       background: ${(props) => props.theme.gray5};
       width: 125px;
