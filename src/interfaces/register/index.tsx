@@ -16,7 +16,6 @@ export interface iUserRegisterValidatedReq {
     number: number;
     complement: string;
     confirmPassword: string;
-
 }
 
 
@@ -35,6 +34,29 @@ export interface iUserRegisterReq {
     street: string;
     number: number;
     complement: string;
+}
+
+export interface iUserInfoUserLogin {
+    addressId: string,
+    updatedAt: string,
+    createdAt: string,
+    buyer: boolean,
+    description: string,
+    date_of_birth: string,
+    telephone: string,
+    email: string,
+    cpf: string,
+    name: string,
+    id: string
+}
+
+export interface iUserUpate {
+    name?: string;
+    cpf?: string;
+    email?: string;
+    telephone?: string;
+    date_of_birth?: string;
+    description?: string;
 }
 
 

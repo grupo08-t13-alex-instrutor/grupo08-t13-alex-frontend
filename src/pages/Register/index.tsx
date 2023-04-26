@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup"
 
 const Register = () => {
-  const navigate = useNavigate();
+ 
   const [buyerValue, setBuyerValue] = useState(true)
 
   const { registerUser } = useContext(User)
@@ -27,7 +27,7 @@ const Register = () => {
   const onSubmitFunction = (data: iUserRegisterReq) => {
     registerUser({ ...data, buyer: buyerValue })
 
-    // reset();
+    reset();
   };
   return (
     <>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Footer = styled.footer`
-
+margin-top: 3rem;
 background: ${props => props.theme.gray0};
 padding: 1rem;
 display: flex;

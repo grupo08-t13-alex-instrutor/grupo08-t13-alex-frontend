@@ -24,7 +24,8 @@ const Login = () => {
 
   const onSubmitFunction = async (data: IBodySession) => {
 
-     sessionUser(data)
+    sessionUser(data)
+
 
     reset();
   };

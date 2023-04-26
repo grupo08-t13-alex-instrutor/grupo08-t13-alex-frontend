@@ -104,7 +104,7 @@ form{
 
     img{
         cursor: pointer;
-    }
+    } 
 
     .addImageGalery{
         flex-direction: column;
