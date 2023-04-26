@@ -52,7 +52,6 @@ li{
 
 button{ 
     background: ${props => props.theme.whiteFixed};
-    border: 1px solid ${props => props.theme.gray0};
     border-radius: 4px;
 }
 

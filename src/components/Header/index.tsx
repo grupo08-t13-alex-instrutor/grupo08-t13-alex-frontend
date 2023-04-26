@@ -1,101 +1,111 @@
 import { HeaderStyled, MenuDesktopStyled, MenuStyled } from "./styled";
 import MotorsShop from "../../assets/png/MotorsShop.png";
 import { IoMenu, IoClose } from "react-icons/io5";
-import { iUser } from "../../interfaces";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { User } from "../../context";
+import instanceAxios from "../../services";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-    const [openMenu, setOpenMenu] = useState(false);
-    const [userLogged, setUserLogged] = useState<null | iUser>(null);
-    const [mobile, setMobile] = useState(false);
+    const navigate = useNavigate()
+    const { infoUserLogin } = useContext(User)
 
-    let user: iUser = {
-        name: "Samuel Leão",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
-        advertisement: [
-            { name: "car" }
-        ]
+    const [openMenu, setOpenMenu] = useState(false)
+    const [adversaments, setAdversaments] = useState([])
+
+    let siglaName = ""
+
+    if (infoUserLogin?.name.includes(" ")) {
+        const a = infoUserLogin?.name.split(" ")
+        siglaName += a[0][0] + a[1][1]
+
+    } else {
+        siglaName += infoUserLogin?.name[0]
     }
 
-    const { name, description, advertisement } = user;
-        
-    return(
+    const getAdversaments = async () => {
+        const responseAdress = await instanceAxios.get(`ads`);
+        setAdversaments(responseAdress.data)
+    }
+
+    useEffect(() => {
+        getAdversaments()
+    }, [localStorage.getItem("token")])
+
+    return (
         <>
             <HeaderStyled>
-                <img src={MotorsShop} alt="Logo Motors Shop"/>
-                <button className="invisible-options" onClick={( event ) => {
-                    event.preventDefault();
+                <img src={MotorsShop} alt="Logo Motors Shop" onClick={() => navigate("/homepage")} />
+                <button className="invisible-options" onClick={(event) => {
                     setOpenMenu(!openMenu);
                 }}>
-                    { openMenu ? <IoClose/> : <IoMenu/> }
+                    {openMenu ? <IoClose /> : <IoMenu />}
                 </button>
                 <div>
                     <hr />
-                    { userLogged ?
-                            <button onClick={ event => {
-                                event.preventDefault();
-                                setOpenMenu(!openMenu);
-                            }}>
-                                <div>
-                                    <span className="profile-picture">
-                                        <p>SL</p>
-                                    </span>
-                                    <p>{name}</p>
-                                </div>
-                            </button>
+                    {localStorage.getItem("token") ?
+                        <button onClick={event => {
+                            setOpenMenu(!openMenu);
+                        }}>
+                            <div>
+                                <span className="profile-picture">
+                                    <p>{siglaName}</p>
+                                </span>
+                                <p>{infoUserLogin?.name}</p>
+                            </div>
+                        </button>
                         :
-                            <>
-                                <button className="body-1-600 margin" id="btnlogin" onClick={ event => {
-                                    event.preventDefault();
-                                    setUserLogged(user);
-                                }}>
-                                    Fazer Login
-                                </button>
-                                <button className="button-big-text register margin">Cadastrar</button>
-                            </>
+                        <>
+                            <button className="body-1-600 margin" id="btnlogin" onClick={event => {
+                                navigate("/login");
+                            }}>
+                                Fazer Login
+                            </button>
+                            <button className="button-big-text register margin">Cadastrar</button>
+                        </>
                     }
                 </div>
             </HeaderStyled>
-            <MenuStyled topPosition={ openMenu ? "none" : "-400px" }>
-                <div className={ openMenu ? "input" : "" }>
+            <MenuStyled topPosition={openMenu ? "none" : "-400px"}>
+                <div className={openMenu ? "input" : ""}>
                     <button className="body-1-600">Carros</button>
                     <button className="body-1-600">Motos</button>
                     <button className="body-1-600">Leilão</button>
                     <hr />
-                    { userLogged ? 
-                            <>
-                                <button className="atention" onClick={ event => {
-                                    event.preventDefault();
-                                    setUserLogged(null);
-                                }}>
-                                    Sair
-                                </button>
-                            </>
+                    {localStorage.getItem("token") ?
+                        <>
+                            <button className="atention" onClick={() => {
+                                localStorage.removeItem("token")
+                                setOpenMenu(!openMenu);
+                                navigate("/homepage");
+                            }}>
+                                Sair
+                            </button>
+                        </>
                         :
-                            <>
-                                <button className="body-1-600" onClick={
-                                    event => {
-                                        event.preventDefault();
-                                        setUserLogged(user);
-                                    }
-                                }>Fazer login</button>
-                                <button className="button-big-text register">Cadastrar</button>
-                            </>
+                        <>
+                            <button className="body-1-600" onClick={
+                                event => {
+                                    navigate("/login");
+                                }
+                            }>Fazer login</button>
+                            <button className="button-big-text register" onClick={() => navigate("/register")}>Cadastrar</button>
+                        </>
                     }
                 </div>
             </MenuStyled >
-            <MenuDesktopStyled height={ openMenu ? "auto" : "0" } padding={ openMenu ? "16px 22px" : "0" }>
+            <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"}>
                 <button>Editar Perfil</button>
                 <button>Editar Endereço</button>
-                { advertisement.length > 0 ? <button>Meus Anúncios</button> : "" }
-                <button onClick={ event => {
-                    event.preventDefault();
-                    setUserLogged(null);
-                    setOpenMenu(!openMenu);
+                {adversaments.length > 0 ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
+                <button onClick={event => {
+                    localStorage.removeItem("token")
+                    setOpenMenu(openMenu);
+                    navigate("/homepage");
                 }}>
                     Sair
                 </button>
-            </MenuDesktopStyled>
+            </MenuDesktopStyled >
         </>
     )
 }

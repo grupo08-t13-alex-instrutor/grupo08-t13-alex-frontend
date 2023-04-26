@@ -1,42 +1,36 @@
 import Section from "./styled";
-import { FooterHomePage, Header } from "../../components";
+import { EditFormAds, FooterHomePage, Header, RegisterFormAds } from "../../components";
 import { Cards } from "../../components";
-import Modal from "../../components/Modal";
-import UpdateUserForm from "../../components/UpdateUserForm";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
-import { IAdversamentsGet } from "../../interfaces";
 import { useLocation } from "react-router-dom";
 import instanceAxios from "../../services";
+import { siglaNameUtils } from "../../utils";
 
 const ProfilePageAdmin = () => {
 
   const location = useLocation();
   const [adversaments, setAdversaments] = useState([])
-
+  const [sigla, setSigla] = useState<string>()
   const { infoUserLogin } = useContext(User)
-
-  let siglaName = ""
-  if (infoUserLogin?.name.includes(" ")) {
-    const a = infoUserLogin?.name.split(" ")
-    siglaName += a[0][0] + a[1][1]
-
-  } else {
-    siglaName += infoUserLogin?.name[0]
-  }
 
   const getAdversaments = async () => {
     const responseAdress = await instanceAxios.get(`ads`);
     setAdversaments(responseAdress.data)
+
   }
 
+  const callBackSiglaNameUtils = async () => {
+    const result = await siglaNameUtils(infoUserLogin!.name)
+    setSigla(result)
+  }
 
   if (location.pathname === "/profile/admin") {
     useEffect(() => {
+      callBackSiglaNameUtils()
       getAdversaments()
-    }, [location.pathname])
+    }, [location.pathname, localStorage.getItem("token")])
   }
-
 
   return (
     <Section className="profile">
@@ -44,7 +38,7 @@ const ProfilePageAdmin = () => {
       <div className="bg"></div>
 
       <article className="infoUser">
-        <article className="siglaInfoUser">{siglaName}</article>
+        <article className="siglaInfoUser">{sigla}</article>
         <section>
           <span>{infoUserLogin?.name}</span>
           <span className="anunciante">Anuciante</span>
@@ -68,7 +62,7 @@ const ProfilePageAdmin = () => {
                   name={infoUserLogin!.name}
                   ano={e.year}
                   preco={e.price}
-                  siglaNanme={siglaName}
+                  siglaNanme={sigla!}
                 >
                   <div className="btnAdmin">
                     <button>Editar</button>

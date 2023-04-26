@@ -17,6 +17,9 @@ export const HeaderStyled = styled.header`
   #btnlogin{
     color:${props => props.theme.brand1}
   }
+  img{
+    cursor: pointer;
+  }
   
   button {
     padding: 0;

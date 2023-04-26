@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import { IBodySession } from "../interfaces/session";
 import { iAdressRequest } from "../interfaces/adresses";
 import { iUserInfoUserLogin, iUserRegisterReq } from "../interfaces/register";
@@ -16,6 +16,8 @@ export interface UserProviderData {
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     infoUserLogin: iUserInfoUserLogin | undefined,
+    idUser: string,
+    setIdUser: Dispatch<SetStateAction<string>>
 }
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
@@ -27,6 +29,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     const navigate = useNavigate();
     const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
+    const [idUser, setIdUser] = useState<string>("")
 
     const sessionUser = async (data: IBodySession) => {
 
@@ -35,6 +38,9 @@ function ContextDadosUser({ children }: iInfoUser) {
         localStorage.removeItem("token")
 
         localStorage.setItem("token", response.data.token);
+
+        navigate("/homepage")
+
     }
 
     const token = localStorage.getItem("token");
@@ -110,10 +116,8 @@ function ContextDadosUser({ children }: iInfoUser) {
         }
     }
 
-
     useEffect(() => {
 
-    
         if (token) {
             getUseInfoData();
             getIdAdressUser();
@@ -129,6 +133,8 @@ function ContextDadosUser({ children }: iInfoUser) {
                 registerUser,
                 updateUser,
                 infoUserLogin,
+                idUser,
+                setIdUser
             }}
         >
             {children}

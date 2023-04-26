@@ -11,6 +11,7 @@ export interface IcardData {
     preco: string,
     siglaNanme: string,
     children: ReactNode,
+    idAmount?: string,
     onClick?: () => void,
 }
 

@@ -46,6 +46,7 @@ export const Homepage = () => {
                             return (
                                 <Cards
                                     onClick={() => navigate("/profile/user")}
+                                    idAmount={e.user.id}
                                     src={e.images[0]}
                                     marca={e.brand}
                                     descricao={e.description}

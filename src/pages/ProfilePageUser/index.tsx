@@ -5,20 +5,26 @@ import { useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import instanceAxios from "../../services";
 import { User } from "../../context";
+import { siglaNameUtils } from "../../utils";
 
 const ProfilePageUser = () => {
 
-    const { infoUserLogin } = useContext(User)
+    const { idUser } = useContext(User)
     const location = useLocation();
     const [adversaments, setAdversaments] = useState([])
+    const [sigla, setSigla] = useState<string>()
+    const [user, setUser] = useState<any>()
 
-    let siglaName = ""
-    if (infoUserLogin?.name.includes(" ")) {
-        const a = infoUserLogin?.name.split(" ")
-        siglaName += a[0][0] + a[1][1]
+    const userSelectInPageProfileUser = async () => {
 
-    } else {
-        siglaName += infoUserLogin?.name[0]
+        const responsegetUser = await instanceAxios.get(`user/${idUser}`);
+
+        setUser(responsegetUser.data)
+
+        const result = await siglaNameUtils(responsegetUser.data.name)
+
+        setSigla(result)
+
     }
 
     const getAdversaments = async () => {
@@ -28,8 +34,9 @@ const ProfilePageUser = () => {
 
     if (location.pathname === "/profile/user") {
         useEffect(() => {
+            userSelectInPageProfileUser()
             getAdversaments()
-        }, [location.pathname])
+        }, [location.pathname, localStorage.getItem("token")])
     }
 
     return (
@@ -38,30 +45,30 @@ const ProfilePageUser = () => {
             <div className="bg"></div>
 
             <article className="infoUser" >
-                <article className="siglaInfoUser">{siglaName}</article>
+                <article className="siglaInfoUser">{sigla}</article>
                 <section>
-                    <span>{infoUserLogin?.name}</span>
+                    <span>{user?.name}</span>
                     <span className="anunciante">Anuciante</span>
                 </section>
                 <p>
-                    {infoUserLogin?.description}
+                    {user?.description}
                 </p>
             </article>
             <h5>Anúncios</h5>
             <ul>
                 {
-                    adversaments!.map((e: any) => {
-                        if (e.user.id === infoUserLogin?.id) {
+                    adversaments.map((e: any) => {
+                        if (e.user.id === idUser) {
                             return (
                                 <Cards
                                     src={e.images[0]}
                                     marca={e.brand}
                                     descricao={e.description}
                                     km={e.mileage}
-                                    name={infoUserLogin!.name}
+                                    name={user?.name}
                                     ano={e.year}
                                     preco={e.price}
-                                    siglaNanme={siglaName}
+                                    siglaNanme={sigla!}
                                 >
                                     {e.published ? <p className="ativo">ativo</p> : <p className="inativo">inativo</p>}
                                 </Cards>

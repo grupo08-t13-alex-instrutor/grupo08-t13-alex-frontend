@@ -5,7 +5,7 @@ const SectionHome = styled.section`
 
 li{
     position: relative;
-    cursor: pointer;
+
     .cifrao{
         position: absolute;
         padding: 4px;
@@ -15,6 +15,12 @@ li{
         background: ${props => props.theme.random7};
         border-radius: 4px;
     }
+    
+    #nameUser:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
 
 }
 
