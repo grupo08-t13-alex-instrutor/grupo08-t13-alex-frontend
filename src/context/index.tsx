@@ -112,7 +112,6 @@ function ContextDadosUser({ children }: iInfoUser) {
         if (token && idAdressUser !== "") {
             instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
             const responseAdress = await instanceAxios.get(`adress/${idAdressUser}`);
-            console.log(responseAdress.data)
         }
     }
 

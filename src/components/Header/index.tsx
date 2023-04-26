@@ -61,7 +61,7 @@ const Header = () => {
                             }}>
                                 Fazer Login
                             </button>
-                            <button className="button-big-text register margin">Cadastrar</button>
+                            <button className="button-big-text register margin" onClick={() => navigate("/register")}>Cadastrar</button>
                         </>
                     }
                 </div>
