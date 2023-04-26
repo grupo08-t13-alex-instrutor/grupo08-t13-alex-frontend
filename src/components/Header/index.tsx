@@ -1,10 +1,11 @@
-import { HeaderStyled, MenuDesktopStyled, MenuStyled } from "./styled";
+import { HeaderStyled, MenuDesktopStyled, MenuStyled, ModalContainer } from "./styled";
 import MotorsShop from "../../assets/png/MotorsShop.png";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
 import instanceAxios from "../../services";
 import { useNavigate } from "react-router-dom";
+import { EditAddress } from "../EditAddress";
 
 const Header = () => {
     const navigate = useNavigate()
@@ -12,6 +13,7 @@ const Header = () => {
 
     const [openMenu, setOpenMenu] = useState(false)
     const [adversaments, setAdversaments] = useState([])
+    const [editAddress, setEditAddress] = useState<boolean>(false);
 
     let siglaName = ""
 
@@ -96,16 +98,28 @@ const Header = () => {
             </MenuStyled >
             <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"}>
                 <button>Editar Perfil</button>
-                <button>Editar Endereço</button>
+                <button onClick={ event => {
+                    setEditAddress( !editAddress )
+                }}>Editar Endereço</button>
                 {adversaments.length > 0 ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
                 <button onClick={event => {
                     localStorage.removeItem("token")
-                    setOpenMenu(openMenu);
+                    setOpenMenu(!openMenu);
                     navigate("/homepage");
                 }}>
                     Sair
                 </button>
             </MenuDesktopStyled >
+            { editAddress ? 
+                    <ModalContainer>
+                        <EditAddress
+                            editAddress={ editAddress }
+                            setEditAddress={ setEditAddress }
+                        />
+                    </ModalContainer>
+                :
+                    <></>
+            }
         </>
     )
 }

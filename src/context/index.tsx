@@ -17,7 +17,8 @@ export interface UserProviderData {
     updateUser: (data: iUserUpate) => void,
     infoUserLogin: iUserInfoUserLogin | undefined,
     idUser: string,
-    setIdUser: Dispatch<SetStateAction<string>>
+    setIdUser: Dispatch<SetStateAction<string>>,
+    idAdressUser: string
 }
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
@@ -134,7 +135,8 @@ function ContextDadosUser({ children }: iInfoUser) {
                 updateUser,
                 infoUserLogin,
                 idUser,
-                setIdUser
+                setIdUser,
+                idAdressUser
             }}
         >
             {children}
