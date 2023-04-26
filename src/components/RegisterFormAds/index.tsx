@@ -1,8 +1,37 @@
-import SectionBgForm from "./styled"
+import { HeaderRegisterFormAd, FormRegisterFormAd, ContainerRegisterFormAd } from "./styled"
 import Remove from "../../assets/svg/x.svg";
 import React, { useState } from "react";
+import { useForm} from "react-hook-form";
+import * as yup from "yup";
+import { iAdRequest } from "../../interfaces/ads";
 
-const RegisterFormAds = () => {
+interface iChildren {
+    openRegisterAdForm: boolean,
+    setOpenRegisterAdForm: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm }: iChildren ) => {
+    const { register, handleSubmit, formState: { errors, defaultValues }, reset } = useForm<iAdRequest>({ 
+        mode: "onBlur",
+        // defaultValues: async () => {
+        //     const data = await 
+        // },
+        values: {
+            brand: '',
+            model: '',
+            year: '',
+            fuel: '',
+            mileage: 1,
+            color: '',
+            price: 1,
+            description: '',
+            images: []
+        }
+    });
+
+    const registerAd = async (data: iAdRequest) => {
+        console.log(data);        
+    }
 
     const [galleryImages, setGalleryImages] = useState([
         { id: 0, label: "Imagem da capa", value: "" },
@@ -39,15 +68,18 @@ const RegisterFormAds = () => {
 
 
     return (
-        < SectionBgForm onClick={() => null}>
-            <form action="" >
-
-                <div>
-                    <span>Criar de anuncio</span>
-                    <img src={Remove} onClick={() => null} />
-                </div>
-
-                <p>informações do veículo</p>
+        <ContainerRegisterFormAd>
+            <HeaderRegisterFormAd>
+                <span>Criar de anuncio</span>
+                <button onClick={ event => {
+                    event.preventDefault()
+                    setOpenRegisterAdForm( !openRegisterAdForm )
+                }}>
+                    <img src={Remove} />
+                </button>
+            </HeaderRegisterFormAd>
+            <FormRegisterFormAd action="" onSubmit={handleSubmit( registerAd )}>
+                <p>Informações do veículo</p>
 
                 <label htmlFor="">Marca</label>
                 <input type="text" />
@@ -113,16 +145,15 @@ const RegisterFormAds = () => {
                 </div>
 
                 <div className="alteration">
-                    <button >Cancelar</button>
-                    <button className="save">Criar anúncio</button>
+                    <button onClick={ event => {
+                        event.preventDefault()
+                        setOpenRegisterAdForm( !openRegisterAdForm )
+                    }}>Cancelar</button>
+                    <button className="save" type="submit">Criar anúncio</button>
                 </div>
-
-            </form >
-        </SectionBgForm >
-
+            </FormRegisterFormAd>
+        </ContainerRegisterFormAd >
     )
-
-
 }
 
 export default RegisterFormAds
