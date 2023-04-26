@@ -59,17 +59,21 @@ export const validacaoUpdated = yup.object().shape({
         .string(),
     cpf: yup
         .string()
-        .matches(/^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2})$/, "O padrão de cpf é 000.000.000-00"),
+        .matches(/^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2})$/, "O padrão de cpf é 000.000.000-00")
+        .notRequired(),
     email: yup
         .string()
-        .email("Email inválido"),
+        .email("Email inválido").notRequired(),
     telephone: yup
         .string()
-        .matches(/^\(\d{2}\)\d{5}-\d{4}$/, "O padrão para o telefone é (00)00000-0000"),
+        .matches(/^\(\d{2}\)\d{5}-\d{4}$/, "O padrão para o telefone é (00)00000-0000")
+        .notRequired(),
     date_of_birth: yup
         .string()
-        .matches(/([0-9]{2})([\/]{1})([0-9]{2})([\/]{1})([0-9]{4})/, "O padrão de desse campo é \'00/00/0000\'' "),
+        .matches(/([0-9]{2})([\/]{1})([0-9]{2})([\/]{1})([0-9]{4})/, "O padrão de desse campo é \'00/00/0000\'' ")
+        .notRequired(),
     description: yup
         .string()
-        .max(300, 'Deve ter no máximo 300 caracteres'),
+        .max(300, 'Deve ter no máximo 300 caracteres')
+        .notRequired(),
 });

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import { IBodySession } from "../interfaces/session";
-import { iAdressRequest } from "../interfaces/adresses";
+import { iAddressUpdate, iAdressRequest } from "../interfaces/adresses";
 import { iUserInfoUserLogin, iUserRegisterReq } from "../interfaces/register";
 import { useNavigate, useLocation } from "react-router-dom";
 import instanceAxios from "../services";
@@ -15,9 +15,13 @@ export interface UserProviderData {
     registerUser: (data: iUserRegisterReq) => void,
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
+    patchAdressUser: (data: iAddressUpdate) => Promise<any>,
     infoUserLogin: iUserInfoUserLogin | undefined,
     idUser: string,
-    setIdUser: Dispatch<SetStateAction<string>>
+    setIdUser: Dispatch<SetStateAction<string>>,
+    idAdressUser: string,
+    dataAdress: {},
+    setDataAdress: Dispatch<SetStateAction<{}>>
 }
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
@@ -29,6 +33,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     const navigate = useNavigate();
     const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
+    const [dataAdress, setDataAdress] = useState({})
     const [idUser, setIdUser] = useState<string>("")
 
     const sessionUser = async (data: IBodySession) => {
@@ -112,6 +117,18 @@ function ContextDadosUser({ children }: iInfoUser) {
         if (token && idAdressUser !== "") {
             instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
             const responseAdress = await instanceAxios.get(`adress/${idAdressUser}`);
+            setDataAdress(responseAdress.data)
+        }
+    }
+
+    const patchAdressUser = async (data: iAddressUpdate): Promise<any> => {
+        if (token) {
+            console.log(data)
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+            const responseAdress = await instanceAxios.patch(`adress`, { ...dataAdress, ...data });
+            console.log(responseAdress.data)
+
+            return responseAdress.data
         }
     }
 
@@ -133,7 +150,11 @@ function ContextDadosUser({ children }: iInfoUser) {
                 updateUser,
                 infoUserLogin,
                 idUser,
-                setIdUser
+                setIdUser,
+                idAdressUser,
+                dataAdress,
+                setDataAdress,
+                patchAdressUser
             }}
         >
             {children}

@@ -19,11 +19,11 @@ const UpdateUserForm = () => {
     reset,
     formState: { errors },
   } = useForm<iUserUpate>({
-    resolver: yupResolver(validacaoUpdated),
+    resolver: yupResolver(validacaoUpdated, { stripUnknown: true }),
   });
 
   const onSubmitFunction = (data: iUserUpate) => {
-    
+
     setUserUpdate({ ...infoUserLogin, ...data })
 
     updateUser(data)
@@ -92,6 +92,7 @@ const UpdateUserForm = () => {
         >
           Cancelar
         </button>
+        <button>Exluir perfil</button>
         <button className="submit">Salvar alteracões</button>
       </div>
 

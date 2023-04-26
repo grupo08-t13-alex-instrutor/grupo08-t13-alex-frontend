@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const StyledForm = styled.form`
-  height: auto;
-  width: 100%;
+ 
   display: flex;
+  position: absolute;
   flex-direction: column;
   gap: 37px;
 
