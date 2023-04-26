@@ -1,13 +1,14 @@
-import { HeaderStyled, MenuDesktopStyled, MenuStyled } from "./styled";
+import { HeaderStyled, MenuDesktopStyled, MenuStyled, ModalContainer } from "./styled";
 import MotorsShop from "../../assets/png/MotorsShop.png";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { iUser } from "../../interfaces";
 import { useState } from "react";
+import { EditAddress } from "../EditAddress";
 
 const Header = () => {
     const [openMenu, setOpenMenu] = useState(false);
     const [userLogged, setUserLogged] = useState<null | iUser>(null);
-    const [mobile, setMobile] = useState(false);
+    const [editAddress, setEditAddress] = useState<boolean>(false);
 
     let user: iUser = {
         name: "Samuel Leão",
@@ -86,7 +87,10 @@ const Header = () => {
             </MenuStyled >
             <MenuDesktopStyled height={ openMenu ? "auto" : "0" } padding={ openMenu ? "16px 22px" : "0" }>
                 <button>Editar Perfil</button>
-                <button>Editar Endereço</button>
+                <button onClick={ event => {
+                    event.preventDefault();
+                    setEditAddress(!editAddress);
+                }}>Editar Endereço</button>
                 { advertisement.length > 0 ? <button>Meus Anúncios</button> : "" }
                 <button onClick={ event => {
                     event.preventDefault();
@@ -96,6 +100,16 @@ const Header = () => {
                     Sair
                 </button>
             </MenuDesktopStyled>
+            { editAddress ? 
+                    <ModalContainer>
+                        <EditAddress
+                            editAddress={ editAddress }
+                            setEditAddress={ setEditAddress }
+                        />
+                    </ModalContainer>
+                :
+                    <></>
+            }
         </>
     )
 }
