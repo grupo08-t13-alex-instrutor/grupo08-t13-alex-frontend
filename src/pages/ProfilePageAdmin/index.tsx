@@ -1,80 +1,84 @@
-import Section from "./styled"
-import { FooterHomePage, Header } from "../../components";
+import Section from "./styled";
+import { EditFormAds, FooterHomePage, Header, RegisterFormAds } from "../../components";
 import { Cards } from "../../components";
-
-const car = {
-    marca: 'Civic',
-    descrica: 'e um carro',
-    km: '100.000',
-    name: 'Arlindo',
-    ano: '2023',
-    preco: '50.000,00',
-}
+import { useContext, useEffect, useState } from "react";
+import { User } from "../../context";
+import { useLocation } from "react-router-dom";
+import instanceAxios from "../../services";
+import { siglaNameUtils } from "../../utils";
 
 const ProfilePageAdmin = () => {
 
-    return (
-        <Section className="profile" >
-            <Header />
-            <div className="bg"></div>
+  const location = useLocation();
+  const [adversaments, setAdversaments] = useState([])
+  const [sigla, setSigla] = useState<string>()
+  const { infoUserLogin } = useContext(User)
 
-            <article className="infoUser" >
-                <article className="siglaInfoUser">SL</article>
-                <section>
-                    <span>Samuel Leão</span>
-                    <span className="anunciante">Anuciante</span>
-                </section>
-                <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                    elit. Voluptate, aliquid facere. Maiores reprehenderit
-                    cum atque rem nisi quo et, laboriosam vero quisquam?
-                    Quibusdam incidunt commodi quas repellendus velit fugiat accusantium?
-                </p>
-                <button>Criar anuncio</button>
-            </article>
-            <h5>Anúncios</h5>
-            <ul>
+  const getAdversaments = async () => {
+    const responseAdress = await instanceAxios.get(`ads`);
+    setAdversaments(responseAdress.data)
+
+  }
+
+  const callBackSiglaNameUtils = async () => {
+    const result = await siglaNameUtils(infoUserLogin!.name)
+    setSigla(result)
+  }
+
+  if (location.pathname === "/profile/admin") {
+    useEffect(() => {
+      callBackSiglaNameUtils()
+      getAdversaments()
+    }, [location.pathname, localStorage.getItem("token")])
+  }
+
+  return (
+    <Section className="profile">
+      <Header />
+      <div className="bg"></div>
+
+      <article className="infoUser">
+        <article className="siglaInfoUser">{sigla}</article>
+        <section>
+          <span>{infoUserLogin?.name}</span>
+          <span className="anunciante">Anuciante</span>
+        </section>
+        <p>
+          {infoUserLogin?.description}
+        </p>
+        <button>Criar anuncio</button>
+      </article>
+      <h5>Anúncios</h5>
+      <ul>
+        {
+          adversaments!.map((e: any) => {
+            if (e.user.id === infoUserLogin?.id) {
+              return (
                 <Cards
-                    src={
-                        'https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7'
-                    }
-                    marca={'Civic'}
-                    descricao={'e um carro'}
-                    km={'100.000'}
-                    name={'Samuel Leão'}
-                    ano={'2023'}
-                    preco={'50.000,00'}
+                  src={e.images[0]}
+                  marca={e.brand}
+                  descricao={e.description}
+                  km={e.mileage}
+                  name={infoUserLogin!.name}
+                  ano={e.year}
+                  preco={e.price}
+                  siglaNanme={sigla!}
                 >
-                    <div className="btnAdmin">
-                        <button>Editar</button>
-                        <button>Ver detalhes</button>
-                    </div>
-                </Cards >
-                <Cards
-                    src={
-                        'https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7'
-                    }
-                    marca={'Civic'}
-                    descricao={'e um carro'}
-                    km={'100.000'}
-                    name={'Samuel Leão'}
-                    ano={'2023'}
-                    preco={'50.000,00'}
-                >
-                    <div className="btnAdmin">
-                        <button>Editar</button>
-                        <button>Ver detalhes</button>
-                    </div>
+                  <div className="btnAdmin">
+                    <button>Editar</button>
+                    <button>Ver detalhes</button>
+                  </div>
                 </Cards>
-
-            </ul>
-
-            <FooterHomePage />
-        </Section>
-
-    );
+              )
+            } else {
+              return null;
+            }
+          })
+        }
+      </ul>
+      <FooterHomePage />
+    </Section>
+  );
 };
 
-export default ProfilePageAdmin
-
-
+export default ProfilePageAdmin;

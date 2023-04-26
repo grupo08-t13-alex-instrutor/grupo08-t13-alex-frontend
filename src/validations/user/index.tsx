@@ -1,4 +1,4 @@
-import * as yup  from "yup"
+import * as yup from "yup"
 
 export const validacaoCadastro = yup.object().shape({
     name: yup
@@ -49,4 +49,27 @@ export const validacaoCadastro = yup.object().shape({
     confirmPassword: yup.string()
         .required("Preenchimento da confirmação de senha obrigatório")
         .oneOf([yup.ref("password")], "senhas não iguais")
+});
+
+
+
+
+export const validacaoUpdated = yup.object().shape({
+    name: yup
+        .string(),
+    cpf: yup
+        .string()
+        .matches(/^([0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2})$/, "O padrão de cpf é 000.000.000-00"),
+    email: yup
+        .string()
+        .email("Email inválido"),
+    telephone: yup
+        .string()
+        .matches(/^\(\d{2}\)\d{5}-\d{4}$/, "O padrão para o telefone é (00)00000-0000"),
+    date_of_birth: yup
+        .string()
+        .matches(/([0-9]{2})([\/]{1})([0-9]{2})([\/]{1})([0-9]{4})/, "O padrão de desse campo é \'00/00/0000\'' "),
+    description: yup
+        .string()
+        .max(300, 'Deve ter no máximo 300 caracteres'),
 });

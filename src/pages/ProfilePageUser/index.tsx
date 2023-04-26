@@ -1,17 +1,43 @@
 import Section from "./styled"
 import { FooterHomePage, Header } from "../../components";
 import { Cards } from "../../components";
-
-const car = {
-    marca: 'Civic',
-    descrica: 'e um carro',
-    km: '100.000',
-    name: 'Arlindo',
-    ano: '2023',
-    preco: '50.000,00',
-}
+import { useLocation } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import instanceAxios from "../../services";
+import { User } from "../../context";
+import { siglaNameUtils } from "../../utils";
 
 const ProfilePageUser = () => {
+
+    const { idUser } = useContext(User)
+    const location = useLocation();
+    const [adversaments, setAdversaments] = useState([])
+    const [sigla, setSigla] = useState<string>()
+    const [user, setUser] = useState<any>()
+
+    const userSelectInPageProfileUser = async () => {
+
+        const responsegetUser = await instanceAxios.get(`user/${idUser}`);
+
+        setUser(responsegetUser.data)
+
+        const result = await siglaNameUtils(responsegetUser.data.name)
+
+        setSigla(result)
+
+    }
+
+    const getAdversaments = async () => {
+        const responseAdress = await instanceAxios.get(`ads`);
+        setAdversaments(responseAdress.data)
+    }
+
+    if (location.pathname === "/profile/user") {
+        useEffect(() => {
+            userSelectInPageProfileUser()
+            getAdversaments()
+        }, [location.pathname, localStorage.getItem("token")])
+    }
 
     return (
         <Section className="profile" >
@@ -19,46 +45,39 @@ const ProfilePageUser = () => {
             <div className="bg"></div>
 
             <article className="infoUser" >
-                <article className="siglaInfoUser">SL</article>
+                <article className="siglaInfoUser">{sigla}</article>
                 <section>
-                    <span>Samuel Leão</span>
+                    <span>{user?.name}</span>
                     <span className="anunciante">Anuciante</span>
                 </section>
                 <p>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing
-                    elit. Voluptate, aliquid facere. Maiores reprehenderit
-                    cum atque rem nisi quo et, laboriosam vero quisquam?
-                    Quibusdam incidunt commodi quas repellendus velit fugiat accusantium?
+                    {user?.description}
                 </p>
             </article>
             <h5>Anúncios</h5>
             <ul>
-                <Cards
-                    src={
-                        'https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7'
-                    }
-                    marca={'Civic'}
-                    descricao={'e um carro'}
-                    km={'100.000'}
-                    name={'Samuel Leão'}
-                    ano={'2023'}
-                    preco={'50.000,00'}
-                >
-                    <p className="inativo">inativo</p>
-                </Cards >
-                <Cards
-                    src={
-                        'https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7'
-                    }
-                    marca={'Civic'}
-                    descricao={'e um carro'}
-                    km={'100.000'}
-                    name={'Samuel Leão'}
-                    ano={'2023'}
-                    preco={'50.000,00'}
-                >
-                    <p className="ativo">ativo</p>
-                </Cards>
+                {
+                    adversaments.map((e: any) => {
+                        if (e.user.id === idUser) {
+                            return (
+                                <Cards
+                                    src={e.images[0]}
+                                    marca={e.brand}
+                                    descricao={e.description}
+                                    km={e.mileage}
+                                    name={user?.name}
+                                    ano={e.year}
+                                    preco={e.price}
+                                    siglaNanme={sigla!}
+                                >
+                                    {e.published ? <p className="ativo">ativo</p> : <p className="inativo">inativo</p>}
+                                </Cards>
+                            )
+                        } else {
+                            return null;
+                        }
+                    })
+                }
 
             </ul>
 

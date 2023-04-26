@@ -15,6 +15,12 @@ li{
         background: ${props => props.theme.random7};
         border-radius: 4px;
     }
+    
+    #nameUser:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+    
 
 }
 

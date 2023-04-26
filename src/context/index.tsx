@@ -1,9 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import { IBodySession } from "../interfaces/session";
 import { iAdressRequest } from "../interfaces/adresses";
-import { iUserRegisterReq } from "../interfaces/register";
-import { useNavigate } from "react-router-dom";
+import { iUserInfoUserLogin, iUserRegisterReq } from "../interfaces/register";
+import { useNavigate, useLocation } from "react-router-dom";
 import instanceAxios from "../services";
+import { iUserUpate } from "../interfaces/register";
+import { IAdversamentsGet } from "../interfaces";
 
 export interface iInfoUser {
     children: React.ReactNode;
@@ -12,16 +14,22 @@ export interface iInfoUser {
 export interface UserProviderData {
     registerUser: (data: iUserRegisterReq) => void,
     sessionUser: (data: IBodySession) => void,
+    updateUser: (data: iUserUpate) => void,
+    infoUserLogin: iUserInfoUserLogin | undefined,
+    idUser: string,
+    setIdUser: Dispatch<SetStateAction<string>>
 }
-
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
 
 
 function ContextDadosUser({ children }: iInfoUser) {
 
+
     const navigate = useNavigate();
-    const [infoUserLogin, setInfoUserLogin] = useState({})
+    const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
+    const [idAdressUser, setIdAdressUser] = useState("")
+    const [idUser, setIdUser] = useState<string>("")
 
     const sessionUser = async (data: IBodySession) => {
 
@@ -30,6 +38,9 @@ function ContextDadosUser({ children }: iInfoUser) {
         localStorage.removeItem("token")
 
         localStorage.setItem("token", response.data.token);
+
+        navigate("/homepage")
+
     }
 
     const token = localStorage.getItem("token");
@@ -75,28 +86,55 @@ function ContextDadosUser({ children }: iInfoUser) {
             "addressId": responseAdress.data.id
         }
 
-        const responseUser = await instanceAxios.post("user", registerUser);
+        await instanceAxios.post("user", registerUser);
 
         navigate("/login")
     }
 
-    const getUseInfoData = async () => {
+    const updateUser = async (data: iUserUpate) => {
         if (token) {
-            instanceAxios.defaults.headers.authorization = `Bearer ${localStorage.getItem("token")}`;
-            const responseUser = await instanceAxios.get("user");
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+            const responseUser = await instanceAxios.patch(`user`, { ...infoUserLogin, ...data });
             setInfoUserLogin(responseUser.data)
         }
     }
 
+    const getUseInfoData = async () => {
+        if (token) {
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+            const responseUser = await instanceAxios.get("user");
+            setInfoUserLogin(responseUser.data)
+            setIdAdressUser(responseUser.data.addressId)
+        }
+    }
+
+    const getIdAdressUser = async () => {
+        if (token && idAdressUser !== "") {
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+            const responseAdress = await instanceAxios.get(`adress/${idAdressUser}`);
+            console.log(responseAdress.data)
+        }
+    }
+
     useEffect(() => {
-        getUseInfoData();
+
+        if (token) {
+            getUseInfoData();
+            getIdAdressUser();
+        }
+
     }, [token]);
+
 
     return (
         <User.Provider
             value={{
                 sessionUser,
-                registerUser
+                registerUser,
+                updateUser,
+                infoUserLogin,
+                idUser,
+                setIdUser
             }}
         >
             {children}

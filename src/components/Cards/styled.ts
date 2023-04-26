@@ -3,6 +3,11 @@ import styled from "styled-components";
 const Li = styled.li`
   min-width: 278px;
 
+
+  .imgCard{
+    cursor: pointer;
+  }
+
   .teste {
     background-color: ${(props) => props.theme.gray7};
     display: flex;
@@ -55,27 +60,27 @@ const Li = styled.li`
 
     article {
       background-color: ${(props) => {
-        const colorsRandom = [
-          props.theme.random1,
-          props.theme.random2,
-          props.theme.random3,
-          props.theme.random4,
-          props.theme.random5,
-          props.theme.random6,
-          props.theme.random7,
-          props.theme.random8,
-          props.theme.random9,
-          props.theme.random10,
-          props.theme.random11,
-          props.theme.random12,
-        ];
+    const colorsRandom = [
+      props.theme.random1,
+      props.theme.random2,
+      props.theme.random3,
+      props.theme.random4,
+      props.theme.random5,
+      props.theme.random6,
+      props.theme.random7,
+      props.theme.random8,
+      props.theme.random9,
+      props.theme.random10,
+      props.theme.random11,
+      props.theme.random12,
+    ];
 
-        const randomColorIndex = Math.floor(Math.random() * 12);
+    const randomColorIndex = Math.floor(Math.random() * 12);
 
-        const color = colorsRandom[randomColorIndex];
+    const color = colorsRandom[randomColorIndex];
 
-        return color;
-      }};
+    return color;
+  }};
       color: ${(props) => props.theme.whiteFixed};
       border-radius: 100%;
       height: 2rem;
