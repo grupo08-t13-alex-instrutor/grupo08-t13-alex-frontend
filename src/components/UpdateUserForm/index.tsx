@@ -6,8 +6,13 @@ import { validacaoUpdated } from "../../validations/user";
 import { useContext, useState } from "react";
 import { User } from "../../context";
 
+interface iChildren {
+  editUser: boolean,
+  setEditUser: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-const UpdateUserForm = () => {
+
+const UpdateUserForm = ({ setEditUser, editUser }: iChildren) => {
 
   const { updateUser, infoUserLogin } = useContext(User)
 

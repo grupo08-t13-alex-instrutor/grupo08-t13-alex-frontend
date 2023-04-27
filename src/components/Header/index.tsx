@@ -16,7 +16,7 @@ const Header = () => {
     const [openMenu, setOpenMenu] = useState(false)
     const [adversaments, setAdversaments] = useState([])
     const [editAddress, setEditAddress] = useState<boolean>(false);
-    const [editUser, seteditUser] = useState<boolean>(true);
+    const [editUser, setEditUser] = useState<boolean>(false);
     const [sigla, setSigla] = useState<string>()
 
     const callBackSiglaNameUtils = async () => {
@@ -128,7 +128,9 @@ const Header = () => {
 
             {editUser ?
                 <ModalContainer>
-                    <UpdateUserForm />
+                    <UpdateUserForm
+                        editUser={editAddress}
+                        setEditUser={setEditUser} />
                 </ModalContainer>
                 :
                 null
