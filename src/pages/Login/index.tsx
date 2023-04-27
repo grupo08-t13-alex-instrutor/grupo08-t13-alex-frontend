@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { sessionVaidated } from "../../validations/login";
 import { yupResolver } from "@hookform/resolvers/yup"
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const Login = () => {
             <label htmlFor="password">Senha</label>
             <input type="password" id="password" placeholder="Digitar senha" {...register("password")} />
             <p> {errors.password?.message}</p>
-            <span className="text-body-2-500">Esqueci minha senha</span>
+            <span className="text-body-2-500"><Link to="/forgot">Esqueci minha senha</Link></span>
           </div>
 
           <div className="form-footer">
