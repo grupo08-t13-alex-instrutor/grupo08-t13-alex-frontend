@@ -111,6 +111,7 @@ const Header = () => {
                         <></>
                 }
                 <button>Editar Endereço</button>
+                <button>Editar perfil</button>
                 {adversaments.length > 0 ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
                 <button onClick={event => {
                     localStorage.removeItem("token")
