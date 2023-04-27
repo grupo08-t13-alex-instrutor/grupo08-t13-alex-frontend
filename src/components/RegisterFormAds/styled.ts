@@ -1,35 +1,45 @@
 import styled from "styled-components";
 
-
-const SectionBgForm = styled.section`
-
-width: 100vw;
-height: 310vh;
-position: absolute;
-top: 0;
-z-index: 10;
-background-color: rgba(0, 0, 0, 0.5);
-display: flex;
-align-items: flex-start;
-justify-content: center;
-
-
-form{
+const ContainerRegisterFormAd = styled.div`
+    min-width: 300px;
+    max-width: 500px;
+    height: 90%;
+    margin: 0 10px;
+    gap: 0.5rem;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
-    width: 369px;
-    padding: 0.5rem;
-    gap: 0.5rem;
     background-color: ${props => props.theme.whiteFixed};
-    margin-top: 2rem;
-    border-radius: 4px;
+    box-sizing: border-box;
 
+    @media (min-width: 720px) {
+        margin: auto;
+    }
+`
+
+const HeaderRegisterFormAd = styled.div`
+    width: 100%;
+    padding: 1rem 1rem 0 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+`
+
+const FormRegisterFormAd = styled.form`
+    padding: 0 1rem 1rem 1rem;
+    overflow-y: auto;
+    
     input{
-        padding: 0.2rem;
+        width: 100%;
+        padding: 0.5rem;
+        margin: 0.3rem 0 0.7rem 0;
         color: ${props => props.theme.gray3};
-        border: 2px solid ${props => props.theme.gray3};
+        border: 2px solid ${props => props.theme.gray4};
         border-radius: 4px;
         font-size: 14.5px;
+        box-sizing: border-box;
 
         :focus{
             border-radius: 4px;
@@ -39,7 +49,8 @@ form{
     }
 
     textarea{
-        border: 2px solid ${props => props.theme.gray2};
+        padding: 0.5rem;
+        border: 2px solid ${props => props.theme.gray4};
         border-radius: 4px;
     }
 
@@ -47,16 +58,29 @@ form{
         justify-content: space-between;
         display:flex;
 
+        fieldset {
+            width: 50%;
+        }
     }
 
     .addImageGalery{
         gap: 0.5rem ;
+
         button{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
             background-color: ${props => props.theme.brand4} ;
             color: ${props => props.theme.brand1} ;
             border-radius: 4px;
-            width: 300px;
-            height: 38px;
+            box-sizing: border-box;
+            
+            :hover {
+                background-color: ${props => props.theme.brand1} ;
+                color: ${props => props.theme.brand4};
+            }
         }
     }
     
@@ -67,16 +91,23 @@ form{
     .alteration{
         gap: 0.5rem;
         button{
-            background-color: ${props => props.theme.gray6} ;
-            color: ${props => props.theme.gray2} ;
+            font-size: 14px;
+            font-weight: 600;
             width: 220px;
             height: 40px;
             border-radius: 4px;
+            background-color: ${props => props.theme.gray6} ;
+            color: ${props => props.theme.gray2} ;
+
+            :nth-child(1):hover {
+                background-color: ${props => props.theme.gray2} ;
+                color: ${props => props.theme.gray6} ;
+            }
         }
 
         .save{
             background-color: ${props => props.theme.brand3} ;
-            color: ${props => props.theme.brand4} ;
+            color: ${props => props.theme.brand4};
         }
 
     }
@@ -88,6 +119,10 @@ form{
     .addImageGalery{
         flex-direction: column;
     }
-}
 `
-export default SectionBgForm
+
+export { 
+    HeaderRegisterFormAd, 
+    FormRegisterFormAd, 
+    ContainerRegisterFormAd 
+}

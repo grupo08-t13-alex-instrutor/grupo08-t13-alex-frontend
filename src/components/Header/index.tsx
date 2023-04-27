@@ -103,10 +103,13 @@ const Header = () => {
                     setEditAddress(!editAddress)
                 }}
                 >Editar Endereço</button>
+                <button onClick={event => {
+                    setEditAddress(!editAddress)
+                }}>Editar Endereço</button>
                 {adversaments.length > 0 ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
                 <button onClick={event => {
                     localStorage.removeItem("token")
-                    setOpenMenu(openMenu);
+                    setOpenMenu(!openMenu);
                     navigate("/homepage");
                 }}>
                     Sair
@@ -122,6 +125,7 @@ const Header = () => {
                 :
                 null
             }
+
             {editUser ?
                 <ModalContainer>
                     <UpdateUserForm />

@@ -6,18 +6,18 @@ import { User } from "../../context";
 import { useLocation } from "react-router-dom";
 import instanceAxios from "../../services";
 import { siglaNameUtils } from "../../utils";
+import { ModalContainer } from "../../components/Header/styled";
 
 const ProfilePageAdmin = () => {
-
   const location = useLocation();
   const [adversaments, setAdversaments] = useState([])
+  const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
   const [sigla, setSigla] = useState<string>()
   const { infoUserLogin } = useContext(User)
 
   const getAdversaments = async () => {
     const responseAdress = await instanceAxios.get(`ads`);
     setAdversaments(responseAdress.data)
-
   }
 
   const callBackSiglaNameUtils = async () => {
@@ -35,6 +35,16 @@ const ProfilePageAdmin = () => {
   return (
     <Section className="profile">
       <Header />
+      { openRegisterAdForm ?
+        <ModalContainer>
+          <RegisterFormAds 
+            openRegisterAdForm={ openRegisterAdForm }
+            setOpenRegisterAdForm={ setOpenRegisterAdForm }
+            />
+        </ModalContainer>
+      :
+        <></>
+      }
       <div className="bg"></div>
 
       <article className="infoUser">
@@ -46,7 +56,10 @@ const ProfilePageAdmin = () => {
         <p>
           {infoUserLogin?.description}
         </p>
-        <button>Criar anuncio</button>
+        <button onClick={ event => {
+          event.preventDefault();
+          setOpenRegisterAdForm(!openRegisterAdForm);
+        }}>Criar anuncio</button>
       </article>
       <h5>Anúncios</h5>
       <ul>
