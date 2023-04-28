@@ -103,6 +103,17 @@ const AsideHomePage = ({
       ...filteredPrice,
     ]);
   };
+
+  // const filter = () => {
+  //   for(let i = 0; i < filters.length(); i ++)
+  //     const teste = adversaments.filter((adv) => {
+  //       const key = Object.keys(filters[i])
+  //         if(Object.keys(filters[i]) === Object.keys(adversaments[i])){
+  //           return adversaments.(Object.keys(filters[i])) === filters[i]
+  //         }
+  //     }
+  //   )
+  // }
   return (
     <Aside>
       <h4>Marca</h4>
