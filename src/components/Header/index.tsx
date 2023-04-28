@@ -1,10 +1,13 @@
-import { HeaderStyled, MenuDesktopStyled, MenuStyled } from "./styled";
+import { HeaderStyled, MenuDesktopStyled, MenuStyled, ModalContainer } from "./styled";
 import MotorsShop from "../../assets/png/MotorsShop.png";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
 import instanceAxios from "../../services";
 import { useNavigate } from "react-router-dom";
+import { EditAddress } from "../EditAddress";
+import UpdateUserForm from "../UpdateUserForm";
+import { siglaNameUtils } from "../../utils";
 
 const Header = () => {
     const navigate = useNavigate()
@@ -12,28 +15,29 @@ const Header = () => {
 
     const [openMenu, setOpenMenu] = useState(false)
     const [adversaments, setAdversaments] = useState([])
+    const [editAddress, setEditAddress] = useState<boolean>(false);
+    const [editUser, setEditUser] = useState<boolean>(false);
+    const [sigla, setSigla] = useState<string>()
 
-    let siglaName = ""
-
-    if (infoUserLogin?.name.includes(" ")) {
-        const a = infoUserLogin?.name.split(" ")
-        siglaName += a[0][0] + a[1][1]
-
-    } else {
-        siglaName += infoUserLogin?.name[0]
-    }
+    // const callBackSiglaNameUtils = async () => {
+    //     const result = await siglaNameUtils(infoUserLogin!.name)
+    //     setSigla(result)
+    // }
 
     const getAdversaments = async () => {
         const responseAdress = await instanceAxios.get(`ads`);
+
         setAdversaments(responseAdress.data)
     }
 
     useEffect(() => {
         getAdversaments()
+        // callBackSiglaNameUtils()
     }, [localStorage.getItem("token")])
 
     return (
         <>
+
             <HeaderStyled>
                 <img src={MotorsShop} alt="Logo Motors Shop" onClick={() => navigate("/homepage")} />
                 <button className="invisible-options" onClick={(event) => {
@@ -49,7 +53,7 @@ const Header = () => {
                         }}>
                             <div>
                                 <span className="profile-picture">
-                                    <p>{siglaName}</p>
+                                    <p>{sigla}</p>
                                 </span>
                                 <p>{infoUserLogin?.name}</p>
                             </div>
@@ -61,7 +65,7 @@ const Header = () => {
                             }}>
                                 Fazer Login
                             </button>
-                            <button className="button-big-text register margin">Cadastrar</button>
+                            <button className="button-big-text register margin" onClick={() => navigate("/register")}>Cadastrar</button>
                         </>
                     }
                 </div>
@@ -95,17 +99,43 @@ const Header = () => {
                 </div>
             </MenuStyled >
             <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"}>
-                <button>Editar Perfil</button>
-                <button>Editar Endereço</button>
-                {adversaments.length > 0 ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
+                <button onClick={event => {
+                    setEditUser(!editUser)
+                }}>Editar Perfil</button>
+
+                <button onClick={event => {
+                    setEditAddress(!editAddress)
+                }}>Editar Endereço</button>
+                {!infoUserLogin?.buyer ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
                 <button onClick={event => {
                     localStorage.removeItem("token")
-                    setOpenMenu(openMenu);
+                    setOpenMenu(!openMenu);
                     navigate("/homepage");
                 }}>
                     Sair
                 </button>
             </MenuDesktopStyled >
+            {editAddress ?
+                <ModalContainer>
+                    <EditAddress
+                        editAddress={editAddress}
+                        setEditAddress={setEditAddress}
+                    />
+                </ModalContainer>
+                :
+                null
+            }
+
+            {editUser ?
+                <ModalContainer>
+                    <UpdateUserForm
+                        editUser={editUser}
+                        setEditUser={setEditUser}
+                    />
+                </ModalContainer>
+                :
+                null
+            }
         </>
     )
 }

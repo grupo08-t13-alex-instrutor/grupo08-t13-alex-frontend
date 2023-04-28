@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Aside from "./styled";
 
 interface iProps {
@@ -5,6 +6,8 @@ interface iProps {
   setFilters: React.Dispatch<React.SetStateAction<{}>>;
   adversaments: any[];
   setFiltered: React.Dispatch<React.SetStateAction<object[]>>;
+  setAdversaments: React.Dispatch<React.SetStateAction<object[]>>;
+  filtered: object[];
 }
 
 const AsideHomePage = ({
@@ -12,96 +15,148 @@ const AsideHomePage = ({
   filters,
   adversaments,
   setFiltered,
+  setAdversaments,
+  filtered,
 }: iProps) => {
+  const [filterBtn, setFilterBtn] = useState(false);
+
   const handleClickBrand = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
-    setFilters({ ...filters, brand: spanText });
-    filter();
+
+    const filteredBrand = adversaments.filter((adv) => {
+      return adv.brand.toLowerCase() === spanText.toLowerCase();
+    });
+
+    const uniqueBrands = new Set([...filtered, ...filteredBrand]);
+
+    const arrayUniqueBrands = Array.from(uniqueBrands);
+
+    setFiltered(arrayUniqueBrands);
+
+    setFilterBtn(true);
   };
 
   const handleClickModel = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
-    setFilters({ ...filters, model: spanText });
-    filter();
+
+    const filteredModel = adversaments.filter((adv) => {
+      return adv.model.toLowerCase() === spanText.toLowerCase();
+    });
+
+    const uniqueModel = new Set([...filtered, ...filteredModel]);
+
+    const arrayUniqueModel = Array.from(uniqueModel);
+
+    setFiltered(arrayUniqueModel);
+    setFilterBtn(true);
   };
 
   const handleClickColor = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
-    setFilters({ ...filters, color: spanText });
+
+    const filteredColor = adversaments.filter((adv) => {
+      return adv.color.toLowerCase() === spanText.toLowerCase();
+    });
+
+    const uniqueColor = new Set([...filtered, ...filteredColor]);
+
+    const arrayUniqueColor = Array.from(uniqueColor);
+
+    setFiltered(arrayUniqueColor);
+    setFilterBtn(true);
   };
 
   const handleClickYear = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
-    setFilters({ ...filters, year: spanText });
+    const filteredYear = adversaments.filter((adv) => {
+      return adv.year.toLowerCase() === spanText.toLowerCase();
+    });
+
+    const uniqueYear = new Set([...filtered, ...filteredYear]);
+
+    const arrayUniqueYear = Array.from(uniqueYear);
+
+    setFiltered(arrayUniqueYear);
+    setFilterBtn(true);
   };
 
   const handleClickFuel = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
-    setFilters({ ...filters, fuel: spanText });
-  };
 
-  const handleClickKm = (e: React.MouseEvent) => {
-    const spanText: string = (e.target as HTMLElement).innerText;
-    setFilters({ ...filters, km: spanText });
-  };
+    let fuelNumber = 0;
 
-  const handleClickPrice = (e: React.MouseEvent) => {
-    const spanText: string = (e.target as HTMLElement).innerText;
-    setFilters({ ...filters, price: spanText });
-  };
-
-  const filter = () => {
-    const filteredBrand = adversaments.filter((adv) => {
-      if (Object.keys(filters).includes("brand")) {
-        return adv?.brand.toLowerCase() === filters?.brand.toLowerCase();
-      }
-    });
-
-    const filteredModel = adversaments.filter((adv) => {
-      if (Object.keys(filters).includes("model")) {
-        return adv?.model.toLowerCase() === filters?.model.toLowerCase();
-      }
-    });
-
-    const filteredColor = adversaments.filter((adv) => {
-      if (Object.keys(filters).includes("color")) {
-        return adv?.color.toLowerCase() === filters?.color.toLowerCase();
-      }
-    });
-
-    const filteredYear = adversaments.filter((adv) => {
-      if (Object.keys(filters).includes("year")) {
-        return adv?.year.toLowerCase() === filters?.year.toLowerCase();
-      }
-    });
+    if (spanText === "Disel") {
+      fuelNumber = 1;
+    } else if (spanText === "Etanol") {
+      fuelNumber = 2;
+    } else if (spanText === "Gasolina") {
+      fuelNumber = 3;
+    } else {
+      fuelNumber = 4;
+    }
 
     const filteredFuel = adversaments.filter((adv) => {
-      if (Object.keys(filters).includes("fuel")) {
-        return adv?.fuel.toLowerCase() === filters?.fuel.toLowerCase();
-      }
+      return adv.fuel === fuelNumber;
     });
 
-    const filteredKm = adversaments.filter((adv) => {
-      if (Object.keys(filters).includes("km")) {
-        return adv?.km.toLowerCase() === filters?.km.toLowerCase();
-      }
-    });
+    const uniqueFuel = new Set([...filtered, ...filteredFuel]);
 
+    const arrayUniqueFuel = Array.from(uniqueFuel);
+
+    setFiltered(arrayUniqueFuel);
+    setFilterBtn(true);
+  };
+
+  const handleClickPriceMin = (e: string) => {
     const filteredPrice = adversaments.filter((adv) => {
-      if (Object.keys(filters).includes("price")) {
-        return adv?.price.toLowerCase() === filters?.price.toLowerCase();
-      }
+      return adv.price >= parseInt(e);
     });
 
-    setFiltered([
-      ...filteredBrand,
-      ...filteredModel,
-      ...filteredColor,
-      ...filteredYear,
-      ...filteredFuel,
-      ...filteredKm,
-      ...filteredPrice,
-    ]);
+    const uniquePrice = new Set([...filtered, ...filteredPrice]);
+
+    const arrayUniquePrice = Array.from(uniquePrice);
+
+    setFiltered(arrayUniquePrice);
+    setFilterBtn(true);
+  };
+
+  const handleClickPriceMAx = (e: string) => {
+    const filteredPrice = adversaments.filter((adv) => {
+      return adv.mileage <= parseInt(e);
+    });
+
+    const uniquePrice = new Set([...filtered, ...filteredPrice]);
+
+    const arrayUniquePrice = Array.from(uniquePrice);
+
+    setFiltered(arrayUniquePrice);
+    setFilterBtn(true);
+  };
+
+  const handleClickKmMin = (e: string) => {
+    const filteredKm = adversaments.filter((adv) => {
+      return adv.mileage >= parseInt(e);
+    });
+
+    const uniqueKm = new Set([...filtered, ...filteredKm]);
+
+    const arrayUniqueKm = Array.from(uniqueKm);
+
+    setFiltered(arrayUniqueKm);
+    setFilterBtn(true);
+  };
+
+  const handleClickKmMAx = (e: string) => {
+    const filteredKm = adversaments.filter((adv) => {
+      return adv.mileage <= parseInt(e);
+    });
+
+    const uniqueKm = new Set([...filtered, ...filteredKm]);
+
+    const arrayUniqueKm = Array.from(uniqueKm);
+
+    setFiltered(arrayUniqueKm);
+    setFilterBtn(true);
   };
 
   // const filter = () => {
@@ -120,10 +175,9 @@ const AsideHomePage = ({
       <div>
         <span
           onClick={() => {
-            handleClickBrand;
-            filter();
+            setAdversaments(adversaments);
           }}
-          className="heading-6-600z"
+          className="heading-6-600"
         >
           General Motors
         </span>
@@ -199,22 +253,22 @@ const AsideHomePage = ({
         <span onClick={handleClickYear} className="heading-6-600">
           2022
         </span>
-        <span onClick={handleClickYear} className="heading-6-600">
+        <span onClick={handleClickColor} className="heading-6-600">
           2021
         </span>
-        <span onClick={handleClickYear} className="heading-6-600">
-          2018
+        <span onClick={handleClickColor} className="heading-6-600">
+          2019
         </span>
-        <span onClick={handleClickYear} className="heading-6-600">
+        <span onClick={handleClickColor} className="heading-6-600">
           2015
         </span>
-        <span onClick={handleClickYear} className="heading-6-600">
+        <span onClick={handleClickColor} className="heading-6-600">
           2013
         </span>
-        <span onClick={handleClickYear} className="heading-6-600">
+        <span onClick={handleClickColor} className="heading-6-600">
           2012
         </span>
-        <span onClick={handleClickYear} className="heading-6-600">
+        <span onClick={handleClickColor} className="heading-6-600">
           2010
         </span>
       </div>
@@ -237,22 +291,40 @@ const AsideHomePage = ({
 
       <h4>Km</h4>
       <div className="km">
-        <input type="number" placeholder="Mínimo" />
-        <input type="number" className="max" placeholder="Máximo" />
+        <input
+          type="number"
+          placeholder="Mínimo"
+          onChange={(e) => handleClickKmMin(e.target.value)}
+        />
+        <input
+          type="number"
+          className="max"
+          placeholder="Máximo"
+          onChange={(e) => handleClickKmMAx(e.target.value)}
+        />
       </div>
 
       <h4>Preço</h4>
       <div className="price">
-        <input type="number" placeholder="Mínimo" />
-        <input type="number" className="max" placeholder="Máximo" />
+        <input
+          type="number"
+          placeholder="Mínimo"
+          onChange={(e) => handleClickPriceMin(e.target.value)}
+        />
+        <input
+          type="number"
+          className="max"
+          placeholder="Máximo"
+          onChange={(e) => handleClickPriceMAx(e.target.value)}
+        />
       </div>
 
-      {filters ? (
+      {filterBtn ? (
         <button
           id="cleanFilter"
           onClick={async () => {
-            setFilters([]);
-            setFiltered(adversaments);
+            setFiltered([]);
+            setFilterBtn(false);
           }}
         >
           Limpar Filtros

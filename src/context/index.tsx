@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import { IBodySession } from "../interfaces/session";
-import { iAdressRequest } from "../interfaces/adresses";
+import { iAddressUpdate, iAdressRequest } from "../interfaces/adresses";
 import { iUserInfoUserLogin, iUserRegisterReq } from "../interfaces/register";
 import { useNavigate, useLocation } from "react-router-dom";
 import instanceAxios from "../services";
@@ -15,9 +15,13 @@ export interface UserProviderData {
     registerUser: (data: iUserRegisterReq) => void,
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
+    patchAdressUser: (data: iAddressUpdate) => Promise<any>,
+    deleteUser: () => void,
+    setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
     infoUserLogin: iUserInfoUserLogin | undefined,
     idUser: string,
-    setIdUser: Dispatch<SetStateAction<string>>
+    setIdUser: Dispatch<SetStateAction<string>>,
+    idAdressUser: string
 }
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
@@ -29,6 +33,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     const navigate = useNavigate();
     const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
+    const [dataAdress, setDataAdress] = useState({})
     const [idUser, setIdUser] = useState<string>("")
 
     const sessionUser = async (data: IBodySession) => {
@@ -38,6 +43,8 @@ function ContextDadosUser({ children }: iInfoUser) {
         localStorage.removeItem("token")
 
         localStorage.setItem("token", response.data.token);
+
+        instanceAxios.defaults.headers.authorization = `Bearer ${response.data.token}`;
 
         navigate("/homepage")
 
@@ -93,7 +100,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const updateUser = async (data: iUserUpate) => {
         if (token) {
-            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+           
             const responseUser = await instanceAxios.patch(`user`, { ...infoUserLogin, ...data });
             setInfoUserLogin(responseUser.data)
         }
@@ -101,7 +108,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getUseInfoData = async () => {
         if (token) {
-            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+            
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
             setIdAdressUser(responseUser.data.addressId)
@@ -110,9 +117,23 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getIdAdressUser = async () => {
         if (token && idAdressUser !== "") {
-            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
             const responseAdress = await instanceAxios.get(`adress/${idAdressUser}`);
+            setDataAdress(responseAdress.data)
+        }
+    }
+
+    const patchAdressUser = async (data: iAddressUpdate): Promise<any> => {
+        if (token) {
+            const responseAdress = await instanceAxios.patch(`adress`, { ...dataAdress, ...data });
             console.log(responseAdress.data)
+
+            return responseAdress.data
+        }
+    }
+
+    const deleteUser = async () => {
+        if (token) {
+            await instanceAxios.delete(`user`);
         }
     }
 
@@ -134,7 +155,11 @@ function ContextDadosUser({ children }: iInfoUser) {
                 updateUser,
                 infoUserLogin,
                 idUser,
-                setIdUser
+                setIdUser,
+                setInfoUserLogin,
+                idAdressUser,
+                patchAdressUser,
+                deleteUser
             }}
         >
             {children}

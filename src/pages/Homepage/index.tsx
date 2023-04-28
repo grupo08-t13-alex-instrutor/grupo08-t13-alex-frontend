@@ -16,7 +16,7 @@ export const Homepage = () => {
   const location = useLocation();
   const [adversaments, setAdversaments] = useState<object[]>([]);
   const [filters, setFilters] = useState({});
-  const [filtered, setFiltered] = useState<object[]>(adversaments);
+  const [filtered, setFiltered] = useState<object[]>([]);
 
   const getAdversaments = async () => {
     const responseAdress = await instanceAxios.get(`ads`);
@@ -26,10 +26,10 @@ export const Homepage = () => {
   if (location.pathname === "/homepage") {
     useEffect(() => {
       getAdversaments();
-      setFiltered(adversaments);
+      setAdversaments(adversaments);
     }, [location.pathname]);
   }
-
+  console.log(filtered)
   return (
     <SectionHome>
       <Header />
@@ -38,37 +38,71 @@ export const Homepage = () => {
         <AsideHomePage
           setFilters={setFilters}
           filters={filters}
+          filtered={filtered}
           adversaments={adversaments}
           setFiltered={setFiltered}
+          setAdversaments={setAdversaments}
         />
         <Ul>
-          {filtered!.map((e: any) => {
-            let siglaName = "";
+          {
+            filtered.length > 0 ?
 
-            if (e.user.name.includes(" ")) {
-              const sigla = e.user.name.split(" ");
-              siglaName += sigla[0][0] + sigla[1][1];
-            } else {
-              siglaName += e.user.name[0];
-            }
+              filtered.map((e: any) => {
+                let siglaName = "";
 
-            return (
-              <Cards
-                onClick={() => navigate("/profile/user")}
-                idAmount={e.user.id}
-                src={e.images[0]}
-                marca={e.brand}
-                descricao={e.description}
-                km={e.mileage}
-                name={e.user.name}
-                ano={e.year}
-                preco={e.price}
-                siglaNanme={siglaName}
-              >
-                <span className="cifrao">$</span>
-              </Cards>
-            );
-          })}
+                if (e.user.name.includes(" ")) {
+                  const sigla = e.user.name.split(" ");
+                  siglaName += sigla[0][0] + sigla[1][1];
+                } else {
+                  siglaName += e.user.name[0];
+                }
+
+                return (
+                  <Cards
+                    onClick={() => navigate("/profile/user")}
+                    idAmount={e.user.id}
+                    src={e.images[0]}
+                    marca={e.brand}
+                    descricao={e.description}
+                    km={e.mileage}
+                    name={e.user.name}
+                    ano={e.year}
+                    preco={e.price}
+                    siglaNanme={siglaName}
+                  >
+                    <span className="cifrao">$</span>
+                  </Cards>
+                );
+              })
+              :
+              adversaments.map((e: any) => {
+                let siglaName = "";
+
+                if (e.user.name.includes(" ")) {
+                  const sigla = e.user.name.split(" ");
+                  siglaName += sigla[0][0] + sigla[1][1];
+                } else {
+                  siglaName += e.user.name[0];
+                }
+
+                return (
+                  <Cards
+                    onClick={() => navigate("/profile/user")}
+                    idAmount={e.user.id}
+                    src={e.images[0]}
+                    marca={e.brand}
+                    descricao={e.description}
+                    km={e.mileage}
+                    name={e.user.name}
+                    ano={e.year}
+                    preco={e.price}
+                    siglaNanme={siglaName}
+                  >
+                    <span className="cifrao">$</span>
+                  </Cards>
+                );
+              })
+          }
         </Ul>
       </Section>
       <FooterHomePage />
