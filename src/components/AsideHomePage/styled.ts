@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Aside = styled.aside`
   width: 281px;
   margin-left: 2rem;
+  margin-bottom: 3rem;
 
   #cleanFilter {
     color: ${(props) => props.theme.whiteFixed};
@@ -37,7 +38,7 @@ const Aside = styled.aside`
   .km {
     display: block;
 
-    button {
+    input {
       color: ${(props) => props.theme.gray2};
       background: ${(props) => props.theme.gray5};
       width: 125px;

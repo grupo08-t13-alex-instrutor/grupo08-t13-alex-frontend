@@ -18,7 +18,6 @@ const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNan
 
       <div className="teste">
         <img className="imgCard" src={src} alt="" onClick={() => {
-          console.log("clikou")
         }} />
       </div>
       <section>

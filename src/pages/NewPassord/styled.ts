@@ -18,7 +18,7 @@ p{
     min-width: 287px;
     max-width: 356px;
     background-color: ${(props) => props.theme.gray10};
-    padding: 12px 28px;
+    padding: 44px 28px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -75,7 +75,7 @@ p{
         }
       }
 
-      .login {
+      .resetPass {
         background-color: ${(props) => props.theme.brand1};
         padding: 12px 28px;
         width: 100%;
@@ -93,6 +93,16 @@ p{
         border-radius: 4px;
         border: 1.5px solid #adb5bd;
         color: ${(props) => props.theme.gray0};
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      .login {
+        background-color: transparent;
+        padding: 12px 28px;
+        width: 100%;
+        border-radius: 4px;
+        border: 1.5px solid blue;
+        color: ${(props) => props.theme.brand1};
         font-size: 1rem;
         font-weight: 600;
       }

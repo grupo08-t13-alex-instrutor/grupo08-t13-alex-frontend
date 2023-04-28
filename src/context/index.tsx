@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
 import { IBodySession } from "../interfaces/session";
-import { iAdressRequest } from "../interfaces/adresses";
+import { iAddressUpdate, iAdressRequest } from "../interfaces/adresses";
 import { iUserInfoUserLogin, iUserRegisterReq } from "../interfaces/register";
 import { useNavigate, useLocation } from "react-router-dom";
 import instanceAxios from "../services";
@@ -10,15 +10,28 @@ import { IAdversamentsGet } from "../interfaces";
 export interface iInfoUser {
     children: React.ReactNode;
 }
+export interface iRecoveriPasswordSendEmail {
+    email: string
+}
+export interface iRecoverPasswordUpdatePassword {
+    password: string
+}
 
 export interface UserProviderData {
     registerUser: (data: iUserRegisterReq) => void,
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
+    patchAdressUser: (data: iAddressUpdate) => Promise<any>,
+    setIdUser: Dispatch<SetStateAction<string>>,
+    setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
+    setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
+    deleteUser: () => void,
+    recoverPasswordUpdatePassword: (data: iRecoverPasswordUpdatePassword) => void,
+    recoverPasswordSendEmail: (data: iRecoveriPasswordSendEmail) => void,
     infoUserLogin: iUserInfoUserLogin | undefined,
     idUser: string,
-    setIdUser: Dispatch<SetStateAction<string>>,
-    idAdressUser: string
+    idAdressUser: string,
+    tokenRecoverPassword: string
 }
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
@@ -30,6 +43,8 @@ function ContextDadosUser({ children }: iInfoUser) {
     const navigate = useNavigate();
     const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
+    const [dataAdress, setDataAdress] = useState({})
+    const [tokenRecoverPassword, setTokenRecoverPassword] = useState("")
     const [idUser, setIdUser] = useState<string>("")
 
     const sessionUser = async (data: IBodySession) => {
@@ -39,6 +54,8 @@ function ContextDadosUser({ children }: iInfoUser) {
         localStorage.removeItem("token")
 
         localStorage.setItem("token", response.data.token);
+
+        instanceAxios.defaults.headers.authorization = `Bearer ${response.data.token}`;
 
         navigate("/homepage")
 
@@ -94,7 +111,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const updateUser = async (data: iUserUpate) => {
         if (token) {
-            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+
             const responseUser = await instanceAxios.patch(`user`, { ...infoUserLogin, ...data });
             setInfoUserLogin(responseUser.data)
         }
@@ -102,7 +119,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getUseInfoData = async () => {
         if (token) {
-            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
+
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
             setIdAdressUser(responseUser.data.addressId)
@@ -111,10 +128,33 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getIdAdressUser = async () => {
         if (token && idAdressUser !== "") {
-            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
             const responseAdress = await instanceAxios.get(`adress/${idAdressUser}`);
-            console.log(responseAdress.data)
+            setDataAdress(responseAdress.data)
         }
+    }
+
+    const patchAdressUser = async (data: iAddressUpdate): Promise<any> => {
+        if (token) {
+            const responseAdress = await instanceAxios.patch(`adress`, { ...dataAdress, ...data });
+
+            return responseAdress.data
+        }
+    }
+
+    const deleteUser = async () => {
+        if (token) {
+            await instanceAxios.delete(`user`);
+        }
+    }
+
+    const recoverPasswordSendEmail = async (emailData: iRecoveriPasswordSendEmail) => {
+        const responseToeknRecoverPassword = await instanceAxios.post(`forgot/pass`, emailData);
+
+        setTokenRecoverPassword(responseToeknRecoverPassword.data.token)
+    }
+
+    const recoverPasswordUpdatePassword = async (passwordData: iRecoverPasswordUpdatePassword) => {
+        await instanceAxios.patch(`forgot/pass/${tokenRecoverPassword}`, passwordData);
     }
 
     useEffect(() => {
@@ -136,7 +176,14 @@ function ContextDadosUser({ children }: iInfoUser) {
                 infoUserLogin,
                 idUser,
                 setIdUser,
-                idAdressUser
+                setInfoUserLogin,
+                idAdressUser,
+                patchAdressUser,
+                deleteUser,
+                tokenRecoverPassword,
+                setTokenRecoverPassword,
+                recoverPasswordSendEmail,
+                recoverPasswordUpdatePassword
             }}
         >
             {children}
