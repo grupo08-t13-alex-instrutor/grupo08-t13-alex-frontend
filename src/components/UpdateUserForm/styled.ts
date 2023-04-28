@@ -5,12 +5,29 @@ const StyledForm = styled.form`
   display: flex;
   position: absolute;
   flex-direction: column;
-  gap: 37px;
+  position: relative;
+  background-color: ${(props) => props.theme.whiteFixed};
+  padding: 1rem;
+  border-radius: 4px;
 
   .form-title {
     margin: 0;
   }
-  
+
+  .closeModal{
+   
+  color: ${ props => props.theme.gray2 };
+  font-size: 2rem;
+  position: absolute;
+  top: 0;
+  right: 12px;
+  cursor: pointer;
+    :hover {
+      color: ${ props => props.theme.gray0 };
+    }
+        
+  }
+
   p{
     color:red;
   }
@@ -30,13 +47,15 @@ const StyledForm = styled.form`
   }
 
   .cancel {
-    width: 40%;
+    display: flex;
+    width: 25%;
+    justify-content: center;
     max-width: 126px;
     background-color: ${(props) => props.theme.gray6};
   }
 
   .submit {
-    width: 60%;
+    width: 40%;
     max-width: 193px;
     background-color: ${(props) => props.theme.brand1};
     color: ${(props) => props.theme.whiteFixed};
@@ -44,21 +63,15 @@ const StyledForm = styled.form`
 
   .form-header {
     width: 100%;
-    display: flex;
     flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
 
-    .close {
-    }
+   
   }
 
   .form-inputs {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
     gap: 18px;
 
     label {
@@ -141,6 +154,8 @@ const StyledForm = styled.form`
       background-color: ${(props) => props.theme.brand1};
       color: ${(props) => props.theme.whiteFixed};
     }
+
+  
   }
 
   .form-footer {
@@ -149,10 +164,11 @@ const StyledForm = styled.form`
     align-items: center;
     justify-content: flex-end;
     gap: 10px;
-  }
 
-  @media (min-width: 900px) {
-    gap: 24px;
+    .deletedUser{
+      background-color: ${(props) => props.theme.alert2};
+      color: ${(props) => props.theme.alert1};
+    }
   }
 `;
 

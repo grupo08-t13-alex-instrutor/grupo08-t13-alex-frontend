@@ -18,7 +18,7 @@ p{
     min-width: 287px;
     max-width: 356px;
     background-color: ${(props) => props.theme.gray10};
-    padding: 44px 28px;
+    padding: 12px 28px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

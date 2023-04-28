@@ -26,6 +26,7 @@ const Header = () => {
 
     const getAdversaments = async () => {
         const responseAdress = await instanceAxios.get(`ads`);
+
         setAdversaments(responseAdress.data)
     }
 
@@ -98,15 +99,14 @@ const Header = () => {
                 </div>
             </MenuStyled >
             <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"}>
-                <button>Editar Perfil</button>
                 <button onClick={event => {
-                    setEditAddress(!editAddress)
-                }}
-                >Editar Endereço</button>
+                    setEditUser(!editUser)
+                }}>Editar Perfil</button>
+
                 <button onClick={event => {
                     setEditAddress(!editAddress)
                 }}>Editar Endereço</button>
-                {adversaments.length > 0 ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
+                {!infoUserLogin?.buyer ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
                 <button onClick={event => {
                     localStorage.removeItem("token")
                     setOpenMenu(!openMenu);
@@ -129,8 +129,9 @@ const Header = () => {
             {editUser ?
                 <ModalContainer>
                     <UpdateUserForm
-                        editUser={editAddress}
-                        setEditUser={setEditUser} />
+                        editUser={editUser}
+                        setEditUser={setEditUser}
+                    />
                 </ModalContainer>
                 :
                 null

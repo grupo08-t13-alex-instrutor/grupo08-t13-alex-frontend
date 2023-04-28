@@ -3,6 +3,7 @@ import styled from "styled-components";
 const Aside = styled.aside`
   width: 281px;
   margin-left: 2rem;
+  margin-bottom: 3rem;
 
   #cleanFilter {
     color: ${(props) => props.theme.whiteFixed};

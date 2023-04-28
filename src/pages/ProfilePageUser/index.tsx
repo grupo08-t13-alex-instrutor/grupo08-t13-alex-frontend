@@ -70,7 +70,6 @@ const ProfilePageUser = () => {
                                     preco={e.price}
                                     siglaNanme={sigla!}
                                 >
-                                    {e.published ? <p className="ativo">ativo</p> : <p className="inativo">inativo</p>}
                                 </Cards>
                             )
                         } else {

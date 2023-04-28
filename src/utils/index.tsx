@@ -6,7 +6,7 @@ const siglaNameUtils = async (name: string) => {
 
     if (name.includes(" ")) {
         const siglaNameSplit = name.split(" ")
-        response += siglaNameSplit[0][0] + siglaNameSplit[1][1]
+        response += siglaNameSplit[0][0] + siglaNameSplit[1][0]
 
     } else {
         response += name[0]
