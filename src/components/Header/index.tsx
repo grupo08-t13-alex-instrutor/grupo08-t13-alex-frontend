@@ -19,10 +19,17 @@ const Header = () => {
     const [editUser, setEditUser] = useState<boolean>(false);
     const [sigla, setSigla] = useState<string>()
 
-    // const callBackSiglaNameUtils = async () => {
-    //     const result = await siglaNameUtils(infoUserLogin!.name)
-    //     setSigla(result)
-    // }
+    const callBackSiglaNameUtils = async () => {
+
+        if (infoUserLogin?.name.includes(" ")) {
+            const siglaNameSplit = infoUserLogin.name.split(" ")
+
+            setSigla(siglaNameSplit[0][0] + siglaNameSplit[1][0])
+        } else {
+            setSigla(infoUserLogin?.name[0])
+        }
+
+    }
 
     const getAdversaments = async () => {
         const responseAdress = await instanceAxios.get(`ads`);
@@ -32,7 +39,7 @@ const Header = () => {
 
     useEffect(() => {
         getAdversaments()
-        // callBackSiglaNameUtils()
+        callBackSiglaNameUtils()
     }, [localStorage.getItem("token")])
 
     return (

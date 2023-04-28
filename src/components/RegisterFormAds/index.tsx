@@ -27,7 +27,6 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm }: iChildre
     });
 
     const registerAd = async (data: iAdRequest) => {
-        console.log(data);        
     }
 
     const [galleryImages, setGalleryImages] = useState([

@@ -125,7 +125,6 @@ function ContextDadosUser({ children }: iInfoUser) {
     const patchAdressUser = async (data: iAddressUpdate): Promise<any> => {
         if (token) {
             const responseAdress = await instanceAxios.patch(`adress`, { ...dataAdress, ...data });
-            console.log(responseAdress.data)
 
             return responseAdress.data
         }

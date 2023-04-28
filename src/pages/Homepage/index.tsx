@@ -29,7 +29,6 @@ export const Homepage = () => {
       setAdversaments(adversaments);
     }, [location.pathname]);
   }
-  console.log(filtered)
   return (
     <SectionHome>
       <Header />

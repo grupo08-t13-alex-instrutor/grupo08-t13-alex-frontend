@@ -40,11 +40,11 @@ const AsideHomePage = ({
 
   const handleClickModel = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
-
+    
     const filteredModel = adversaments.filter((adv) => {
+     
       return adv.model.toLowerCase() === spanText.toLowerCase();
     });
-
     const uniqueModel = new Set([...filtered, ...filteredModel]);
 
     const arrayUniqueModel = Array.from(uniqueModel)
