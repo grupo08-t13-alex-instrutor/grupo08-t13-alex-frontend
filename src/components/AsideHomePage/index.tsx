@@ -22,6 +22,7 @@ const AsideHomePage = ({
 
   const handleClickBrand = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
+    setFiltered(adversaments);
 
     const filteredBrand = adversaments.filter((adv) => {
       return adv.brand.toLowerCase() === spanText.toLowerCase();
@@ -323,7 +324,8 @@ const AsideHomePage = ({
         <button
           id="cleanFilter"
           onClick={async () => {
-            setFiltered([]);
+            setFilters([]);
+            setFiltered(adversaments);
             setFilterBtn(false);
           }}
         >

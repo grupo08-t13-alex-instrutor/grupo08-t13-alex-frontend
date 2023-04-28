@@ -16,7 +16,7 @@ export const Homepage = () => {
   const location = useLocation();
   const [adversaments, setAdversaments] = useState<object[]>([]);
   const [filters, setFilters] = useState({});
-  const [filtered, setFiltered] = useState<object[]>([]);
+  const [filtered, setFiltered] = useState<object[]>(adversaments);
 
   const getAdversaments = async () => {
     const responseAdress = await instanceAxios.get(`ads`);
@@ -29,7 +29,7 @@ export const Homepage = () => {
       setAdversaments(adversaments);
     }, [location.pathname]);
   }
-  console.log(filtered)
+  console.log(filtered);
   return (
     <SectionHome>
       <Header />
@@ -44,10 +44,8 @@ export const Homepage = () => {
           setAdversaments={setAdversaments}
         />
         <Ul>
-          {
-            filtered.length > 0 ?
-
-              filtered.map((e: any) => {
+          {filtered.length > 0
+            ? filtered.map((e: any) => {
                 let siglaName = "";
 
                 if (e.user.name.includes(" ")) {
@@ -74,8 +72,7 @@ export const Homepage = () => {
                   </Cards>
                 );
               })
-              :
-              adversaments.map((e: any) => {
+            : adversaments.map((e: any) => {
                 let siglaName = "";
 
                 if (e.user.name.includes(" ")) {
@@ -101,8 +98,7 @@ export const Homepage = () => {
                     <span className="cifrao">$</span>
                   </Cards>
                 );
-              })
-          }
+              })}
         </Ul>
       </Section>
       <FooterHomePage />
