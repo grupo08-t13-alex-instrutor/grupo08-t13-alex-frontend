@@ -8,26 +8,15 @@ import {
 } from "../../components";
 import { Section, Ul } from "../../styled";
 import SectionHome from "./styled";
-import { User } from "../../context";
 import instanceAxios from "../../services";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const Homepage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [adversaments, setAdversaments] = useState([]);
-  const [filters, setFilters] = useState({
-    // brand: "",
-    // model: "",
-    // color: "",
-    // year: "",
-    // fuel: "",
-    // km: "",
-  });
-
-  const filter = () => {
-    // const filteredAds = adversaments.filter()cz\
-  };
+  const [adversaments, setAdversaments] = useState<object[]>([]);
+  const [filters, setFilters] = useState({});
+  const [filtered, setFiltered] = useState<object[]>(adversaments);
 
   const getAdversaments = async () => {
     const responseAdress = await instanceAxios.get(`ads`);
@@ -37,6 +26,7 @@ export const Homepage = () => {
   if (location.pathname === "/homepage") {
     useEffect(() => {
       getAdversaments();
+      setFiltered(adversaments);
     }, [location.pathname]);
   }
 
@@ -45,9 +35,14 @@ export const Homepage = () => {
       <Header />
       <Banner />
       <Section>
-        <AsideHomePage setFilters={setFilters} filters={filters} />
+        <AsideHomePage
+          setFilters={setFilters}
+          filters={filters}
+          adversaments={adversaments}
+          setFiltered={setFiltered}
+        />
         <Ul>
-          {adversaments!.map((e: any) => {
+          {filtered!.map((e: any) => {
             let siglaName = "";
 
             if (e.user.name.includes(" ")) {
