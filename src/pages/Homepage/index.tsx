@@ -19,8 +19,8 @@ export const Homepage = () => {
   const [filtered, setFiltered] = useState<object[]>([]);
 
   const getAdversaments = async () => {
-    const responseAdress = await instanceAxios.get(`ads`);
-    setAdversaments(responseAdress.data);
+    const responseAdversaments = await instanceAxios.get(`ads`);
+    setAdversaments(responseAdversaments.data);
   };
 
   if (location.pathname === "/homepage") {

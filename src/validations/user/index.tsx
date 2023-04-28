@@ -77,3 +77,14 @@ export const validacaoUpdated = yup.object().shape({
         .max(300, 'Deve ter no máximo 300 caracteres')
         .notRequired(),
 });
+
+
+export const recoveriUpdatePassword = yup.object().shape({
+    password: yup.string()
+        .matches(/[A-Z]/, "Deve conter ao menos 1 letra maiúscula")
+        .matches(/[a-z]/, "Deve conter ao menos 1 letra minuscula")
+        .matches(/(\d)/, "Deve conter ao menos um número")
+        .matches(/(\W)|_/, "Deve conter um caracter especial")
+        .required("Preenchimento da senha obrigatório")
+        .min(8, "no mínimo 8 caracteres"),
+})

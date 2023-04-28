@@ -7,6 +7,8 @@ import ProfilePageAdmin from "../pages/ProfilePageAdmin";
 import ProfilePageUser from "../pages/ProfilePageUser";
 import { useContext } from "react";
 import { User } from "../context";
+import ForgotPass from "../pages/ForgotPassword";
+import NewPass from "../pages/NewPassord";
 
 function ProtecaoRotas() {
 
@@ -30,6 +32,8 @@ export const RoutesMain = () => (
     <Route path="/profile/user" element={<ProfilePageUser />} />
     <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
+    <Route path="/forgot" element={<ForgotPass />} />
+    <Route path="/resetPassword" element={<NewPass />} />
     <Route path="*" element={<Navigate to="/homepage" />} />
   </Routes >
 );

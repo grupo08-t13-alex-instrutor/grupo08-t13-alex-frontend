@@ -32,9 +32,9 @@ const Header = () => {
     }
 
     const getAdversaments = async () => {
-        const responseAdress = await instanceAxios.get(`ads`);
+        const responseAdversaments = await instanceAxios.get(`ads`);
 
-        setAdversaments(responseAdress.data)
+        setAdversaments(responseAdversaments.data)
     }
 
     useEffect(() => {

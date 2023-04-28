@@ -10,18 +10,28 @@ import { IAdversamentsGet } from "../interfaces";
 export interface iInfoUser {
     children: React.ReactNode;
 }
+export interface iRecoveriPasswordSendEmail {
+    email: string
+}
+export interface iRecoverPasswordUpdatePassword {
+    password: string
+}
 
 export interface UserProviderData {
     registerUser: (data: iUserRegisterReq) => void,
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
-    deleteUser: () => void,
+    setIdUser: Dispatch<SetStateAction<string>>,
+    setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
     setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
+    deleteUser: () => void,
+    recoverPasswordUpdatePassword: (data: iRecoverPasswordUpdatePassword) => void,
+    recoverPasswordSendEmail: (data: iRecoveriPasswordSendEmail) => void,
     infoUserLogin: iUserInfoUserLogin | undefined,
     idUser: string,
-    setIdUser: Dispatch<SetStateAction<string>>,
-    idAdressUser: string
+    idAdressUser: string,
+    tokenRecoverPassword: string
 }
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
@@ -34,6 +44,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
     const [dataAdress, setDataAdress] = useState({})
+    const [tokenRecoverPassword, setTokenRecoverPassword] = useState("")
     const [idUser, setIdUser] = useState<string>("")
 
     const sessionUser = async (data: IBodySession) => {
@@ -100,7 +111,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const updateUser = async (data: iUserUpate) => {
         if (token) {
-           
+
             const responseUser = await instanceAxios.patch(`user`, { ...infoUserLogin, ...data });
             setInfoUserLogin(responseUser.data)
         }
@@ -108,7 +119,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getUseInfoData = async () => {
         if (token) {
-            
+
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
             setIdAdressUser(responseUser.data.addressId)
@@ -136,6 +147,16 @@ function ContextDadosUser({ children }: iInfoUser) {
         }
     }
 
+    const recoverPasswordSendEmail = async (emailData: iRecoveriPasswordSendEmail) => {
+        const responseToeknRecoverPassword = await instanceAxios.post(`forgot/pass`, emailData);
+
+        setTokenRecoverPassword(responseToeknRecoverPassword.data.token)
+    }
+
+    const recoverPasswordUpdatePassword = async (passwordData: iRecoverPasswordUpdatePassword) => {
+        await instanceAxios.patch(`forgot/pass/${tokenRecoverPassword}`, passwordData);
+    }
+
     useEffect(() => {
 
         if (token) {
@@ -158,7 +179,11 @@ function ContextDadosUser({ children }: iInfoUser) {
                 setInfoUserLogin,
                 idAdressUser,
                 patchAdressUser,
-                deleteUser
+                deleteUser,
+                tokenRecoverPassword,
+                setTokenRecoverPassword,
+                recoverPasswordSendEmail,
+                recoverPasswordUpdatePassword
             }}
         >
             {children}
