@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FooterHomePage, Header } from "../../components";
 import StyledLogin from "./styled";
-import ForgotPasswordForm from "../../components/ForgotPassword";
+// import ForgotPasswordForm from "../../components/ForgotPassword";
 import { User } from "../../context";
 import { IBodySession } from "../../interfaces/session";
 import { useForm } from "react-hook-form";
