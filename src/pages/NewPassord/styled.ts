@@ -13,6 +13,17 @@ p{
   color: red;
 }
 
+form{
+  
+  .SHOW , .HIDDEN{
+    left: 0;
+    cursor: pointer;
+    font-weight: bolder;
+    font-weight: bolder;
+    color: ${(props) => props.theme.gray2};
+  }
+}
+
   .container {
     width: 50%;
     min-width: 287px;

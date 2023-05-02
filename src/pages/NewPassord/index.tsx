@@ -5,7 +5,7 @@ import ForgotPasswordForm from "../../components/ForgotPassword";
 import { User, iRecoverPasswordUpdatePassword } from "../../context";
 import { IBodySession } from "../../interfaces/session";
 import { useForm } from "react-hook-form";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { sessionVaidated } from "../../validations/login";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { recoveriUpdatePassword } from "../../validations/user";
@@ -14,6 +14,7 @@ const NewPass = () => {
   const navigate = useNavigate();
 
   const { recoverPasswordUpdatePassword } = useContext(User)
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     register,
@@ -26,7 +27,6 @@ const NewPass = () => {
 
   const onSubmitFunction = async (password: iRecoverPasswordUpdatePassword) => {
     recoverPasswordUpdatePassword(password)
-
     reset();
 
     navigate("/login")
@@ -42,9 +42,26 @@ const NewPass = () => {
           </div>
 
           <div className="form-inputs">
-            <label htmlFor="login">Nova Senha</label>
-            <input type="password" id="newPassword" placeholder="Digite sua nova Senha"   {...register("password")} />
-            <p>{errors.password?.message}</p>
+
+            {!showPassword ?
+              <>
+                <label htmlFor="password">Senha</label>
+                <input type="password" id="password" placeholder="Digitar senha" {...register("password")} />
+
+              </> :
+              <>
+                <label htmlFor="password">Senha</label>
+                <input type="text" id="password" placeholder="Digitar senha" {...register("password")} />
+              </>
+            }
+            <p> {errors.password?.message}</p>
+
+            {!showPassword ?
+              <span className="SHOW" onClick={() => setShowPassword(true)}>SHOW</span>
+              :
+              <span className="HIDDEN" onClick={() => setShowPassword(false)}>HIDDEN</span>
+            }
+
           </div>
 
           <div className="form-footer">
