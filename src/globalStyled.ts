@@ -150,7 +150,7 @@ h5.subtitle {
   font-weight: 500;
   font-size: 20px;
   line-height: 25px;
-  color: #868E96;;
+  color: #868E96;
   flex: none;
   order: 9;
   flex-grow: 0;

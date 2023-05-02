@@ -3,6 +3,13 @@ import styled from "styled-components";
 
 const SectionHome = styled.section`
 
+ul{
+    width: 100%;
+    height: 49%;
+}
+
+position: relative;
+
 li{
     position: relative;
 
@@ -23,6 +30,30 @@ li{
     
 
 }
+
+#formart{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#page{
+    display: flex;
+    gap: 2rem;
+
+    span{
+        cursor: pointer;
+            strong{
+                color: ${props => props.theme.gray3};
+            }
+            color: ${props => props.theme.gray5};
+    }
+
+    #seguinte,#anterior{
+        color: ${props => props.theme.brand1};
+        font-weight: 900;
+    }
+} 
 
 `
 

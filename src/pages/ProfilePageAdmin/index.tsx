@@ -3,15 +3,18 @@ import { EditFormAds, FooterHomePage, Header, RegisterFormAds } from "../../comp
 import { Cards } from "../../components";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import instanceAxios from "../../services";
 import { siglaNameUtils } from "../../utils";
 import { ModalContainer } from "../../components/Header/styled";
 
 const ProfilePageAdmin = () => {
+  
+  const navigate = useNavigate()
   const location = useLocation();
   const [adversaments, setAdversaments] = useState([])
   const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
+  const [openUpateAdForm, setOpenUpateAdForm] = useState(false);
   const [sigla, setSigla] = useState<string>()
   const { infoUserLogin } = useContext(User)
 
@@ -35,15 +38,26 @@ const ProfilePageAdmin = () => {
   return (
     <Section className="profile">
       <Header />
-      { openRegisterAdForm ?
+      {openRegisterAdForm ?
         <ModalContainer>
-          <RegisterFormAds 
-            openRegisterAdForm={ openRegisterAdForm }
-            setOpenRegisterAdForm={ setOpenRegisterAdForm }
-            />
+          <RegisterFormAds
+            openRegisterAdForm={openRegisterAdForm}
+            setOpenRegisterAdForm={setOpenRegisterAdForm}
+          />
         </ModalContainer>
-      :
+        :
         <></>
+      }
+
+      {
+        openUpateAdForm ?
+          <ModalContainer>
+            <EditFormAds
+              setOpenUpateAdForm={setOpenUpateAdForm}
+            />
+          </ModalContainer>
+          :
+          <></>
       }
       <div className="bg"></div>
 
@@ -56,7 +70,7 @@ const ProfilePageAdmin = () => {
         <p>
           {infoUserLogin?.description}
         </p>
-        <button onClick={ event => {
+        <button onClick={event => {
           event.preventDefault();
           setOpenRegisterAdForm(!openRegisterAdForm);
         }}>Criar anuncio</button>
@@ -76,10 +90,16 @@ const ProfilePageAdmin = () => {
                   ano={e.year}
                   preco={e.price}
                   siglaNanme={sigla!}
+                  idAds={e.id}
                 >
                   <div className="btnAdmin">
-                    <button>Editar</button>
-                    <button>Ver detalhes</button>
+                    <button onClick={() => {
+                      setOpenUpateAdForm(true)
+
+                    }}>Editar</button>
+                    <button onClick={() => {
+                      navigate("/ad")
+                    }}>Ver detalhes</button>
                   </div>
                 </Cards>
               )

@@ -2,7 +2,11 @@ import SectionBgForm from "./styled"
 import Remove from "../../assets/svg/x.svg";
 import React, { useState } from "react";
 
-const EditFormAds = () => {
+interface a {
+    setOpenUpateAdForm: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const EditFormAds = ({ setOpenUpateAdForm }: a) => {
     const [galleryImages, setGalleryImages] = useState([
         { id: 1, label: "Imagem da capa", value: "" },
         { id: 2, label: "1ª Imagem da galeria", value: "" },
@@ -25,7 +29,7 @@ const EditFormAds = () => {
     const handleChangeImage = (event: React.FormEvent<HTMLInputElement>, id: number) => {
 
         event.preventDefault();
-        
+
         const { value }: any = event.target;
 
         const updatedGalleryImages = galleryImages.map(image => {
@@ -45,7 +49,7 @@ const EditFormAds = () => {
 
                 <div>
                     <span>Editar de anuncio</span>
-                    <img src={Remove} onClick={() => null} />
+                    <img src={Remove} onClick={() => setOpenUpateAdForm(false)} />
                 </div>
 
                 <p>informações do veículo</p>
@@ -116,7 +120,7 @@ const EditFormAds = () => {
                         </React.Fragment>
                     ))}
 
-                    <button onClick={ () => handleAddImageField }>
+                    <button onClick={() => handleAddImageField}>
                         Adicionar campo para imagem da galeria
                     </button>
                 </div>

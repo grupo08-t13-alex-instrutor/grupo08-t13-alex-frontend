@@ -17,19 +17,56 @@ export interface iRecoverPasswordUpdatePassword {
     password: string
 }
 
+export interface iUserAdResponse {
+    id: string,
+    name: string,
+    cpf: string,
+    email: string,
+    telephone: string,
+    date_of_birth: string,
+    description: string,
+    buyer: boolean
+}
+
+export interface iImageResponse {
+    id: string
+    link: string;
+}
+
+export interface IAdResponse {
+    id: string;
+    brand: string;
+    model: string;
+    year: string;
+    fuel: number;
+    mileage: number;
+    color: string;
+    price: number;
+    description: string;
+    published: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    images: iImageResponse[];
+    user: iUserAdResponse;
+}
+
+
 export interface UserProviderData {
     registerUser: (data: iUserRegisterReq) => void,
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
+    getAdsAmount: () => Promise<any>,
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
     setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
+    setOneAd: Dispatch<SetStateAction<string | undefined>>,
     deleteUser: () => void,
     recoverPasswordUpdatePassword: (data: iRecoverPasswordUpdatePassword) => void,
     recoverPasswordSendEmail: (data: iRecoveriPasswordSendEmail) => void,
     infoUserLogin: iUserInfoUserLogin | undefined,
     idUser: string,
+    oneAd: string | undefined,
     idAdressUser: string,
     tokenRecoverPassword: string
 }
@@ -44,6 +81,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
     const [dataAdress, setDataAdress] = useState({})
+    const [oneAd, setOneAd] = useState<string | undefined>()
     const [tokenRecoverPassword, setTokenRecoverPassword] = useState("")
     const [idUser, setIdUser] = useState<string>("")
 
@@ -119,7 +157,6 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getUseInfoData = async () => {
         if (token) {
-
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
             setIdAdressUser(responseUser.data.addressId)
@@ -157,6 +194,12 @@ function ContextDadosUser({ children }: iInfoUser) {
         await instanceAxios.patch(`forgot/pass/${tokenRecoverPassword}`, passwordData);
     }
 
+    const getAdsAmount = async () => {
+        const response = await instanceAxios.get(`ads/${oneAd}`);
+        // setOneAd(response.data)
+        return response.data
+    }
+
     useEffect(() => {
 
         if (token) {
@@ -183,7 +226,10 @@ function ContextDadosUser({ children }: iInfoUser) {
                 tokenRecoverPassword,
                 setTokenRecoverPassword,
                 recoverPasswordSendEmail,
-                recoverPasswordUpdatePassword
+                recoverPasswordUpdatePassword,
+                getAdsAmount,
+                setOneAd,
+                oneAd
             }}
         >
             {children}
