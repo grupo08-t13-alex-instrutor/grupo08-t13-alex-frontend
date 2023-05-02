@@ -4,20 +4,22 @@ import { IcardData } from "../../interfaces";
 import Li from "./styled";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNanme, onClick, idAmount }: IcardData) => {
+const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNanme, onClick, idAmount, idAds }: IcardData) => {
 
-  const { setIdUser } = useContext(User)
+  const { setIdUser, setOneAd } = useContext(User)
   const location = useLocation()
   const navigate = useNavigate()
 
   return (
     <Li
-      key={idAmount}
+      key={idAds}
     >
       {children}
 
       <div className="teste">
         <img className="imgCard" src={src} alt="" onClick={() => {
+          setOneAd(idAds!)
+          navigate("/ad")
         }} />
       </div>
       <section>

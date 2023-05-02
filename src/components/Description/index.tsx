@@ -1,14 +1,36 @@
+import { useContext, useEffect, useState } from "react";
 import { StyledDescription } from "./styled";
+import { useLocation } from "react-router-dom";
+import { User } from "../../context";
 
 export const Description = () => {
+
+  const { getAdsAmount, } = useContext(User)
+
+  const [infoCar, setInfoCar] = useState({
+    description: null
+  })
+
+  const location = useLocation()
+
+  const callBAckGetAdAmount = async () => {
+    const { description } = await getAdsAmount()
+    setInfoCar({
+      description: description
+    })
+  }
+
+  if (location.pathname === "/ad") {
+    useEffect(() => {
+      callBAckGetAdAmount()
+    }, [])
+  }
+
   return (
     <StyledDescription className="descriptionAdds">
       <h6 className="heading-6-600">Descrição</h6>
       <p className="text-body-1">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusantium
-        deserunt sequi iure sit quaerat sunt eos ut tempora quod, facilis
-        asperiores eveniet exercitationem illum in! Sed tenetur obcaecati
-        repellendus molestiae.
+        {infoCar.description}
       </p>
     </StyledDescription>
   );

@@ -1,7 +1,7 @@
 import { HeaderRegisterFormAd, FormRegisterFormAd, ContainerRegisterFormAd } from "./styled"
 import Remove from "../../assets/svg/x.svg";
 import React, { useState } from "react";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { iAdRequest } from "../../interfaces/ads";
 
@@ -10,8 +10,16 @@ interface iChildren {
     setOpenRegisterAdForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm }: iChildren ) => {
-    const { register, handleSubmit, formState: { errors, defaultValues }, reset } = useForm<iAdRequest>({ 
+const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm }: iChildren) => {
+
+    const [galleryImages, setGalleryImages] = useState([
+        { id: 0, label: "Imagem da capa", value: "" },
+        { id: 1, label: "1ª Imagem da galeria", value: "" },
+        { id: 2, label: "2ª Imagem da galeria", value: "" }
+    ]);
+
+
+    const { register, handleSubmit, formState: { errors, defaultValues }, reset } = useForm<iAdRequest>({
         mode: "onBlur",
         values: {
             brand: '',
@@ -29,15 +37,8 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm }: iChildre
     const registerAd = async (data: iAdRequest) => {
     }
 
-    const [galleryImages, setGalleryImages] = useState([
-        { id: 0, label: "Imagem da capa", value: "" },
-        { id: 1, label: "1ª Imagem da galeria", value: "" },
-        { id: 2, label: "2ª Imagem da galeria", value: "" }
-    ]);
 
-    const handleAddImageField = (event: React.FormEvent<HTMLInputElement>) => {
-
-        event.preventDefault();
+    const handleAddImageField = () => {
 
         const newImageField = {
             id: galleryImages.length + 1,
@@ -62,19 +63,18 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm }: iChildre
         setGalleryImages(updatedGalleryImages);
     };
 
-
     return (
         <ContainerRegisterFormAd>
             <HeaderRegisterFormAd>
                 <span>Criar de anuncio</span>
-                <button onClick={ event => {
+                <button onClick={event => {
                     event.preventDefault()
-                    setOpenRegisterAdForm( !openRegisterAdForm )
+                    setOpenRegisterAdForm(!openRegisterAdForm)
                 }}>
                     <img src={Remove} />
                 </button>
             </HeaderRegisterFormAd>
-            <FormRegisterFormAd action="" onSubmit={handleSubmit( registerAd )}>
+            <FormRegisterFormAd action="" onSubmit={handleSubmit(registerAd)}>
                 <p>Informações do veículo</p>
 
                 <label htmlFor="">Marca</label>
@@ -123,27 +123,29 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm }: iChildre
 
                 <div className="addImageGalery">
 
-                    {galleryImages.map(image => (
-                        <React.Fragment key={image.id}>
-                            <label htmlFor={`image-${image.id - 1}`}>{image.label}</label>
-                            <input
-                                name={`image-${image.id}`}
-                                id={`image-${image.id}`}
-                                value={image.value}
-                                onChange={event => handleChangeImage(event, image.id)}
-                            />
-                        </React.Fragment>
-                    ))}
+                    {galleryImages.map((image) => {
+                        return (
+                            <React.Fragment key={image.id}>
+                                <label htmlFor={`image-${image.id - 1}`}>{image.label}</label>
+                                <input
+                                    name={`image-${image.id}`}
+                                    id={`image-${image.id}`}
+                                    value={image.value}
+                                    onChange={event => handleChangeImage(event, image.id)}
+                                />
+                            </React.Fragment>
+                        )
+                    })}
 
-                    <button onClick={ () => handleAddImageField }>
+                    <button onClick={handleAddImageField}>
                         Adicionar campo para imagem da galeria
                     </button>
                 </div>
 
                 <div className="alteration">
-                    <button onClick={ event => {
+                    <button onClick={event => {
                         event.preventDefault()
-                        setOpenRegisterAdForm( !openRegisterAdForm )
+                        setOpenRegisterAdForm(!openRegisterAdForm)
                     }}>Cancelar</button>
                     <button className="save" type="submit">Criar anúncio</button>
                 </div>

@@ -4,7 +4,7 @@ import { IoMenu, IoClose } from "react-icons/io5";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
 import instanceAxios from "../../services";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { EditAddress } from "../EditAddress";
 import UpdateUserForm from "../UpdateUserForm";
 import { siglaNameUtils } from "../../utils";
@@ -12,7 +12,6 @@ import { siglaNameUtils } from "../../utils";
 const Header = () => {
     const navigate = useNavigate()
     const { infoUserLogin } = useContext(User)
-
     const [openMenu, setOpenMenu] = useState(false)
     const [adversaments, setAdversaments] = useState([])
     const [editAddress, setEditAddress] = useState<boolean>(false);
@@ -20,27 +19,19 @@ const Header = () => {
     const [sigla, setSigla] = useState<string>()
 
     const callBackSiglaNameUtils = async () => {
-
-        if (infoUserLogin?.name.includes(" ")) {
-            const siglaNameSplit = infoUserLogin.name.split(" ")
-
-            setSigla(siglaNameSplit[0][0] + siglaNameSplit[1][0])
-        } else {
-            setSigla(infoUserLogin?.name[0])
-        }
-
+        const result = await siglaNameUtils(infoUserLogin!.name)
+        setSigla(result)
     }
 
     const getAdversaments = async () => {
         const responseAdversaments = await instanceAxios.get(`ads`);
-
         setAdversaments(responseAdversaments.data)
     }
 
     useEffect(() => {
-        getAdversaments()
         callBackSiglaNameUtils()
-    }, [localStorage.getItem("token")])
+        getAdversaments()
+    }, [])
 
     return (
         <>

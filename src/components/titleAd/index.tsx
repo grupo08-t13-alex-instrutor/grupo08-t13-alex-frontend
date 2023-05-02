@@ -1,4 +1,7 @@
+import { useContext, useEffect, useState } from "react"
 import { TitleAdContainer, Tag, ButtonBlue } from "./styled"
+import { User } from "../../context"
+import { useLocation } from "react-router-dom"
 
 interface iCarInformation {
     name: string
@@ -8,25 +11,44 @@ interface iCarInformation {
 }
 
 const TitleAd = () => {
-    let carInformation: iCarInformation = {
-        name: "Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200 ",
-        year: "2013",
-        mileage: "0",
-        price: "00.000,00"
+
+    const { getAdsAmount, } = useContext(User)
+
+    const [infoCar, setInfoCar] = useState({
+        model: null,
+        year: null,
+        mileage: null,
+        price: null
+    })
+
+    const location = useLocation()
+
+    const callBAckGetAdAmount = async () => {
+        const { model, year, mileage, price } = await getAdsAmount()
+        setInfoCar({
+                model: model,
+                year: year,
+                mileage: mileage,
+                price: price
+        })
     }
 
-    const { name, year, mileage, price } = carInformation;
+    if (location.pathname === "/ad") {
+        useEffect(() => {
+            callBAckGetAdAmount()
+        }, [])
+    }
 
     return (
         <TitleAdContainer className="TitleAdContainer">
             <div>
-                <h2 className="heading-6-600">{name}</h2>
+                <h2 className="heading-6-600">{infoCar.model}</h2>
                 <div className="container">
                     <div>
-                        <Tag>{year}</Tag>
-                        <Tag>{`${mileage} KM`}</Tag>
+                        <Tag>{infoCar.year}</Tag>
+                        <Tag>{`${infoCar.mileage} KM`}</Tag>
                     </div>
-                    <p>{`R$ ${price}`}</p>
+                    <p>{`R$ ${infoCar.price}`}</p>
                 </div>
             </div>
             <ButtonBlue>Comprar</ButtonBlue>

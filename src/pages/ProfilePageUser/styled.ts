@@ -117,6 +117,7 @@ article {
     top: 18%;
     padding: 1rem;
     right: 11.5%;
+    top: 10%;
     position: absolute;
 
     @media (max-width: 920px) {

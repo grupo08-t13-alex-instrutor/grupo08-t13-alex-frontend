@@ -69,6 +69,7 @@ const ProfilePageUser = () => {
                                     ano={e.year}
                                     preco={e.price}
                                     siglaNanme={sigla!}
+                                    idAds={e.id}
                                 >
                                 </Cards>
                             )

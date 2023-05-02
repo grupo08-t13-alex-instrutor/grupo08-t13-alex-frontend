@@ -12,17 +12,18 @@ background-color: rgba(0, 0, 0, 0.5);
 display: flex;
 align-items: flex-start;
 justify-content: center;
-
+overflow-y: auto;
 
 form{
     display: flex;
     flex-direction: column;
-    width: 369px;
+    width: 24rem;
     padding: 0.5rem;
     gap: 0.5rem;
-    background-color: ${props => props.theme.whiteFixed};
-    margin-top: 2rem;
+    margin-top: 1rem;
     border-radius: 4px;
+    height: 39rem;
+    background-color: ${props => props.theme.whiteFixed};
 
     input{
         padding: 0.2rem;
@@ -55,7 +56,6 @@ form{
             background-color: ${props => props.theme.brand4} ;
             color: ${props => props.theme.brand1} ;
             border-radius: 4px;
-            width: 300px;
             height: 38px;
         }
     }
