@@ -196,7 +196,6 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getAdsAmount = async () => {
         const response = await instanceAxios.get(`ads/${oneAd}`);
-        // setOneAd(response.data)
         return response.data
     }
 

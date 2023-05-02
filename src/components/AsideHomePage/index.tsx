@@ -40,9 +40,9 @@ const AsideHomePage = ({
 
   const handleClickModel = (e: React.MouseEvent) => {
     const spanText: string = (e.target as HTMLElement).innerText;
-    
+
     const filteredModel = adversaments.filter((adv) => {
-     
+
       return adv.model.toLowerCase() === spanText.toLowerCase();
     });
     const uniqueModel = new Set([...filtered, ...filteredModel]);
@@ -288,14 +288,34 @@ const AsideHomePage = ({
 
       <h4>Km</h4>
       <div className="km">
-        <input type="number" placeholder="Mínimo" onChange={(e) => handleClickKmMin(e.target.value)} />
-        <input type="number" className="max" placeholder="Máximo" onChange={(e) => handleClickKmMAx(e.target.value)} />
+
+        {!filterBtn ? (
+          <>
+            <input type="number" placeholder="Mínimo" value="" onClick={() => setFilterBtn(true)} />
+            <input type="number" className="max" placeholder="Máximo" value="" onClick={() => setFilterBtn(true)} />
+          </>
+        ) : (
+          <>
+            <input type="number" placeholder="Mínimo" onChange={(e) => handleClickKmMin(e.target.value)} />
+            <input type="number" className="max" placeholder="Máximo" onChange={(e) => handleClickKmMAx(e.target.value)} />
+          </>
+        )}
+
       </div>
 
       <h4>Preço</h4>
       <div className="price">
-        <input type="number" placeholder="Mínimo" onChange={(e) => handleClickPriceMin(e.target.value)} />
-        <input type="number" className="max" placeholder="Máximo" onChange={(e) => handleClickPriceMAx(e.target.value)} />
+        {!filterBtn ? (
+          <>
+            <input type="number" placeholder="Mínimo" value="" onClick={() => setFilterBtn(true)} />
+            <input type="number" className="max" placeholder="Máximo" value="" onClick={() => setFilterBtn(true)} />
+          </>
+        ) : (
+          <>
+            <input type="number" placeholder="Mínimo" onChange={(e) => handleClickPriceMin(e.target.value)} />
+            <input type="number" className="max" placeholder="Máximo" onChange={(e) => handleClickPriceMAx(e.target.value)} />
+          </>
+        )}
       </div>
 
       {filterBtn ? (

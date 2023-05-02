@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup"
 
 const Register = () => {
- 
+
   const [buyerValue, setBuyerValue] = useState(true)
+  const [showPassword, setShowPassword] = useState(false)
 
   const { registerUser } = useContext(User)
 
@@ -25,6 +26,7 @@ const Register = () => {
 
 
   const onSubmitFunction = (data: iUserRegisterReq) => {
+    
     registerUser({ ...data, buyer: buyerValue })
 
     reset();
@@ -137,16 +139,36 @@ const Register = () => {
               </div>
             </div>
 
-            <label htmlFor="password">Senha</label>
-            <input type="text" placeholder="Digitar senha" id="password" {...register("password")} />
-            <p> {errors.password?.message}</p>
-            <label htmlFor="confirm-password">Comfirmar senha</label>
-            <input type="text" id="confirmPassword" placeholder="Digitar senha"  {...register("confirmPassword")} />
+            {!showPassword ?
+              <>
+                <label htmlFor="password">Senha</label>
+                <input type="password" placeholder="Digitar senha" id="password" {...register("password")} />
+                <p> {errors.password?.message}</p>
+
+                <label htmlFor="confirm-password">Comfirmar senha</label>
+                <input type="password" id="confirmPassword" placeholder="Digitar senha"  {...register("confirmPassword")} />
+              </> :
+              <>
+                <label htmlFor="password">Senha</label>
+                <input type="text" placeholder="Digitar senha" id="password" {...register("password")} />
+                <p> {errors.password?.message}</p>
+
+                <label htmlFor="confirm-password">Comfirmar senha</label>
+                <input type="text" id="confirmPassword" placeholder="Digitar senha"  {...register("confirmPassword")} />
+              </>
+            }
+
+            {!showPassword ?
+              <span className="SHOW" onClick={() => setShowPassword(true)}>SHOW</span>
+              :
+              <span className="HIDDEN" onClick={() => setShowPassword(false)}>HIDDEN</span>
+            }
+
             <p> {errors.confirmPassword?.message}</p>
             <button className="submit" >Finalizar cadastro</button>
           </div>
         </form>
-      </StyledRegister>
+      </StyledRegister >
       <FooterHomePage />
     </>
   );
