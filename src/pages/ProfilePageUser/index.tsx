@@ -28,8 +28,8 @@ const ProfilePageUser = () => {
     }
 
     const getAdversaments = async () => {
-        const responseAdress = await instanceAxios.get(`ads`);
-        setAdversaments(responseAdress.data)
+        const responseAdversaments = await instanceAxios.get(`ads`);
+        setAdversaments(responseAdversaments.data)
     }
 
     if (location.pathname === "/profile/user") {
@@ -69,8 +69,8 @@ const ProfilePageUser = () => {
                                     ano={e.year}
                                     preco={e.price}
                                     siglaNanme={sigla!}
+                                    idAds={e.id}
                                 >
-                                    {e.published ? <p className="ativo">ativo</p> : <p className="inativo">inativo</p>}
                                 </Cards>
                             )
                         } else {

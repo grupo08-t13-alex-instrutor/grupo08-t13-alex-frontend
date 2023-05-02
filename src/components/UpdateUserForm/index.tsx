@@ -5,12 +5,19 @@ import { iUserUpate } from "../../interfaces/register";
 import { validacaoUpdated } from "../../validations/user";
 import { useContext, useState } from "react";
 import { User } from "../../context";
+import { IoClose } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+
+interface iChildren {
+  editUser: boolean,
+  setEditUser: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 
-const UpdateUserForm = () => {
+const UpdateUserForm = ({ setEditUser, editUser }: iChildren) => {
 
-  const { updateUser, infoUserLogin } = useContext(User)
-
+  const { updateUser, infoUserLogin, deleteUser, setInfoUserLogin } = useContext(User)
+  const navigate = useNavigate()
   const [userUpdate, setUserUpdate] = useState({})
 
   const {
@@ -19,11 +26,11 @@ const UpdateUserForm = () => {
     reset,
     formState: { errors },
   } = useForm<iUserUpate>({
-    resolver: yupResolver(validacaoUpdated),
+    resolver: yupResolver(validacaoUpdated, { stripUnknown: true }),
   });
 
   const onSubmitFunction = (data: iUserUpate) => {
-    
+
     setUserUpdate({ ...infoUserLogin, ...data })
 
     updateUser(data)
@@ -35,7 +42,7 @@ const UpdateUserForm = () => {
     <StyledForm onSubmit={handleSubmit(onSubmitFunction)}>
       <div className="form-inputs">
         <span className="text-body-2-500">Informações pessoais</span>
-
+        <IoClose className="closeModal" onClick={() => setEditUser(false)} />
         <label >Nome</label>
         <input id="name" type="text" placeholder="Ex: Fulano Silva" defaultValue={infoUserLogin?.name} {...register("name")} />
         <p>{errors.name?.message}</p>
@@ -84,17 +91,17 @@ const UpdateUserForm = () => {
       <div className="form-footer">
         <button
           className="cancel"
-          onClick={(el) => {
-            el.preventDefault;
-            const modal = document.querySelector(".modal");
-            modal?.classList.toggle("");
-          }}
+          onClick={() => setEditUser(false)}
         >
           Cancelar
         </button>
+        <button className="deletedUser" onClick={() => {
+          deleteUser()
+          localStorage.removeItem("token")
+          navigate("/login")
+          }}>Exluir perfil</button>
         <button className="submit">Salvar alteracões</button>
       </div>
-
     </StyledForm>
   );
 };

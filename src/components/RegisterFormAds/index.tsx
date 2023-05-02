@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { HeaderRegisterFormAd, FormRegisterFormAd, ContainerRegisterFormAd } from "./styled"
 import Remove from "../../assets/svg/x.svg";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { iAdRequest } from "../../interfaces/ads";
 import instanceAxios from "../../services";
@@ -171,7 +171,7 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: 
         <ContainerRegisterFormAd>
             <HeaderRegisterFormAd>
                 <span>Criar de anuncio</span>
-                <button onClick={ event => {
+                <button onClick={event => {
                     event.preventDefault()
                     reset();
                     setOpenRegisterAdForm( !openRegisterAdForm )
@@ -268,9 +268,9 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: 
                 </div>
 
                 <div className="alteration">
-                    <button onClick={ event => {
+                    <button onClick={event => {
                         event.preventDefault()
-                        setOpenRegisterAdForm( !openRegisterAdForm )
+                        setOpenRegisterAdForm(!openRegisterAdForm)
                     }}>Cancelar</button>
                     <button className="save" type="submit">Criar anúncio</button>
                 </div>

@@ -1,33 +1,33 @@
 import { useNavigate } from "react-router-dom";
 import { FooterHomePage, Header } from "../../components";
 import StyledLogin from "./styled";
-import { User } from "../../context";
+import ForgotPasswordForm from "../../components/ForgotPassword";
+import { User, iRecoveriPasswordSendEmail } from "../../context";
 import { IBodySession } from "../../interfaces/session";
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
-import { sessionVaidated } from "../../validations/login";
+import { reconveriPasswordSendEmail, sessionVaidated } from "../../validations/login";
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Link } from "react-router-dom";
-
-const Login = () => {
+const ForgotPass = () => {
   const navigate = useNavigate();
 
-  const { sessionUser } = useContext(User)
+  const { recoverPasswordSendEmail } = useContext(User)
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IBodySession>({
-    resolver: yupResolver(sessionVaidated),
+  } = useForm<iRecoveriPasswordSendEmail>({
+    resolver: yupResolver(reconveriPasswordSendEmail),
   });
 
-  const onSubmitFunction = async (data: IBodySession) => {
-
-    sessionUser(data)
+  const onSubmitFunction = async (email: iRecoveriPasswordSendEmail) => {
+    recoverPasswordSendEmail(email)
 
     reset();
+
+    navigate("/resetPassword")
   };
 
   return (
@@ -36,32 +36,36 @@ const Login = () => {
       <StyledLogin>
         <form className="container" onSubmit={handleSubmit(onSubmitFunction)}>
           <div className="form-header">
-            <h5>Login</h5>
+            <h5>Recuperar Senha</h5>
           </div>
 
           <div className="form-inputs">
-            <label htmlFor="login">Usuário</label>
-            <input type="text" id="email" placeholder="Digitar usuário"  {...register("email")} />
-            <p> {errors.email?.message}</p>
-            <label htmlFor="password">Senha</label>
-            <input type="password" id="password" placeholder="Digitar senha" {...register("password")} />
-            <p> {errors.password?.message}</p>
-            <span className="text-body-2-500"><Link to="/forgot">Esqueci minha senha</Link></span>
+            <label htmlFor="login">E-mail de Recuperação</label>
+            <input type="text" id="email" placeholder="Digite seu Email" {...register("email")} />
+            <p>{errors.email?.message}</p>
           </div>
 
           <div className="form-footer">
-            <button type="submit" className="login">
-              Entrar
+            <button type="submit" className="send">
+              Enviar
             </button>
 
             <span className="text-body-2">Ainda não possui conta?</span>
+
 
             <button
               type="button"
               className="register"
               onClick={() => navigate("/register")}
             >
+
               Cadastrar
+            </button>
+            <button
+              type="button"
+              className="login"
+              onClick={() => navigate("/login")}>
+              Login
             </button>
           </div>
         </form>
@@ -72,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgotPass;
