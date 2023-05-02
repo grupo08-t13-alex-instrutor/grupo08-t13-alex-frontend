@@ -33,6 +33,8 @@ li{
 
 #formart{
     display: flex;
+    flex-wrap: nowrap;
+    -webkit-box-align: center;
     align-items: center;
     flex-direction: column;
 }
@@ -40,7 +42,8 @@ li{
 #page{
     display: flex;
     gap: 2rem;
-
+    margin-top: 2rem;
+    
     span{
         cursor: pointer;
             strong{
