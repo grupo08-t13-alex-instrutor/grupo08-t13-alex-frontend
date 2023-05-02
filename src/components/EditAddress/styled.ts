@@ -39,6 +39,7 @@ export const FooterEditAddress = styled.div`
     padding: 20px 0;
     justify-content: flex-end !important;
     gap: 10px;
+
     button:nth-child(1) {
         padding: 10px 20px;
         font-style: normal;
@@ -63,6 +64,7 @@ export const FooterEditAddress = styled.div`
         :disabled {
         }
     }
+    
     @media (min-width: 720px) {
         button:nth-child(1):hover {
             color: ${ props => props.theme.gray1 };
@@ -108,10 +110,12 @@ export const FormEditAddress = styled.form`
         font-style: normal;
         font-weight: 400;
         font-size: 0.875rem;
-        
+        color: ${ props => props.theme.gray0 };
+
         :hover {
             border: 0.093rem solid ${ props => props.theme.brand1 };
         }
+        
         :focus {
             color: ${ props => props.theme.gray0 };
             border: 0.093rem solid ${ props => props.theme.brand1 };

@@ -19,12 +19,13 @@ const ContainerRegisterFormAd = styled.div`
 
 const HeaderRegisterFormAd = styled.div`
     width: 100%;
-    padding: 1rem 1rem 0 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
+    box-shadow: 0 3px 20px ${ props => props.theme.gray4 };
 `
 
 const FormRegisterFormAd = styled.form`
@@ -35,23 +36,50 @@ const FormRegisterFormAd = styled.form`
         width: 100%;
         padding: 0.5rem;
         margin: 0.3rem 0 0.7rem 0;
-        color: ${props => props.theme.gray3};
         border: 2px solid ${props => props.theme.gray4};
         border-radius: 4px;
         font-size: 14.5px;
         box-sizing: border-box;
 
-        :focus{
+        :disabled {
+            color: ${props => props.theme.gray0};
+
+            :hover {
+                border: 2px solid ${ props => props.theme.gray4 };
+            }
+        }
+        
+        ::placeholder{
+            color: ${props => props.theme.gray3};
+        }
+        
+        :hover {
+            border: 2px solid ${ props => props.theme.brand1 };
+        }
+
+        :focus {
             border-radius: 4px;
-            border: 2px solid ${props => props.theme.brand2};
-        } 
+            color: ${ props => props.theme.gray0 };
+            border: 2px solid ${ props => props.theme.brand1 };
+        }
 
     }
 
     textarea{
+        font-size: 14.5px;
         padding: 0.5rem;
         border: 2px solid ${props => props.theme.gray4};
         border-radius: 4px;
+
+        :hover {
+            border: 2px solid ${ props => props.theme.brand1 };
+        }
+
+        :focus{
+            border-radius: 4px;
+            color: ${ props => props.theme.gray0 };
+            border: 2px solid ${ props => props.theme.brand1 };
+        } 
     }
 
     div{
@@ -106,10 +134,15 @@ const FormRegisterFormAd = styled.form`
         }
 
         .save{
-            background-color: ${props => props.theme.brand3} ;
+            background-color: ${props => props.theme.brand1};
             color: ${props => props.theme.brand4};
+            border: 2px solid ${props => props.theme.brand1};
+            
+            :hover {
+                background-color: ${props => props.theme.brand4};
+                color: ${props => props.theme.brand1};
+            }
         }
-
     }
 
     img{
