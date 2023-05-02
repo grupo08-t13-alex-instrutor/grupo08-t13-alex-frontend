@@ -13,25 +13,22 @@ const Header = () => {
     const navigate = useNavigate()
     const { infoUserLogin } = useContext(User)
     const [openMenu, setOpenMenu] = useState(false)
-    const [adversaments, setAdversaments] = useState([])
     const [editAddress, setEditAddress] = useState<boolean>(false);
     const [editUser, setEditUser] = useState<boolean>(false);
     const [sigla, setSigla] = useState<string>()
 
     const callBackSiglaNameUtils = async () => {
-        const result = await siglaNameUtils(infoUserLogin!.name)
-        setSigla(result)
-    }
+        const res = await instanceAxios.get(`user/${infoUserLogin!.id}`)
 
-    const getAdversaments = async () => {
-        const responseAdversaments = await instanceAxios.get(`ads`);
-        setAdversaments(responseAdversaments.data)
+        const result = await siglaNameUtils(res.data.name)
+
+        setSigla(result)
     }
 
     useEffect(() => {
         callBackSiglaNameUtils()
-        getAdversaments()
-    }, [])
+
+    }, [infoUserLogin])
 
     return (
         <>
