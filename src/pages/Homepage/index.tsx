@@ -16,20 +16,23 @@ export const Homepage = () => {
   const location = useLocation();
   const [adversaments, setAdversaments] = useState<any[]>([]);
   const [filters, setFilters] = useState({});
-  const [totalPage, setTotalPage] = useState()
+  const [totalPage, setTotalPage] = useState();
   const [filtered, setFiltered] = useState<object[]>([]);
-  const [pageNumber, setPageNumber] = useState(1)
+  const [pageNumber, setPageNumber] = useState(0);
 
   const getAdversaments = async () => {
-    const responseAdversaments = await instanceAxios.get(`ads?page=${pageNumber}`);
-    setPageNumber(responseAdversaments.data.page)
-    setTotalPage(responseAdversaments.data.totalPage)
-    setAdversaments(responseAdversaments.data.ads);
+    await instanceAxios.get(`ads?page=${pageNumber}`).then((res) => {
+      console.log(res.data);
+      setPageNumber(res.data.page);
+      setTotalPage(res.data.totalPage);
+      setAdversaments(res.data.ads);
+    });
   };
 
   if (location.pathname === "/homepage") {
     useEffect(() => {
-      getAdversaments()
+      getAdversaments();
+      console.log(adversaments);
     }, [location.pathname, pageNumber]);
   }
 
@@ -48,85 +51,112 @@ export const Homepage = () => {
         />
         <div id="formart">
           <Ul>
-            {
-              filtered.length > 0 ?
+            {filtered.length > 0 ? (
+              filtered.map((e: any) => {
+                let siglaName = "";
 
-                filtered.map((e: any) => {
-                  let siglaName = "";
+                if (e.user.name.includes(" ")) {
+                  const sigla = e.user.name.split(" ");
+                  siglaName += sigla[0][0] + sigla[1][1];
+                } else {
+                  siglaName += e.user.name[0];
+                }
+                return (
+                  <Cards
+                    onClick={() => navigate("/profile/user")}
+                    idAmount={e.user.id}
+                    src={e.images[0]}
+                    marca={e.brand}
+                    descricao={e.description}
+                    km={e.mileage}
+                    name={e.user.name}
+                    ano={e.year}
+                    preco={e.price}
+                    siglaNanme={siglaName}
+                    idAds={e.id}
+                  >
+                    {e.price < 10000 ? <span className="cifrao">$</span> : null}
+                  </Cards>
+                );
+              })
+            ) : adversaments.length > 0 ? (
+              adversaments.map((e: any) => {
+                let siglaName = "";
 
-                  if (e.user.name.includes(" ")) {
-                    const sigla = e.user.name.split(" ");
-                    siglaName += sigla[0][0] + sigla[1][1];
-                  } else {
-                    siglaName += e.user.name[0];
-                  }
-                  return (
-                    <Cards
-                      onClick={() => navigate("/profile/user")}
-                      idAmount={e.user.id}
-                      src={e.images[0]}
-                      marca={e.brand}
-                      descricao={e.description}
-                      km={e.mileage}
-                      name={e.user.name}
-                      ano={e.year}
-                      preco={e.price}
-                      siglaNanme={siglaName}
-                      idAds={e.id}
-                    >
-                      {e.price < 10000 ? <span className="cifrao">$</span> : null}
-                    </Cards>
-                  );
-                })
-                :
-                adversaments.map((e: any) => {
-                  let siglaName = "";
+                if (e.user.name.includes(" ")) {
+                  const sigla = e.user.name.split(" ");
+                  siglaName += sigla[0][0] + sigla[1][1];
+                } else {
+                  siglaName += e.user.name[0];
+                }
 
-                  if (e.user.name.includes(" ")) {
-                    const sigla = e.user.name.split(" ");
-                    siglaName += sigla[0][0] + sigla[1][1];
-                  } else {
-                    siglaName += e.user.name[0];
-                  }
-
-                  return (
-                    <Cards
-                      onClick={() => navigate("/profile/user")}
-                      idAmount={e.user.id}
-                      src={e.images[0]}
-                      marca={e.brand}
-                      descricao={e.description}
-                      km={e.mileage}
-                      name={e.user.name}
-                      ano={e.year}
-                      preco={e.price}
-                      siglaNanme={siglaName}
-                      idAds={e.id}
-                    >
-                      {e.price < 10000 ? <span className="cifrao">$</span> : null}
-                    </Cards>
-                  );
-                })
-            }
+                return (
+                  <Cards
+                    onClick={() => navigate("/profile/user")}
+                    idAmount={e.user.id}
+                    src={e.images[0]}
+                    marca={e.brand}
+                    descricao={e.description}
+                    km={e.mileage}
+                    name={e.user.name}
+                    ano={e.year}
+                    preco={e.price}
+                    siglaNanme={siglaName}
+                    idAds={e.id}
+                  >
+                    {e.price < 10000 ? <span className="cifrao">$</span> : null}
+                  </Cards>
+                );
+              })
+            ) : (
+              <h1>Sem anúncios no momento!</h1>
+            )}
           </Ul>
           <div id="page">
-            {pageNumber === 1 ?
-              null
-              :
-              <span id="anterior" onClick={() => setPageNumber(pageNumber - 1)}>{'<'} Anterior</span>
-            }
-            <span>
-              <strong>{pageNumber}</strong> de {totalPage}
-            </span>
-            {pageNumber === totalPage ?
-              null
-              :
-              <span id="seguinte" onClick={() => setPageNumber(pageNumber + 1)}> Seguinte {'>'} </span>
-            }
+            {pageNumber === 0 ? (
+              <>
+                <span>
+                  <strong>{pageNumber + 1}</strong> de {totalPage}
+                </span>
+
+                <span
+                  id="seguinte"
+                  onClick={() => setPageNumber(pageNumber + 1)}
+                >
+                  {" "}
+                  Seguinte {">"}{" "}
+                </span>
+              </>
+            ) : (
+              <>
+                <span
+                  id="anterior"
+                  onClick={() => setPageNumber(pageNumber - 1)}
+                >
+                  {"<"} Anterior
+                </span>
+                <span>
+                  <strong>{pageNumber + 1}</strong> de {totalPage}
+                </span>
+
+                <span
+                  id="seguinte"
+                  onClick={() => setPageNumber(pageNumber + 1)}
+                >
+                  {" "}
+                  Seguinte {">"}{" "}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </Section>
       <FooterHomePage />
+      <div className="editAdsModal">
+        <div>
+          <h1>teste</h1>
+        </div>
+      </div>
     </SectionHome>
   );
 };
