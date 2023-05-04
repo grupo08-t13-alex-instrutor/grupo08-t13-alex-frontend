@@ -1,7 +1,7 @@
 import Section from "./styled"
 import { FooterHomePage, Header } from "../../components";
 import { Cards } from "../../components";
-import { useLocation } from "react-router-dom";
+import { Await, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import instanceAxios from "../../services";
 import { User } from "../../context";
@@ -25,19 +25,31 @@ const ProfilePageUser = () => {
 
         setSigla(result)
 
+        sessionStorage.setItem('sigla', result)
+        sessionStorage.setItem('id', responsegetUser.data.id)
+        sessionStorage.setItem('name', responsegetUser.data.name)
+        sessionStorage.setItem('description', responsegetUser.data.description)
+
     }
+
+
 
     const getAdversaments = async () => {
         const responseAdversaments = await instanceAxios.get(`ads`);
-        setAdversaments(responseAdversaments.data)
+        localStorage.setItem('adversamentsPageUser', JSON.stringify(responseAdversaments.data))
+        const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageUser')!)
+        setAdversaments(adverSamentsSession)
     }
 
-    if (location.pathname === "/profile/user") {
-        useEffect(() => {
-            userSelectInPageProfileUser()
-            getAdversaments()
-        }, [location.pathname, localStorage.getItem("token")])
-    }
+    console.log(adversaments)
+
+
+    useEffect(() => {
+        userSelectInPageProfileUser()
+        getAdversaments()
+        const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageUser')!)
+        setAdversaments(adverSamentsSession)
+    }, [])
 
     return (
         <Section className="profile" >
@@ -45,20 +57,20 @@ const ProfilePageUser = () => {
             <div className="bg"></div>
 
             <article className="infoUser" >
-                <article className="siglaInfoUser">{sigla}</article>
+                <article className="siglaInfoUser">{sessionStorage.getItem('sigla')}</article>
                 <section>
-                    <span>{user?.name}</span>
+                    <span>{sessionStorage.getItem('name')}</span>
                     <span className="anunciante">Anuciante</span>
                 </section>
                 <p>
-                    {user?.description}
+                    {sessionStorage.getItem('description')}
                 </p>
             </article>
             <h5>Anúncios</h5>
             <ul>
                 {
                     adversaments.map((e: any) => {
-                        if (e.user.id === idUser && e.published === true) {
+                        if (e.user.id === sessionStorage.getItem('id') && e.published === true) {
                             return (
                                 <Cards
                                     src={e.images[0]}
@@ -71,7 +83,7 @@ const ProfilePageUser = () => {
                                     siglaNanme={sigla!}
                                     idAds={e.id}
                                 >
-                                   
+
                                 </Cards>
                             )
                         } else {

@@ -12,6 +12,14 @@ const AsideAdPageStyled = styled.aside`
         float: under;
         margin: 0.5rem;
     }
+
+    #aviso{
+        width: 100%;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+    }
 `;
 
 export default AsideAdPageStyled;

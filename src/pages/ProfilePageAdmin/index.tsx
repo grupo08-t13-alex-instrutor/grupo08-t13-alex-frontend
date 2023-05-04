@@ -32,20 +32,34 @@ const ProfilePageAdmin = () => {
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads`);
-    setAdversaments(responseAdversaments.data)
-  }
+    localStorage.setItem('adversamentsPageAdmin', JSON.stringify(responseAdversaments.data))
 
+    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
+
+    setAdversaments(adverSamentsSession)
+  }
   const callBackSiglaNameUtils = async () => {
+
     const result = await siglaNameUtils(infoUserLogin!.name)
+
+    const resUser = await instanceAxios.get(`user/${infoUserLogin!.id}`)
+
+    sessionStorage.setItem('sigla', result)
+    sessionStorage.setItem('name', resUser.data.name)
+    sessionStorage.setItem('idAdmin', resUser.data.id)
+    sessionStorage.setItem('description', resUser.data.description)
+
     setSigla(result)
   }
 
-  if (location.pathname === "/profile/admin") {
-    useEffect(() => {
-      callBackSiglaNameUtils()
-      getAdversaments()
-    }, [location.pathname, localStorage.getItem("token")])
-  }
+  useEffect(() => {
+    callBackSiglaNameUtils()
+    getAdversaments()
+
+    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
+    setAdversaments(adverSamentsSession)
+  }, [localStorage.getItem("token")])
+
 
   return (
     <Section className="profile">
@@ -75,13 +89,13 @@ const ProfilePageAdmin = () => {
       <div className="bg"></div>
 
       <article className="infoUser">
-        <article className="siglaInfoUser">{sigla}</article>
+        <article className="siglaInfoUser">{sessionStorage.getItem('sigla')}</article>
         <section>
-          <span>{infoUserLogin?.name}</span>
+          <span>{sessionStorage.getItem('name')}</span>
           <span className="anunciante">Anuciante</span>
         </section>
         <p>
-          {infoUserLogin?.description}
+          {sessionStorage.getItem('description')}
         </p>
         <button onClick={event => {
           event.preventDefault();
@@ -92,18 +106,19 @@ const ProfilePageAdmin = () => {
       <h5>Anúncios</h5>
       <ul>
         {
-          adversaments!.map((e: any) => {
-            if (e.user.id === infoUserLogin?.id) {
+          adversaments.map((e: any) => {
+            if (e.user.id === sessionStorage.getItem('idAdmin')) {
+              console.log(e)
               return (
                 <Cards
                   src={e.images[0]}
                   marca={e.brand}
                   descricao={e.description}
                   km={e.mileage}
-                  name={infoUserLogin!.name}
+                  name={sessionStorage.getItem('name')!}
                   ano={e.year}
                   preco={e.price}
-                  siglaNanme={sigla!}
+                  siglaNanme={sessionStorage.getItem('sigla')!}
                   idAds={e.id}
                 >
                   {e.published ?

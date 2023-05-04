@@ -56,7 +56,8 @@ export interface UserProviderData {
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
-    getAdsAmount: () => Promise<any>,
+    getAdsAmount: () => void,
+    getUseInfoData: () => Promise<any>,
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
     setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
@@ -159,6 +160,7 @@ function ContextDadosUser({ children }: iInfoUser) {
         if (token) {
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
+            localStorage.setItem("id", responseUser.data.id)
             setIdAdressUser(responseUser.data.addressId)
         }
     }
@@ -220,6 +222,7 @@ function ContextDadosUser({ children }: iInfoUser) {
                 setIdUser,
                 setInfoUserLogin,
                 idAdressUser,
+                getUseInfoData,
                 patchAdressUser,
                 deleteUser,
                 tokenRecoverPassword,

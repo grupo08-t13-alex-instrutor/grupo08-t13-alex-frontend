@@ -9,13 +9,13 @@ import { useLocation } from "react-router-dom"
 const CreationCommentPageProduct = () => {
 
     const location = useLocation()
-    const { infoUserLogin } = useContext(User)
+    const { infoUserLogin, getUseInfoData } = useContext(User)
     const [sigla, setSigla] = useState<string>()
     const [name, setName] = useState<string>()
 
 
     const callBackSiglaNameUtils = async () => {
-        const res = await instanceAxios.get(`user/${infoUserLogin!.id}`)
+        const res = await instanceAxios.get(`user/${localStorage.getItem("id")}`)
 
         const result = await siglaNameUtils(res.data.name)
         setName(res.data.name)
@@ -25,6 +25,9 @@ const CreationCommentPageProduct = () => {
     if (location.pathname === "/ad") {
         useEffect(() => {
             callBackSiglaNameUtils()
+            if (localStorage.getItem("token")) {
+                getUseInfoData()
+            }
 
         }, [location.pathname])
     }
