@@ -3,12 +3,15 @@ import Remove from "../../assets/svg/x.svg";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { iAdRequest } from "../../interfaces/ads";
+import instanceAxios from "../../services";
+import { toast } from "react-toastify";
 
 interface a {
   setOpenUpateAdForm: React.Dispatch<React.SetStateAction<boolean>>;
+  id: string;
 }
 
-const EditFormAds = ({ setOpenUpateAdForm }: a) => {
+const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
   const [galleryImages, setGalleryImages] = useState([
     { id: 1, label: "Imagem da capa", value: "" },
     { id: 2, label: "1ª Imagem da galeria", value: "" },
@@ -45,12 +48,20 @@ const EditFormAds = ({ setOpenUpateAdForm }: a) => {
     setGalleryImages(updatedGalleryImages);
   };
 
+  const deleteAd = async () => {
+    try {
+      await instanceAxios.delete(`ads/${id}`);
+    } catch {
+      toast.error("Algo deu errado!");
+    }
+  };
+
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data: iAdRequest) => {};
 
   return (
-    <SectionBgForm onClick={handleSubmit(onSubmit)}>
+    <SectionBgForm>
       <form action="">
         <div>
           <span>Editar de anuncio</span>
@@ -132,7 +143,7 @@ const EditFormAds = ({ setOpenUpateAdForm }: a) => {
         </div>
 
         <div className="alteration">
-          <button>Excluir Anúncio</button>
+          <button onClick={deleteAd}>Excluir Anúncio</button>
           <button className="save">Salvar alterações</button>
         </div>
       </form>

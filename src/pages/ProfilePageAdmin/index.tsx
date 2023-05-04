@@ -17,10 +17,11 @@ const ProfilePageAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [adversaments, setAdversaments] = useState([]);
-  const [openRegisterAdForm, setOpenRegisterAdForm] = useState(true);
-  const [openUpateAdForm, setOpenUpateAdForm] = useState(false);
+  const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
+  const [openUpateAdForm, setOpenUpateAdForm] = useState(true);
   const [sigla, setSigla] = useState<string>();
   const { infoUserLogin } = useContext(User);
+  const [adId, setAdId] = useState("");
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads`);
@@ -55,7 +56,7 @@ const ProfilePageAdmin = () => {
 
       {openUpateAdForm ? (
         <ModalContainer>
-          <EditFormAds setOpenUpateAdForm={setOpenUpateAdForm} />
+          <EditFormAds setOpenUpateAdForm={setOpenUpateAdForm} id={adId} />
         </ModalContainer>
       ) : (
         <></>
@@ -98,6 +99,7 @@ const ProfilePageAdmin = () => {
                   <button
                     onClick={() => {
                       setOpenUpateAdForm(true);
+                      setAdId(e.id);
                     }}
                   >
                     Editar
