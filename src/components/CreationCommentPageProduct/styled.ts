@@ -14,12 +14,22 @@ const ButtonGrey = styled.button`
     font-size: 12px;
     line-height: 24px;
     color: #868E96;
-    
-    @media (min-width: 720px) {
-        :hover {
-            border: 2px solid #868E96;
+
+    cursor: ${props => {
+        if (!localStorage.getItem("token")) {
+            return `not-allowed`
         }
+    }};
+
+
+    :hover {
+        border: ${props => {
+        if (localStorage.getItem("token")) {
+            return `2px solid #868E96`
+        }
+    }};
     }
+    
 `;
 
 const SectionComment = styled.section`

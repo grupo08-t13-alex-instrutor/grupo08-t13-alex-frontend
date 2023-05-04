@@ -61,6 +61,11 @@ const ProfilePageAdmin = () => {
             setOpenRegisterAdForm={setOpenRegisterAdForm}
             brands={brands}
           />
+          <RegisterFormAds
+            openRegisterAdForm={openRegisterAdForm}
+            setOpenRegisterAdForm={setOpenRegisterAdForm}
+            brands={brands}
+          />
         </ModalContainer>
       ) : (
         <></>
