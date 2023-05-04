@@ -9,9 +9,14 @@ const StyledRegister = styled.section`
   margin-top: 62px;
   padding: 46px 0;
   min-width: 350px;
+  
+
+
 
 p{
   color: red;
+  margin: 0;
+  margin-bottom: 1rem;
 }
   .register-form {
     width: 50%;
@@ -24,6 +29,16 @@ p{
     align-items: flex-start;
     justify-content: center;
     padding: 44px 48px;
+    position: relative;
+
+
+    .SHOW , .HIDDEN{
+      position: absolute;
+      bottom: 6rem;
+      cursor: pointer;
+      font-weight: bolder;
+      color: ${(props) => props.theme.gray2};
+    }
 
     .form-inputs {
       width: 100%;

@@ -5,9 +5,9 @@ export interface iAdRequest {
     model: string
     year: string
     fuel: string
-    mileage: number
+    mileage: string
     color: string
-    price: number
+    price: string
     description: string
     images: iImageRequest[]
 }

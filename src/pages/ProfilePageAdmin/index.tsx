@@ -12,16 +12,27 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import instanceAxios from "../../services";
 import { siglaNameUtils } from "../../utils";
 import { ModalContainer } from "../../components/Header/styled";
+import axios from "axios";
 
 const ProfilePageAdmin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [adversaments, setAdversaments] = useState([]);
   const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
-  const [openUpateAdForm, setOpenUpateAdForm] = useState(true);
+  const [openUpateAdForm, setOpenUpateAdForm] = useState(false);
   const [sigla, setSigla] = useState<string>();
+  const [brands, setBrands] = useState<string[] | null>(null);
   const { infoUserLogin } = useContext(User);
-  const [adId, setAdId] = useState("");
+
+  const getBrands = async () => {
+    const { data } = await axios.get("https://kenzie-kars.herokuapp.com/cars");
+    let res: string[] = [];
+    for (const key in data) {
+      res.push(key);
+    }
+
+    setBrands(res);
+  };
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads`);
@@ -48,6 +59,7 @@ const ProfilePageAdmin = () => {
           <RegisterFormAds
             openRegisterAdForm={openRegisterAdForm}
             setOpenRegisterAdForm={setOpenRegisterAdForm}
+            brands={brands}
           />
         </ModalContainer>
       ) : (
@@ -73,6 +85,7 @@ const ProfilePageAdmin = () => {
         <button
           onClick={(event) => {
             event.preventDefault();
+            getBrands();
             setOpenRegisterAdForm(!openRegisterAdForm);
           }}
         >

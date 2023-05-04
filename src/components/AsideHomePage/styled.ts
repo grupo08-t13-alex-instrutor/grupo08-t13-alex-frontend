@@ -38,13 +38,21 @@ const Aside = styled.aside`
   .km {
     display: block;
 
-    input {
+    input[type='number'] {
       color: ${(props) => props.theme.gray2};
       background: ${(props) => props.theme.gray5};
-      width: 125px;
+      width: 100px;
       height: 37px;
+      border: none;
+      text-align: center;
+      &::-webkit-inner-spin-button { 
+        -webkit-appearance: none;
+      }
+      &::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+      }
     }
-
+   
     .max {
       margin-left: 0.5rem;
     }
