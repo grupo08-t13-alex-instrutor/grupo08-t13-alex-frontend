@@ -108,6 +108,31 @@ export const HeaderStyled = styled.header`
         background-color: #5126ea;
         margin: auto 0;
         padding: 0;
+        background-color: ${(props) => {
+    const colorsRandom = [
+      props.theme.random1,
+      props.theme.random2,
+      props.theme.random3,
+      props.theme.random4,
+      props.theme.random5,
+      props.theme.random6,
+      props.theme.random7,
+      props.theme.random8,
+      props.theme.random9,
+      props.theme.random10,
+      props.theme.random11,
+      props.theme.random12,
+    ];
+
+    const randomColorIndex = Math.floor(Math.random() * 12);
+
+    const color = colorsRandom[randomColorIndex];
+
+    return color;
+  }};
+
+        
+     
 
         p {
           height: 32px;

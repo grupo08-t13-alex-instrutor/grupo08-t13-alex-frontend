@@ -28,11 +28,10 @@ const Header = () => {
     useEffect(() => {
         callBackSiglaNameUtils()
 
-    }, [infoUserLogin])
+    }, [infoUserLogin, localStorage.getItem("token")])
 
     return (
         <>
-
             <HeaderStyled>
                 <img src={MotorsShop} alt="Logo Motors Shop" onClick={() => navigate("/homepage")} />
                 <button className="invisible-options" onClick={(event) => {

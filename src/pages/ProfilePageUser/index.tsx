@@ -58,7 +58,7 @@ const ProfilePageUser = () => {
             <ul>
                 {
                     adversaments.map((e: any) => {
-                        if (e.user.id === idUser) {
+                        if (e.user.id === idUser && e.published === true) {
                             return (
                                 <Cards
                                     src={e.images[0]}
@@ -71,6 +71,7 @@ const ProfilePageUser = () => {
                                     siglaNanme={sigla!}
                                     idAds={e.id}
                                 >
+                                   
                                 </Cards>
                             )
                         } else {

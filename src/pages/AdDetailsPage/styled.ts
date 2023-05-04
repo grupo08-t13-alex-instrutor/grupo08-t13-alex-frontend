@@ -7,10 +7,42 @@ const StyledAdPage = styled.div`
 
     padding: 5.87rem 0 0.625rem 0;
 
-    /* div,
-    section {
-        width: 50%;
-    } */
+    .NotcreateComment{
+
+            .formNotActivate{
+
+                textarea{
+                        border: 1px solid ${props => props.theme.gray5};
+                        color: none;
+                }
+
+                button{
+                    width: 8rem;
+                    height: auto;
+                    padding: 5px 10px;
+                    border: 2px solid transparent;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                    background-color: rgb(233, 236, 239);
+                    font-style: normal;
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 24px;
+                    color: rgb(134, 142, 150);
+                    cursor: "not-allowed";
+                }
+
+                button,textarea{
+                    cursor: ${props => {
+                                if (!localStorage.getItem("token")) {
+                                    return `not-allowed`
+                                }
+                            }};
+                    }
+            }
+
+        }
+    }
 
     ul {
         li {
