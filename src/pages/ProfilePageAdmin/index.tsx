@@ -23,6 +23,7 @@ const ProfilePageAdmin = () => {
   const [sigla, setSigla] = useState<string>();
   const [brands, setBrands] = useState<string[] | null>(null);
   const { infoUserLogin } = useContext(User);
+  const [adId, setAdId] = useState("");
 
   const getBrands = async () => {
     const { data } = await axios.get("https://kenzie-kars.herokuapp.com/cars");
@@ -61,11 +62,6 @@ const ProfilePageAdmin = () => {
             setOpenRegisterAdForm={setOpenRegisterAdForm}
             brands={brands}
           />
-          <RegisterFormAds
-            openRegisterAdForm={openRegisterAdForm}
-            setOpenRegisterAdForm={setOpenRegisterAdForm}
-            brands={brands}
-          />
         </ModalContainer>
       ) : (
         <></>
@@ -73,7 +69,7 @@ const ProfilePageAdmin = () => {
 
       {openUpateAdForm ? (
         <ModalContainer>
-          <EditFormAds setOpenUpateAdForm={setOpenUpateAdForm} id={adId} />
+          <EditFormAds id={adId} setOpenUpateAdForm={setOpenUpateAdForm} />
         </ModalContainer>
       ) : (
         <></>

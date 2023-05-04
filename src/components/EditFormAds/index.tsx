@@ -1,6 +1,6 @@
 import SectionBgForm from "./styled";
 import Remove from "../../assets/svg/x.svg";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { iAdRequest } from "../../interfaces/ads";
 import instanceAxios from "../../services";
@@ -17,6 +17,7 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
     { id: 2, label: "1ª Imagem da galeria", value: "" },
     { id: 3, label: "2ª Imagem da galeria", value: "" },
   ]);
+  const [adData, setAdData] = useState({});
 
   const handleAddImageField = (event: React.FormEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -48,6 +49,16 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
     setGalleryImages(updatedGalleryImages);
   };
 
+  const setData = async () => {
+    const data = await (await instanceAxios.get(`ads/${id}`)).data;
+    setAdData(data);
+    console.log("!!!!", adData);
+  };
+
+  useEffect(() => {
+    setData();
+  }, [setOpenUpateAdForm]);
+
   const deleteAd = async () => {
     try {
       await instanceAxios.delete(`ads/${id}`);
@@ -71,30 +82,46 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
         <p>informações do veículo</p>
 
         <label htmlFor="">Marca</label>
-        <input type="text" {...register("brand")} />
+        <input type="text" {...register("brand")} placeholder={adData.brand} />
 
         <label htmlFor="">Modelo</label>
-        <input type="text" {...register("model")} />
+        <input type="text" {...register("model")} placeholder={adData.model} />
 
         <div>
           <fieldset>
             <label htmlFor="">Ano</label>
-            <input type="text" {...register("model")} />
+            <input
+              type="text"
+              {...register("model")}
+              placeholder={adData.year}
+            />
           </fieldset>
           <fieldset>
             <label htmlFor="">Combustível</label>
-            <input type="text" {...register("model")} />
+            <input
+              type="text"
+              {...register("model")}
+              placeholder={adData.fuel}
+            />
           </fieldset>
         </div>
 
         <div>
           <fieldset>
             <label htmlFor="">Quilometragem</label>
-            <input type="text" {...register("model")} />
+            <input
+              type="text"
+              {...register("model")}
+              placeholder={adData.mileage}
+            />
           </fieldset>
           <fieldset>
             <label htmlFor="">Cor</label>
-            <input type="text" {...register("model")} />
+            <input
+              type="text"
+              {...register("model")}
+              placeholder={adData.color}
+            />
           </fieldset>
         </div>
 
@@ -105,13 +132,21 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
           </fieldset>
           <fieldset>
             <label htmlFor="">Preço</label>
-            <input type="text" {...register("model")} />
+            <input
+              type="text"
+              {...register("model")}
+              placeholder={adData.price}
+            />
           </fieldset>
         </div>
 
         <div className="description">
           <label htmlFor="">Descrição</label>
-          <textarea id="" {...register("model")}></textarea>
+          <textarea
+            id=""
+            {...register("model")}
+            placeholder={adData.description}
+          ></textarea>
         </div>
 
         <div className="yesOrNo">
@@ -133,6 +168,7 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
                 id={`image-${image.id}`}
                 value={image.value}
                 onChange={(event) => handleChangeImage(event, image.id)}
+                placeholder={image.src}
               />
             </React.Fragment>
           ))}
