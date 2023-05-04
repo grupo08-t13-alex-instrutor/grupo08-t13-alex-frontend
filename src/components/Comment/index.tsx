@@ -1,5 +1,6 @@
 import { CardComment, Section } from "./styled";
 import { useState } from "react";
+import moment from "moment";
 
 interface iData {
     img: string,
@@ -35,6 +36,18 @@ const Comment = () => {
     ];
 
     const [commentData, setCommentData] = useState<iData[]>(data)
+    
+    const timeComment = () => {
+        const startData = moment( "2023-04-27T19:17:08.597Z".split('T')[0] );
+        const endData = moment();
+        const duration = moment.duration( endData.diff( startData ));
+        const { _data: { days, hours, minutes, seconds} }: any = duration;
+        
+        if( days ){ return days > 1 ? `há ${days} dias` : `há ${days} dia` };
+        if( hours ){ return hours > 1 ? `há ${hours} horas` : `há ${hours} hora` };
+        if( minutes ){ return minutes > 1 ? `há ${minutes} minutos` : `há ${minutes} minuto` };
+        if( seconds ){ return `há ${seconds} segundos` };
+    }
 
     return(
         <Section>
