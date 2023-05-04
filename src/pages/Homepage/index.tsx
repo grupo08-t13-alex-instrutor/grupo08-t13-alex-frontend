@@ -88,24 +88,26 @@ export const Homepage = () => {
                   } else {
                     siglaName += e.user.name[0];
                   }
+                  if (e.published === true) {
 
-                  return (
-                    <Cards
-                      onClick={() => navigate("/profile/user")}
-                      idAmount={e.user.id}
-                      src={e.images[0]}
-                      marca={e.brand}
-                      descricao={e.description}
-                      km={e.mileage}
-                      name={e.user.name}
-                      ano={e.year}
-                      preco={e.price}
-                      siglaNanme={siglaName}
-                      idAds={e.id}
-                    >
-                      {e.price < 10000 ? <span className="cifrao">$</span> : null}
-                    </Cards>
-                  );
+                    return (
+                      <Cards
+                        onClick={() => navigate("/profile/user")}
+                        idAmount={e.user.id}
+                        src={e.images[0]}
+                        marca={e.brand}
+                        descricao={e.description}
+                        km={e.mileage}
+                        name={e.user.name}
+                        ano={e.year}
+                        preco={e.price}
+                        siglaNanme={siglaName}
+                        idAds={e.id}
+                      >
+                        {e.price < 10000 ? <span className="cifrao">$</span> : null}
+                      </Cards>
+                    )
+                  };
                 })
             }
           </Ul>

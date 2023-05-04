@@ -6,7 +6,6 @@ left: 12px;
 width: 351px;
 height: 398px;
 border-radius: 4px;
-/* background-color: ${(props) => props.theme.gray10}; */
 text-align: center;
 font-style: normal;
 
@@ -17,7 +16,28 @@ font-style: normal;
         padding: 40px 28px;
         gap: 28px;
         border-radius: 4px;
-        background-color: ${(props) => props.theme.gray10};
+        background-color: ${(props) => {
+        const colorsRandom = [
+            props.theme.random1,
+            props.theme.random2,
+            props.theme.random3,
+            props.theme.random4,
+            props.theme.random5,
+            props.theme.random6,
+            props.theme.random7,
+            props.theme.random8,
+            props.theme.random9,
+            props.theme.random10,
+            props.theme.random11,
+            props.theme.random12,
+        ];
+
+        const randomColorIndex = Math.floor(Math.random() * 12);
+
+        const color = colorsRandom[randomColorIndex];
+
+        return color;
+    }};
 
         position: absolute;
         width: 351px;
@@ -68,7 +88,6 @@ font-style: normal;
 
         width: 206px;
         height: 48px;
-        /* background-color: ${(props) => props.theme.grey0}; */
         background-color: #0B0D0D ;
         border: 1.5px solid #0B0D0D;
         border-radius: 4px;
