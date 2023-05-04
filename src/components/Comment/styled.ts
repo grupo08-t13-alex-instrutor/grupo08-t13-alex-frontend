@@ -55,7 +55,28 @@ export const CardComment = styled.li<iCardComment>`
             max-width: 25%;
             border-radius: 50%;
             color: #ffffff;
-            background-color: ${ props => props.bgcolor };
+            background-color: ${(props) => {
+        const colorsRandom = [
+            props.theme.random1,
+            props.theme.random2,
+            props.theme.random3,
+            props.theme.random4,
+            props.theme.random5,
+            props.theme.random6,
+            props.theme.random7,
+            props.theme.random8,
+            props.theme.random9,
+            props.theme.random10,
+            props.theme.random11,
+            props.theme.random12,
+        ];
+
+        const randomColorIndex = Math.floor(Math.random() * 12);
+
+        const color = colorsRandom[randomColorIndex];
+
+        return color;
+    }};
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,15 +88,31 @@ export const CardComment = styled.li<iCardComment>`
             padding: 0 10px;
         }
 
+       
         .time {
-            width: 25%;
+            list-style-type: disc;
             font-style: normal;
             font-weight: 400;
+            -webkit-box-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            align-items: center;
             font-size: 12px;
+            display: flex;
+            padding-left: 0.8rem;
             line-height: 24px;
-            color: #868E96;
+            color: rgb(134, 142, 150);
             text-align: start;
+            position: relative;
+
+                strong{
+                   position: absolute;
+                    top: -0.5rem;
+                    left: 0;
+                    font-size: 2rem;
+                }
         }
+    
     }
 
     .bodyComment {
