@@ -93,7 +93,7 @@ const Header = () => {
                     }
                 </div>
             </MenuStyled >
-            <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"}>
+            <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"} >
                 <button onClick={event => {
                     setEditUser(!editUser)
                 }}>Editar Perfil</button>

@@ -106,7 +106,7 @@ const ProfilePageAdmin = () => {
       <h5>Anúncios</h5>
       <ul>
         {
-          adversaments.map((e: any) => {
+          adversaments!.map((e: any) => {
             if (e.user.id === sessionStorage.getItem('idAdmin')) {
               console.log(e)
               return (
@@ -138,7 +138,7 @@ const ProfilePageAdmin = () => {
                 </Cards>
               )
             } else {
-              return null;
+              return <p>Sem Anúncios</p>;
             }
           })
         }

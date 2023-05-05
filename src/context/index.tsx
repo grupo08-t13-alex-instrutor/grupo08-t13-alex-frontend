@@ -63,6 +63,8 @@ export interface UserProviderData {
     setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
     setOneAd: Dispatch<SetStateAction<string | undefined>>,
     deleteUser: () => void,
+    comments: any[] | undefined,
+    setComments: Dispatch<SetStateAction<any[] | undefined>>,
     recoverPasswordUpdatePassword: (data: iRecoverPasswordUpdatePassword) => void,
     recoverPasswordSendEmail: (data: iRecoveriPasswordSendEmail) => void,
     infoUserLogin: iUserInfoUserLogin | undefined,
@@ -85,6 +87,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     const [oneAd, setOneAd] = useState<string | undefined>()
     const [tokenRecoverPassword, setTokenRecoverPassword] = useState("")
     const [idUser, setIdUser] = useState<string>("")
+    const [comments, setComments] = useState<any[]>()
 
     const sessionUser = async (data: IBodySession) => {
 
@@ -231,7 +234,9 @@ function ContextDadosUser({ children }: iInfoUser) {
                 recoverPasswordUpdatePassword,
                 getAdsAmount,
                 setOneAd,
-                oneAd
+                oneAd,
+                comments,
+                setComments
             }}
         >
             {children}

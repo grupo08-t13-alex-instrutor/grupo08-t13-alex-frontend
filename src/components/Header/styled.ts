@@ -128,7 +128,7 @@ export const HeaderStyled = styled.header`
 
     const color = colorsRandom[randomColorIndex];
 
-    return color;
+    return color
   }};
 
         
@@ -269,7 +269,7 @@ export const MenuDesktopStyled = styled.div<iMenuDesktopProps>`
     flex-direction: column;
     align-items: start;
 
-    position: absolute;
+    position: fixed;
     z-index: 3;
     right: 5px;
     top: 70px;

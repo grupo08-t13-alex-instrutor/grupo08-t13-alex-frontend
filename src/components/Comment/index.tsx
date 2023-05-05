@@ -5,15 +5,17 @@ import { useContext, useEffect, useState } from "react";
 
 
 const Comment = () => {
-    const { oneAd } = useContext(User)
+    const { oneAd, setComments, comments } = useContext(User)
 
     const [commentData, setCommentData] = useState<any[]>()
 
     const getCommentsAboutAd = async () => {
 
         const res = await instanceAxios.get(`comments/${oneAd}`)
-        console.log(res.data)
         setCommentData(res.data.comments)
+        setComments(res.data.comments)
+
+
     }
 
 
@@ -29,8 +31,8 @@ const Comment = () => {
                     <>
                         <ul>
                             {
-                                commentData.map((data: any) => {
-                                    const { comment: { description, createdAt }, user: { name, email } } = data
+                                comments!.map((data: any) => {
+                                    const { comment: { description, createdAt }, user: { name } } = data
 
                                     let siglaName = ""
 

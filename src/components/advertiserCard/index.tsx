@@ -25,6 +25,7 @@ export const AdvertiserCard = () => {
         sessionStorage.setItem('sigla', result);
         sessionStorage.setItem('name', res.data.user.name);
         sessionStorage.setItem('description', res.data.user.description);
+        sessionStorage.setItem('idAmount', res.data.user.id);
 
     }
 
@@ -47,7 +48,7 @@ export const AdvertiserCard = () => {
                 <button className="buttonAds" onClick={() => {
                     if (location.pathname === "/ad") {
                         navigate("/profile/user")
-                        const valor: string | undefined = idAmount;
+                        const valor: string | null = sessionStorage.getItem('id');
                         setIdUser(valor ? valor : "");
 
                     }

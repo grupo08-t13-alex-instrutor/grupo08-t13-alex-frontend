@@ -8,6 +8,8 @@ import { useContext, useState } from "react";
 import { sessionVaidated } from "../../validations/login";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -25,8 +27,17 @@ const Login = () => {
   });
 
   const onSubmitFunction = async (data: IBodySession) => {
-  
+
     sessionUser(data)
+
+    toast('Login com suceso!', {
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
     reset();
   };
