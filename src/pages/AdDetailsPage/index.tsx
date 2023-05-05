@@ -13,6 +13,8 @@ import { Description } from "../../components/Description";
 import { StyledAdPage } from "./styled";
 
 const AdDetailsPage = () => {
+
+
     return (
         <>
             <Header />

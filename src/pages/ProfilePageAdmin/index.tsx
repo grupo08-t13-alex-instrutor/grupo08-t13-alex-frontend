@@ -3,7 +3,7 @@ import { EditFormAds, FooterHomePage, Header, RegisterFormAds } from "../../comp
 import { Cards } from "../../components";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import instanceAxios from "../../services";
 import { siglaNameUtils } from "../../utils";
 import { ModalContainer } from "../../components/Header/styled";
