@@ -3,7 +3,7 @@ import { EditFormAds, FooterHomePage, Header, RegisterFormAds } from "../../comp
 import { Cards } from "../../components";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import instanceAxios from "../../services";
 import { siglaNameUtils } from "../../utils";
 import { ModalContainer } from "../../components/Header/styled";
@@ -16,7 +16,6 @@ const ProfilePageAdmin = () => {
   const [adversaments, setAdversaments] = useState([])
   const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
   const [openUpateAdForm, setOpenUpateAdForm] = useState(false);
-  const [sigla, setSigla] = useState<string>()
   const [brands, setBrands] = useState<string[] | null>(null)
   const { infoUserLogin } = useContext(User)
 
@@ -49,7 +48,6 @@ const ProfilePageAdmin = () => {
     sessionStorage.setItem('idAdmin', resUser.data.id)
     sessionStorage.setItem('description', resUser.data.description)
 
-    setSigla(result)
   }
 
   useEffect(() => {
@@ -108,7 +106,6 @@ const ProfilePageAdmin = () => {
         {
           adversaments!.map((e: any) => {
             if (e.user.id === sessionStorage.getItem('idAdmin')) {
-              console.log(e)
               return (
                 <Cards
                   src={e.images[0]}

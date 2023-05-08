@@ -115,6 +115,10 @@ export const CardComment = styled.li<iCardComment>`
     
     }
 
+    .removeComment{
+        cursor: pointer;
+    }
+
     .bodyComment {
         margin-left: 0;
         .body-2-400 {

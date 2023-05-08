@@ -30,15 +30,6 @@ const Login = () => {
 
     sessionUser(data)
 
-    toast('Login com suceso!', {
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
     reset();
   };
 

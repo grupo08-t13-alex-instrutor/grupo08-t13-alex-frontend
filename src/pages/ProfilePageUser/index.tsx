@@ -41,7 +41,6 @@ const ProfilePageUser = () => {
         setAdversaments(adverSamentsSession)
     }
 
-    console.log(adversaments)
 
 
     useEffect(() => {

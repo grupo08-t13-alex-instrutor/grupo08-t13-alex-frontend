@@ -21,7 +21,7 @@ interface comment {
 const CreationCommentPageProduct = () => {
 
     const location = useLocation()
-    const { getUseInfoData, setComments, comments, oneAd } = useContext(User)
+    const { getUseInfoData, setComments, comments, oneAd, setOneAd } = useContext(User)
     const [sigla, setSigla] = useState<string>()
     const [name, setName] = useState<string>()
 
@@ -45,15 +45,15 @@ const CreationCommentPageProduct = () => {
     const onSubmitFunctionCreateComment = async (data: comment) => {
 
         if (localStorage.getItem("token")) {
-            console.log(data)
             const res = await instanceAxios.post(`comments/${oneAd}`, data)
+            setComments([...comments!, { comment: { id: res.data.id, description: res.data.description, createdAt: await res.data.createdAt }, user: { name: res.data.user.name, id: res.data.user.id } }])
 
-            setComments([...comments!, { comment: { description: res.data.description, createdAt: res.data.createdAt }, user: { name: res.data.user.name } }])
-
-            reset();
         }
 
+        reset();
+
     };
+
 
     if (location.pathname === "/ad") {
         useEffect(() => {
@@ -64,6 +64,7 @@ const CreationCommentPageProduct = () => {
 
         }, [location.pathname])
     }
+
 
     return (
         <>
