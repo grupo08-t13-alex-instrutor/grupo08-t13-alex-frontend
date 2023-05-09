@@ -52,23 +52,23 @@ export interface IAdResponse {
 
 
 export interface UserProviderData {
-    registerUser: (data: iUserRegisterReq) => void,
-    sessionUser: (data: IBodySession) => void,
-    updateUser: (data: iUserUpate) => void,
+    registerUser: (data: iUserRegisterReq) => any,  // era void, agora é any para teste de deploy
+    sessionUser: (data: IBodySession) => any,   // era void, agora é any para teste de deploy
+    updateUser: (data: iUserUpate) => any,  // era void, agora é any para teste de deploy
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
-    getAdsAmount: () => void,
+    getAdsAmount: () => any,    // era void, agora é any para teste de deploy
     getUseInfoData: () => Promise<any>,
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
     setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
     setOneAd: Dispatch<SetStateAction<string | undefined>>,
-    deleteUser: () => void,
+    deleteUser: () => any,  // era void, agora é any para teste de deploy
     comments: any[] | undefined,
     stateRenderComments: number,
     setStateRenderComments: Dispatch<SetStateAction<number>>,
     setComments: Dispatch<SetStateAction<any[] | undefined>>,
-    recoverPasswordUpdatePassword: (data: iRecoverPasswordUpdatePassword) => void,
-    recoverPasswordSendEmail: (data: iRecoveriPasswordSendEmail) => void,
+    recoverPasswordUpdatePassword: (data: iRecoverPasswordUpdatePassword) => any,   // era void, agora é any para teste de deploy
+    recoverPasswordSendEmail: (data: iRecoveriPasswordSendEmail) => any,    // era void, agora é any para teste de deploy
     infoUserLogin: iUserInfoUserLogin | undefined,
     idUser: string,
     oneAd: string | undefined,
