@@ -56,7 +56,7 @@ export interface UserProviderData {
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
-    getAdsAmount: () => any,
+    getAdsAmount: () => any, //trocado de void por any
     getUseInfoData: () => Promise<any>,
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
