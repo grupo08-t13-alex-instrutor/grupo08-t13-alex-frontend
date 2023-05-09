@@ -23,7 +23,7 @@ export const Homepage = () => {
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads?page=${pageNumber}`);
     setPageNumber(responseAdversaments.data.page)
-    setTotalPage(responseAdversaments.data.totalPage + 1)
+    setTotalPage(responseAdversaments.data.totalPage)
     setAdversaments(responseAdversaments.data.ads);
   }
 

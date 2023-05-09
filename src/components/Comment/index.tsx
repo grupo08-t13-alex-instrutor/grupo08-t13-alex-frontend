@@ -56,8 +56,7 @@ const Comment = () => {
     });
 
     const onSubmitFunction = async (data: any) => {
-        console.log(data)
-        console.log(idCommentValue)
+      
         const commentsReq = await instanceAxios.patch(`comments/${idCommentValue}`, data)
 
 
