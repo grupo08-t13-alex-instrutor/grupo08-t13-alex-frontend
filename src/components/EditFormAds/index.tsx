@@ -1,34 +1,167 @@
 import SectionBgForm from "./styled";
+import * as yup from "yup";
 import Remove from "../../assets/svg/x.svg";
-import { HeaderRegisterFormAd } from "../RegisterFormAds/styled";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { iAdRequest } from "../../interfaces/ads";
 import instanceAxios from "../../services";
-import { toast } from "react-toastify";
+import axios from "axios";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Options } from "../ModalOptions";
+
+interface iDataResponse {
+  id: string;
+  name: string;
+  brand: string;
+  year: string;
+  fuel: number;
+  value: number;
+}
 
 interface a {
   setOpenUpateAdForm: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;
+  adversaments: never[],
+  setAdversaments: React.Dispatch<React.SetStateAction<never[]>>;
+  brands: string[] | null,
 }
 
-const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
+const imageRequestSerializer = yup.object().shape({
+  link: yup.string().notRequired()
+});
+
+const adRequestSchema = yup.object().shape({
+  brand: yup.string().max(250).notRequired(),
+  model: yup.string().max(250).notRequired(),
+  year: yup.string()
+    .matches(/[0-9]{4}/, { message: { year: 'Deve conter apenas números (0000)' } })
+    .notRequired(),
+  fuel: yup
+    .string()
+    .notRequired(),
+  mileage: yup.number().notRequired(),
+  color: yup.string().max(50).notRequired(),
+  price: yup.number().notRequired(),
+  description: yup.string().max(300).notRequired(),
+  published: yup.boolean().default(true),
+  images: yup.array(imageRequestSerializer).max(250).notRequired(),
+});
+
+const EditFormAds = ({ setOpenUpateAdForm, id, adversaments, setAdversaments, brands }: a) => {
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<iAdRequest>({
+    mode: "onSubmit",
+    resolver: yupResolver(
+      adRequestSchema,
+      {
+        stripUnknown: true
+      }
+    )
+  });
+
   const [galleryImages, setGalleryImages] = useState([
     { id: 1, label: "Imagem da capa", value: "" },
     { id: 2, label: "1ª Imagem da galeria", value: "" },
     { id: 3, label: "2ª Imagem da galeria", value: "" },
   ]);
-  const [adData, setAdData] = useState({});
 
-  const handleAddImageField = (event: React.FormEvent<HTMLInputElement>) => {
-    event.preventDefault();
 
+  const [searchBrand, setSearchBrand] = useState<string>("");
+  const [searchModel, setSearchModel] = useState<string>('');
+  const [filterBrands, setFilterBrands] = useState<any>(null);
+  const [allInformations, setAllinformations] = useState<iDataResponse[]>([]);
+  const [year, setYear] = useState<string>('2022');
+  const [fuel, setFuel] = useState<string>("3");
+  const [fipe, setFipe] = useState<number>(282045);
+  const [models, setModels] = useState<string[]>([]);
+  const [filterModels, setFilterModels] = useState<string[]>([]);
+  const [openBrandOptions, setOpenBrandOptions] = useState(false);
+  const [openModelOptions, setOpenModelOptions] = useState(false);
+  const [published, setPublished] = useState(true);
+
+  useEffect(
+    () => {
+      if (!brands) {
+        return
+      }
+
+      let res: string[] = []
+      for (const brand of brands) {
+        if (brand.startsWith(searchBrand)) {
+          res.push(brand);
+        }
+      }
+      return setFilterBrands(res);
+    },
+    [searchBrand]
+  )
+
+  const getModels = async (brand: string) => {
+    const { data } = await axios.get(`https://kenzie-kars.herokuapp.com/cars?brand=${brand}`)
+    setAllinformations(data);
+
+    const res = data.map((e: any) => e.name);
+
+    setModels(res)
+  }
+
+
+  useEffect(
+    () => {
+      let list: string[] = []
+      for (const item of models) {
+        if (item.startsWith(searchModel)) {
+          list.push(item)
+        }
+      }
+      setFilterModels(list)
+    },
+    [searchModel]
+  )
+
+  const setDetails = () => {
+    for (const item of allInformations) {
+      if (item.name === searchModel) {
+        const { year, fuel, value } = item
+
+        setYear(year)
+        setFuel(`${fuel}`)
+        setFipe(value)
+
+        break
+      }
+    }
+  }
+
+  const registerAd = async (data: iAdRequest) => {
+    const token = localStorage.getItem('token');
+
+    const resGetAdId = await instanceAxios.get(`ads/${id}`)
+
+    await instanceAxios.patch(`ads/${id}`, { ...resGetAdId.data, ...data, published: published }, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(() => 'Cadastro realizado com sucesso')
+      .catch(error => `Message: ${error.response.statusText}; Status: ${error.response.status}`)
+
+    reset();
+    setOpenUpateAdForm(false);
+  }
+
+
+  const handleAddImageField = () => {
     const newImageField = {
       id: galleryImages.length + 1,
       label: `${galleryImages.length}ª Imagem da galeria`,
-      value: "",
+      value: ""
     };
-  }
+
+    setGalleryImages([...galleryImages, newImageField]);
+  };
+
 
   const handleChangeImage = (event: React.FormEvent<HTMLInputElement>, id: number) => {
 
@@ -49,7 +182,7 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
 
   return (
     < SectionBgForm onClick={() => null}>
-      <form action="" >
+      <form action="" onSubmit={handleSubmit(registerAd)} >
         <div>
           <span>Editar de anuncio</span>
           <img src={Remove} onClick={() => setOpenUpateAdForm(false)} />
@@ -58,78 +191,106 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
         <p>informações do veículo</p>
 
         <label htmlFor="">Marca</label>
-        <input type="text" />
+        <input
+          type="text"
+          id="brand"
+          placeholder={"chevrolet"}
+          value={searchBrand}
+          {...register("brand")}
+          onClick={() => setOpenBrandOptions(!openBrandOptions)}
+          onChange={(event) => setSearchBrand(event.target.value)}
+        />
+        {openBrandOptions ? <Options options={brands} filter={filterBrands} id="brand" setState={setSearchBrand} /> : <></>}
 
         <label htmlFor="">Modelo</label>
-        <input type="text" />
+        <input
+          type="text"
+          id="model"
+          placeholder="bolt ev premier 203cv (elétrico)"
+          value={searchModel}
+          {...register("model")}
+          onClick={(event) => {
+            event.preventDefault();
+            getModels(searchBrand)
+            setOpenModelOptions(!openModelOptions)
+          }}
+          onChange={(event) => setSearchModel(event.target.value)}
+        />
+        {openModelOptions ? <Options options={models} filter={filterModels} id="model" setState={setSearchModel} /> : <></>}
 
         <div>
           <fieldset>
             <label htmlFor="">Ano</label>
-            <input type="text" />
+            <input type="text" id="year" {...register("year", { value: year })} value={year} disabled />
           </fieldset>
           <fieldset>
             <label htmlFor="">Combustível</label>
-            <input type="text" />
+            <input type="text" id="fuel" {...register("fuel", { value: fuel })} value={fuel} disabled />
           </fieldset>
         </div>
 
         <div>
           <fieldset>
             <label htmlFor="">Quilometragem</label>
-            <input type="text" />
+            <input type="text" onClick={setDetails} id="mileage" {...register("mileage")} placeholder="10000" />
           </fieldset>
           <fieldset>
             <label htmlFor="">Cor</label>
-            <input type="text" />
+            <input type="text" id="color" {...register("color")} placeholder="branco" />
           </fieldset >
         </div >
 
         <div>
           <fieldset>
             <label htmlFor="">Preço tabela FIPE</label>
-            <input type="text" />
+            <input type="text" id="priceFIPE" value={fipe} disabled />
           </fieldset>
           <fieldset>
             <label htmlFor="">Preço</label>
-            <input type="text" />
+            <input type="text" id="price" {...register("price")} placeholder="300000" />
           </fieldset >
         </div >
 
         <div className="description">
           <label htmlFor="">Descrição</label>
-          <textarea name="" id="" ></textarea>
+          <textarea id="description" {...register("description")} placeholder="Informe as características do veículo"></textarea>
         </div>
 
         <div className="yesOrNo">
           <span>Publicado</span>
           <div>
-            <button>Sim</button>
-            <button className="no">Não</button>
+            <button type="button" onClick={() => setPublished(true)}>Sim</button>
+            <button className="no" type="button" onClick={() => setPublished(false)}>Não</button>
           </div>
         </div>
 
         <div className="addImageGalery">
 
-          {galleryImages.map(image => (
+          {galleryImages.map((image: any, index: any) => (
             <React.Fragment key={image.id}>
               <label htmlFor={`image-${image.id}`}>{image.label}</label>
               <input
-                name={`image-${image.id}`}
                 id={`image-${image.id}`}
                 value={image.value}
+                {...register(`images.${index}.link`)}
                 onChange={event => handleChangeImage(event, image.id)}
               />
             </React.Fragment>
           ))}
 
-          <button onClick={(e: any) => handleAddImageField(e)}>
+          <button type="button" onClick={handleAddImageField}>
             Adicionar campo para imagem da galeria
           </button>
         </div>
 
         <div className="alteration">
-          <button >Excluir Anúncio</button>
+          <button type="button" onClick={async () => {
+            await instanceAxios.delete(`ads/${id}`)
+            const newAds = adversaments.filter((e: any) => e.id !== id)
+            setAdversaments(newAds)
+            setOpenUpateAdForm(false)
+
+          }} >Excluir Anúncio</button>
           <button className="save">Salvar alterações</button>
         </div>
       </form >
@@ -141,162 +302,4 @@ const EditFormAds = ({ setOpenUpateAdForm, id }: a) => {
 }
 
 
-/* setGalleryImages([...galleryImages, newImageField]);
-
-const handleChangeImage = (
-  event: React.FormEvent<HTMLInputElement>,
-  id: number
-) => {
-  event.preventDefault();
-
-  const { value }: any = event.target;
-
-  const updatedGalleryImages = galleryImages.map((image) => {
-    if (image.id === id) {
-      return { ...image, value };
-    }
-    return image;
-  });
-
-  setGalleryImages(updatedGalleryImages);
-};
-
-const setData = async () => {
-  const data = await (await instanceAxios.get(`ads/${id}`)).data;
-  setAdData(data);
-  console.log("!!!!", adData);
-};
-
-useEffect(() => {
-  setData();
-}, [setOpenUpateAdForm]);
-
-const deleteAd = async () => {
-  try {
-    await instanceAxios.delete(`ads/${id}`);
-  } catch {
-    toast.error("Algo deu errado!");
-  }
-};
-
-const { register, handleSubmit } = useForm();
-
-const onSubmit = (data: iAdRequest) => { };
-
-return (
-  <SectionBgForm>
-    <form action="">
-      <div>
-        <span>Editar de anuncio</span>
-        <img src={Remove} onClick={() => setOpenUpateAdForm(false)} />
-      </div>
-
-      <p>informações do veículo</p>
-
-      <label htmlFor="">Marca</label>
-      <input type="text" {...register("brand")} placeholder={adData.brand} />
-
-      <label htmlFor="">Modelo</label>
-      <input type="text" {...register("model")} placeholder={adData.model} />
-
-      <div>
-        <fieldset>
-          <label htmlFor="">Ano</label>
-          <input
-            type="text"
-            {...register("model")}
-            placeholder={adData.year}
-          />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Combustível</label>
-          <input
-            type="text"
-            {...register("model")}
-            placeholder={adData.fuel}
-          />
-        </fieldset>
-      </div>
-
-      <div>
-        <fieldset>
-          <label htmlFor="">Quilometragem</label>
-          <input
-            type="text"
-            {...register("model")}
-            placeholder={adData.mileage}
-          />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Cor</label>
-          <input
-            type="text"
-            {...register("model")}
-            placeholder={adData.color}
-          />
-        </fieldset>
-      </div>
-
-      <div>
-        <fieldset>
-          <label htmlFor="">Preço tabela FIPE</label>
-          <input type="text" {...register("model")} />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="">Preço</label>
-          <input
-            type="text"
-            {...register("model")}
-            placeholder={adData.price}
-          />
-        </fieldset>
-      </div>
-
-      <div className="description">
-        <label htmlFor="">Descrição</label>
-        <textarea
-          id=""
-          {...register("model")}
-          placeholder={adData.description}
-        ></textarea>
-      </div>
-
-      <div className="yesOrNo">
-        <span>Publicado</span>
-        <div>
-          <button {...register("model")}>Sim</button>
-          <button className="no" {...register("model")}>
-            Não
-          </button>
-        </div>
-      </div>
-
-      <div className="addImageGalery">
-        {galleryImages.map((image) => (
-          <React.Fragment key={image.id}>
-            <label htmlFor={`image-${image.id}`}>{image.label}</label>
-            <input
-              name={`image-${image.id}`}
-              id={`image-${image.id}`}
-              value={image.value}
-              onChange={(event) => handleChangeImage(event, image.id)}
-              placeholder={image.src}
-            />
-          </React.Fragment>
-        ))}
-
-        <button onClick={() => handleAddImageField}>
-          Adicionar campo para imagem da galeria
-        </button>
-      </div>
-
-      <div className="alteration">
-        <button onClick={deleteAd}>Excluir Anúncio</button>
-        <button className="save">Salvar alterações</button>
-      </div>
-    </form>
-  </SectionBgForm>
-);
-
- */
 export default EditFormAds;

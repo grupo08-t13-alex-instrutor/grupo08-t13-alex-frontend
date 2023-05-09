@@ -40,7 +40,8 @@ const ProfilePageAdmin = () => {
     localStorage.setItem('adversamentsPageAdmin', JSON.stringify(responseAdversaments.data))
 
     const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
-    setAdversaments(responseAdversaments.data);
+
+    setAdversaments(adverSamentsSession);
   };
 
 
@@ -91,7 +92,13 @@ const ProfilePageAdmin = () => {
 
       {openUpateAdForm ? (
         <ModalContainer>
-          <EditFormAds id={adId} setOpenUpateAdForm={setOpenUpateAdForm} />
+          <EditFormAds
+            id={adId}
+            setOpenUpateAdForm={setOpenUpateAdForm}
+            adversaments={adversaments}
+            setAdversaments={setAdversaments}
+            brands={brands}
+          />
         </ModalContainer>
       ) : (
         <></>
@@ -114,57 +121,8 @@ const ProfilePageAdmin = () => {
         }}>Criar anuncio</button>
       </article >
       <h5>Anúncios</h5>
-      <article>
-        {
-          adversaments!.map((e: any) => {
-            if (e.user.id === sessionStorage.getItem('idAdmin')) {
-              return (
-                <Cards
-                  src={e.images[0]}
-                  marca={e.brand}
-                  descricao={e.description}
-                  km={e.mileage}
-                  name={sessionStorage.getItem('name')!}
-                  ano={e.year}
-                  preco={e.price}
-                  siglaNanme={sessionStorage.getItem('sigla')!}
-                  idAds={e.id}
-                >
-                  {e.published ?
-                    <span className="ativo">Ativo</span>
-                    :
-                    <span className="inativo">Inativo</span>
-                  }
-                  <div className="btnAdmin">
-                    <button onClick={() => {
-                      setOpenUpateAdForm(true)
-
-                    }}>Editar</button>
-                    <button onClick={() => {
-                      navigate("/ad")
-                    }}>Ver detalhes</button>
-                  </div>
-                </Cards>
-              )
-            } else {
-              return <p>Sem Anúncios</p>;
-            }
-          })
-        }
-        <p>{infoUserLogin?.description}</p>
-        <button
-          onClick={(event) => {
-            event.preventDefault();
-            getBrands();
-            setOpenRegisterAdForm(!openRegisterAdForm);
-          }}
-        >
-          Criar anuncio
-        </button>
-      </article>
-      <h5>Anúncios</h5>
       <ul>
-        {adversaments!.map((e: any) => {
+        {adversaments.length > 0 ? adversaments!.map((e: any) => {
           if (e.user.id === infoUserLogin?.id) {
             return (
               <Cards
@@ -200,7 +158,7 @@ const ProfilePageAdmin = () => {
           } else {
             return null;
           }
-        })}
+        }) : (<p>Sem Anúncios</p>)}
       </ul>
       <FooterHomePage />
     </Section >

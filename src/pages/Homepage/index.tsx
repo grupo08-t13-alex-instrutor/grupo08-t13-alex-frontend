@@ -18,26 +18,18 @@ export const Homepage = () => {
   const [filters, setFilters] = useState({});
   const [totalPage, setTotalPage] = useState();
   const [filtered, setFiltered] = useState<object[]>([]);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads?page=${pageNumber}`);
     setPageNumber(responseAdversaments.data.page)
     setTotalPage(responseAdversaments.data.totalPage + 1)
     setAdversaments(responseAdversaments.data.ads);
-    
-    await instanceAxios.get(`ads?page=${pageNumber}`).then((res) => {
-      console.log(res.data);
-      setPageNumber(res.data.page);
-      setTotalPage(res.data.totalPage);
-      setAdversaments(res.data.ads);
-    });
-  };
+  }
 
   if (location.pathname === "/homepage") {
     useEffect(() => {
       getAdversaments();
-      console.log(adversaments);
     }, [location.pathname, pageNumber]);
   }
 
@@ -120,42 +112,24 @@ export const Homepage = () => {
               <></>
             )}
           </Ul>
+
           <div id="page">
-            {pageNumber === 0 ? (
-              <>
-                <span>
-                  <strong>{pageNumber + 1}</strong> de {totalPage}
-                </span>
+            {pageNumber === 1 ?
+              null
+              :
+              <span id="anterior" onClick={() => setPageNumber(pageNumber - 1)}>{'<'} Anterior</span>
+            }
 
-                <span
-                  id="seguinte"
-                  onClick={() => setPageNumber(pageNumber + 1)}
-                >
-                  {" "}
-                  Seguinte {">"}{" "}
-                </span>
-              </>
-            ) : (
-              <>
-                <span
-                  id="anterior"
-                  onClick={() => setPageNumber(pageNumber - 1)}
-                >
-                  {"<"} Anterior
-                </span>
-                <span>
-                  <strong>{pageNumber + 1}</strong> de {totalPage}
-                </span>
+            <span>
+              <strong>{pageNumber}</strong> de {totalPage}
+            </span>
 
-                <span
-                  id="seguinte"
-                  onClick={() => setPageNumber(pageNumber + 1)}
-                >
-                  {" "}
-                  Seguinte {">"}{" "}
-                </span>
-              </>
-            )}
+            {pageNumber === totalPage ?
+              null
+              :
+              <span id="seguinte" onClick={() => setPageNumber(pageNumber + 1)}> Seguinte {'>'} </span>
+            }
+
           </div>
         </div>
       </Section>
@@ -167,4 +141,4 @@ export const Homepage = () => {
       </div>
     </SectionHome>
   );
-};
+}

@@ -1,9 +1,13 @@
 import { User } from "../../context";
 import instanceAxios from "../../services";
 import { CardComment, Section } from "./styled";
-import { useContext, useEffect } from "react";
-import { AiFillDelete } from "react-icons/ai";
-
+import { useContext, useEffect, useState } from "react";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import Remove from "../../assets/svg/x.svg";
+import { ModalContainer } from "../Header/styled";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as  yup from "yup"
+import { useForm } from "react-hook-form";
 
 const timeComment = (createdAt: string) => {
     const startData = new Date(createdAt.replace('T', " ").replace("Z", ''))
@@ -22,10 +26,18 @@ const timeComment = (createdAt: string) => {
     if (seconds && seconds >= 0) { return <>há {seconds} segundos</> };
 }
 
+export const description = yup.object().shape({
+    description: yup.string().max(300)
+
+
+});
+
+
 const Comment = () => {
 
     const { oneAd, setComments, comments, setOneAd } = useContext(User)
-
+    const [modelEdistdescription, setModelEdistdescription] = useState(false)
+    const [idCommentValue, setIdCommentVAlue] = useState("")
 
     const getCommentsAboutAd = async () => {
 
@@ -34,12 +46,57 @@ const Comment = () => {
 
     }
 
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<any>({
+        resolver: yupResolver(description),
+    });
+
+    const onSubmitFunction = async (data: any) => {
+        console.log(data)
+        console.log(idCommentValue)
+        const commentsReq = await instanceAxios.patch(`comments/${idCommentValue}`, data)
+
+
+        const filterComment = comments!.filter(e => e.id !== idCommentValue);
+
+
+        setComments([...filterComment, { comment: { id: commentsReq.data.id, description: commentsReq.data.description, createdAt: await commentsReq.data.createdAt }, user: { name: commentsReq.data.user.name, id: commentsReq.data.user.id } }])
+
+        setModelEdistdescription(false)
+
+        reset();
+    };
+
     useEffect(() => {
         getCommentsAboutAd()
-    }, [oneAd, localStorage.getItem("token"), setOneAd(oneAd)])
+    }, [oneAd, localStorage.getItem("token"), setOneAd(oneAd) ])
 
     return (
         <Section>
+            {modelEdistdescription ?
+                <ModalContainer id="modal">
+                    <>
+                        <form action="" onSubmit={handleSubmit(onSubmitFunction)}  >
+                            <div>
+                                <span>Editar de anuncio</span>
+                                <img src={Remove} onClick={() => setModelEdistdescription(false)} />
+                            </div>
+
+                            <label htmlFor="">Atualizar comentário</label>
+                            <input type="text" id="description" {...register("description")} />
+                            <>{errors.description?.message}</>
+
+                            <button> atualizar</button>
+                        </form>
+                    </>
+
+                </ModalContainer> : null
+
+            }
             <p className="heading-6-600">Comentários</p>
             {
                 comments ?
@@ -69,11 +126,20 @@ const Comment = () => {
                                                 <p className="body-2-400">{description}</p>
                                             </div>
                                             {localStorage.getItem("id") === id && localStorage.getItem("token")
-                                                ? <AiFillDelete className="removeComment" onClick={async () => {
-                                                    await instanceAxios.delete(`comments/${idComment}`)
-                                                    const newComments = comments.filter(e => e.comment.id !== idComment)
-                                                    setComments(newComments)
-                                                }} />
+                                                ?
+                                                <p>
+                                                    <AiFillDelete className="removeComment" onClick={async () => {
+                                                        await instanceAxios.delete(`comments/${idComment}`)
+                                                        const newComments = comments.filter(e => e.comment.id !== idComment)
+                                                        setComments(newComments)
+                                                    }}
+                                                    />
+
+                                                    <AiFillEdit className="edit" onClick={async () => {
+                                                        setIdCommentVAlue(idComment)
+                                                        setModelEdistdescription(true)
+                                                    }} />
+                                                </p>
                                                 :
                                                 null
                                             }

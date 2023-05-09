@@ -5,10 +5,10 @@ import { User } from "../../context";
 import { IBodySession } from "../../interfaces/session";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
-import { sessionVaidated } from "../../validations/login";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { sessionVaidated } from "../../validations/login";
+
 
 
 const Login = () => {
@@ -27,6 +27,7 @@ const Login = () => {
   });
 
   const onSubmitFunction = async (data: IBodySession) => {
+
 
     sessionUser(data)
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "../../themeProvider";
 
 export const Section = styled.section`
     min-width: 300px;
@@ -9,6 +10,42 @@ export const Section = styled.section`
     border-radius: 4px;
     background: #FDFDFD;
     box-sizing: border-box;
+
+    #modal{
+        left: 0;
+    }
+
+    form{
+
+        div{
+            display: flex;
+            justify-content: space-between;
+            img{
+                cursor: pointer;
+            }
+        }
+
+        input{
+            border-radius: 4px;
+            border: 1.5px solid #e9ecef;
+            padding: 0px 16px;
+            height: 36px;
+            outline: none;
+            color: ${(props) => props.theme.gray3};
+            font-weight: 400;
+            font-size: 1rem;
+    
+            :focus {
+              border: 1.5px solid #5126ea;
+            }
+        }
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background-color: white;
+        padding: 1rem;
+    }
 
     p {
         width: 100%;
@@ -115,8 +152,15 @@ export const CardComment = styled.li<iCardComment>`
     
     }
 
-    .removeComment{
-        cursor: pointer;
+   
+
+    p{
+        display: flex;
+        gap: 1rem;
+        
+            .removeComment,.edit{
+                cursor: pointer;
+            }
     }
 
     .bodyComment {
