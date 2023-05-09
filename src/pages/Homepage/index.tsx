@@ -23,7 +23,7 @@ export const Homepage = () => {
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads?page=${pageNumber}`);
     setPageNumber(responseAdversaments.data.page)
-    setTotalPage(responseAdversaments.data.totalPage)
+    setTotalPage(responseAdversaments.data.totalPage + 1)
     setAdversaments(responseAdversaments.data.ads);
   };
 
@@ -63,7 +63,7 @@ export const Homepage = () => {
                   return (
                     <Cards
                       onClick={() => navigate("/profile/user")}
-                      idAmount={e.user.id}
+                      idAmount={e.user.id!}
                       src={e.images[0]}
                       marca={e.brand}
                       descricao={e.description}
@@ -72,7 +72,7 @@ export const Homepage = () => {
                       ano={e.year}
                       preco={e.price}
                       siglaNanme={siglaName}
-                      idAds={e.id}
+                      idAds={e.id!}
                     >
                       {e.price < 10000 ? <span className="cifrao">$</span> : null}
                     </Cards>

@@ -12,39 +12,22 @@ font-style: normal;
     .container{
         display: flex;
         flex-direction: column;
+        -webkit-box-align: center;
         align-items: center;
         padding: 40px 28px;
         gap: 28px;
         border-radius: 4px;
+        position: absolute;
+        width: 104%;
+        height: 68%;
+        left: -77%;
+        top: 14%;
+        text-align: center;
+
         background-color: ${(props) => {
-        const colorsRandom = [
-            props.theme.random1,
-            props.theme.random2,
-            props.theme.random3,
-            props.theme.random4,
-            props.theme.random5,
-            props.theme.random6,
-            props.theme.random7,
-            props.theme.random8,
-            props.theme.random9,
-            props.theme.random10,
-            props.theme.random11,
-            props.theme.random12,
-        ];
-
-        const randomColorIndex = Math.floor(Math.random() * 12);
-
-        const color = colorsRandom[randomColorIndex];
-
-        return color;
+        return props.theme.whiteFixed;
     }};
 
-        position: absolute;
-        width: 351px;
-        height: 398px;
-        left: 12px;
-        top: 100px;
-        text-align: center;
     }
     .userIdent{
         display: flex;
@@ -64,7 +47,27 @@ font-style: normal;
             top: 40px;
             align-items: center;
             text-align: center;
-            background-color: ${(props) => props.theme.brand1};
+            background-color: ${(props) => {
+        const colorsRandom = [
+            props.theme.random1,
+            props.theme.random2,
+            props.theme.random3,
+            props.theme.random4,
+            props.theme.random5,
+            props.theme.random6,
+            props.theme.random7,
+            props.theme.random8,
+            props.theme.random9,
+            props.theme.random10,
+            props.theme.random11,
+            props.theme.random12,
+        ];
+
+        const randomColorIndex = Math.floor(Math.random() * 12);
+
+        const color = colorsRandom[randomColorIndex];
+        return color
+    }};
             border-radius: 50%;
             padding: none;
             margin-bottom: 20px;

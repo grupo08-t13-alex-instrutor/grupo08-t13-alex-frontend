@@ -1,6 +1,7 @@
 import SectionBgForm from "./styled"
 import Remove from "../../assets/svg/x.svg";
 import React, { useState } from "react";
+import { HeaderRegisterFormAd } from "../RegisterFormAds/styled";
 
 interface a {
     setOpenUpateAdForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -46,7 +47,6 @@ const EditFormAds = ({ setOpenUpateAdForm }: a) => {
     return (
         < SectionBgForm onClick={() => null}>
             <form action="" >
-
                 <div>
                     <span>Editar de anuncio</span>
                     <img src={Remove} onClick={() => setOpenUpateAdForm(false)} />
@@ -120,7 +120,7 @@ const EditFormAds = ({ setOpenUpateAdForm }: a) => {
                         </React.Fragment>
                     ))}
 
-                    <button onClick={() => handleAddImageField}>
+                    <button onClick={(e: any) => handleAddImageField(e)}>
                         Adicionar campo para imagem da galeria
                     </button>
                 </div>
@@ -129,7 +129,6 @@ const EditFormAds = ({ setOpenUpateAdForm }: a) => {
                     <button >Excluir Anúncio</button>
                     <button className="save">Salvar alterações</button>
                 </div>
-
             </form >
         </SectionBgForm >
 

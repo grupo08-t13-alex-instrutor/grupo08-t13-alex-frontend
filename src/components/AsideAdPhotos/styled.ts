@@ -20,13 +20,12 @@ export const ContainerAsidePhotos = styled.div`
 export const UlAdAside = styled.ul`
     width: 100%;
     height: 380px;
-
+    gap: 1rem;
+    flex-wrap: wrap;
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-between;
-    align-content: space-around;
+    -webkit-box-pack: justify;
     overflow: hidden;
-
     gap: 1rem;
 `;
 

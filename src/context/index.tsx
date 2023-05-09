@@ -56,12 +56,17 @@ export interface UserProviderData {
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
-    getAdsAmount: () => Promise<any>,
+    getAdsAmount: () => void,
+    getUseInfoData: () => Promise<any>,
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
     setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
     setOneAd: Dispatch<SetStateAction<string | undefined>>,
     deleteUser: () => void,
+    comments: any[] | undefined,
+    stateRenderComments: number,
+    setStateRenderComments: Dispatch<SetStateAction<number>>,
+    setComments: Dispatch<SetStateAction<any[] | undefined>>,
     recoverPasswordUpdatePassword: (data: iRecoverPasswordUpdatePassword) => void,
     recoverPasswordSendEmail: (data: iRecoveriPasswordSendEmail) => void,
     infoUserLogin: iUserInfoUserLogin | undefined,
@@ -84,6 +89,8 @@ function ContextDadosUser({ children }: iInfoUser) {
     const [oneAd, setOneAd] = useState<string | undefined>()
     const [tokenRecoverPassword, setTokenRecoverPassword] = useState("")
     const [idUser, setIdUser] = useState<string>("")
+    const [comments, setComments] = useState<any[]>()
+    const [stateRenderComments, setStateRenderComments] = useState(0)
 
     const sessionUser = async (data: IBodySession) => {
 
@@ -159,6 +166,7 @@ function ContextDadosUser({ children }: iInfoUser) {
         if (token) {
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
+            localStorage.setItem("id", responseUser.data.id)
             setIdAdressUser(responseUser.data.addressId)
         }
     }
@@ -220,6 +228,7 @@ function ContextDadosUser({ children }: iInfoUser) {
                 setIdUser,
                 setInfoUserLogin,
                 idAdressUser,
+                getUseInfoData,
                 patchAdressUser,
                 deleteUser,
                 tokenRecoverPassword,
@@ -228,7 +237,11 @@ function ContextDadosUser({ children }: iInfoUser) {
                 recoverPasswordUpdatePassword,
                 getAdsAmount,
                 setOneAd,
-                oneAd
+                oneAd,
+                comments,
+                setComments,
+                stateRenderComments,
+                setStateRenderComments
             }}
         >
             {children}

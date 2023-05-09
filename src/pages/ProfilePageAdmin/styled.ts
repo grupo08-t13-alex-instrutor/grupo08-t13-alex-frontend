@@ -150,7 +150,7 @@ article {
     flex-direction: column;
     align-items: flex-start;
     width: 76%;
-    top: 14%;
+    top: 6.5%;
     padding: 1rem;
     right: 11.5%;
     position: absolute;

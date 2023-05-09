@@ -1,44 +1,38 @@
+import { useContext, useEffect, useState } from "react";
 import AsideAdCards from "../AsideAdPhotos";
 import { ContainerAsidePhotos, UlAdAside } from "../AsideAdPhotos/styled";
 import AsideAdPageStyled from "./styled";
+import { User } from "../../context";
+import instanceAxios from "../../services";
 
 const AsideAdPage = () => {
+
+    const { oneAd } = useContext(User)
+
+    const [images, setImages] = useState<any[]>()
+
+    const getImagesAd = async () => {
+
+        const res = await instanceAxios.get(`ads/${oneAd}`)
+        setImages(res.data.images)
+    }
+
+    useEffect(() => {
+        getImagesAd()
+    }, [oneAd])
+
     return (
         <AsideAdPageStyled>
             <>
                 <ContainerAsidePhotos>
                     <h5>Fotos</h5>
                     <UlAdAside>
-                        <AsideAdCards
-                            src={
-                                "https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7"
-                            }
-                        />
-                        <AsideAdCards
-                            src={
-                                "https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7"
-                            }
-                        />
-                        <AsideAdCards
-                            src={
-                                "https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7"
-                            }
-                        />
-                        <AsideAdCards
-                            src={
-                                "https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7"
-                            }
-                        />
-                        <AsideAdCards
-                            src={
-                                "https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7"
-                            }
-                        />
-                        <AsideAdCards
-                            src={
-                                "https://th.bing.com/th/id/OIP.WqbR7g86tUvTYeXVQFbqkAHaHa?w=153&h=180&c=7&r=0&o=5&pid=1.7"
-                            }
-                        />
+                        {
+                            images ?
+                                images.map((e: any) => { return <AsideAdCards src={e.link} /> })
+                                :
+                                <p id="aviso">Esse anúncio não possui mais fotos</p>
+                        }
                     </UlAdAside>
                 </ContainerAsidePhotos>
             </>
