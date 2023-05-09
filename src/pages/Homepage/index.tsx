@@ -134,11 +134,7 @@ export const Homepage = () => {
         </div>
       </Section>
       <FooterHomePage />
-      <div className="editAdsModal">
-        <div>
-          <h1>teste</h1>
-        </div>
-      </div>
+
     </SectionHome>
   );
 }
