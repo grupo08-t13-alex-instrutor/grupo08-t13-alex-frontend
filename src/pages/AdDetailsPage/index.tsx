@@ -8,10 +8,14 @@ import {
 } from "../../components";
 import MainPhotoAdComponent from "../../components/AdMainPhoto";
 import AsideAdPage from "../../components/AsideAdPage";
+import { ButtonGrey, SectionComment } from "../../components/CreationCommentPageProduct/styled";
 import { Description } from "../../components/Description";
+import { AdvertiserCard } from "../../components/advertiserCard";
 import { StyledAdPage } from "./styled";
 
 const AdDetailsPage = () => {
+
+
     return (
         <>
             <Header />
@@ -20,10 +24,27 @@ const AdDetailsPage = () => {
                 <AsideAdPage />
                 <div>
                     <MainPhotoAdComponent />
+                    <AdvertiserCard />
                     <TitleAd />
                     <Description />
                     <Comment />
-                    <CreationCommentPageProduct />
+                    {localStorage.getItem("token") ?
+
+                        <CreationCommentPageProduct />
+                        :
+                        <SectionComment className="NotcreateComment">
+                            <form action="" className="formNotActivate">
+                                <textarea placeholder="Digite seu comentário" disabled={true}></textarea>
+                                <button>Comentar</button>
+                            </form>
+
+                            <div id="btnDiv">
+                                <ButtonGrey className="Gosteimuito">Gostei muito!</ButtonGrey>
+                                <ButtonGrey className="Incrível">Incrível</ButtonGrey>
+                                <ButtonGrey className="Recomendarei">Recomendarei para meus amigos!</ButtonGrey>
+                            </div>
+                        </SectionComment>
+                    }
                 </div>
             </StyledAdPage>
 

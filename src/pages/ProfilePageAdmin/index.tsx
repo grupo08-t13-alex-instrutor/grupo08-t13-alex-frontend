@@ -3,60 +3,72 @@ import { EditFormAds, FooterHomePage, Header, RegisterFormAds } from "../../comp
 import { Cards } from "../../components";
 import { useContext, useEffect, useState } from "react";
 import { User } from "../../context";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import instanceAxios from "../../services";
 import { siglaNameUtils } from "../../utils";
 import { ModalContainer } from "../../components/Header/styled";
 import axios from "axios";
 
 const ProfilePageAdmin = () => {
-  
+
   const navigate = useNavigate()
   const location = useLocation();
   const [adversaments, setAdversaments] = useState([])
   const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
   const [openUpateAdForm, setOpenUpateAdForm] = useState(false);
-  const [sigla, setSigla] = useState<string>()
   const [brands, setBrands] = useState<string[] | null>(null)
   const { infoUserLogin } = useContext(User)
-  
+
   const getBrands = async () => {
     const { data } = await axios.get("https://kenzie-kars.herokuapp.com/cars");
     let res: string[] = []
-    for( const key in data ){
-      res.push( key )
+    for (const key in data) {
+      res.push(key)
     }
-    
-    setBrands( res )
+
+    setBrands(res)
   }
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads`);
-    setAdversaments(responseAdversaments.data)
-  }
+    localStorage.setItem('adversamentsPageAdmin', JSON.stringify(responseAdversaments.data))
 
+    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
+
+    setAdversaments(adverSamentsSession)
+  }
   const callBackSiglaNameUtils = async () => {
+
     const result = await siglaNameUtils(infoUserLogin!.name)
-    setSigla(result)
+
+    const resUser = await instanceAxios.get(`user/${infoUserLogin!.id}`)
+
+    sessionStorage.setItem('sigla', result)
+    sessionStorage.setItem('name', resUser.data.name)
+    sessionStorage.setItem('idAdmin', resUser.data.id)
+    sessionStorage.setItem('description', resUser.data.description)
+
   }
 
-  if (location.pathname === "/profile/admin") {
-    useEffect(() => {
-      callBackSiglaNameUtils()
-      getAdversaments()
-    }, [location.pathname, localStorage.getItem("token")])
-  }
+  useEffect(() => {
+    callBackSiglaNameUtils()
+    getAdversaments()
+
+    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
+    setAdversaments(adverSamentsSession)
+  }, [localStorage.getItem("token")])
+
 
   return (
     <Section className="profile">
       <Header />
       {openRegisterAdForm ?
         <ModalContainer>
-          <RegisterFormAds 
-            openRegisterAdForm={ openRegisterAdForm }
-            setOpenRegisterAdForm={ setOpenRegisterAdForm }
-            brands={ brands }
-            />
+          <RegisterFormAds
+            openRegisterAdForm={openRegisterAdForm}
+            setOpenRegisterAdForm={setOpenRegisterAdForm}
+            brands={brands}
+          />
         </ModalContainer>
         :
         <></>
@@ -75,13 +87,13 @@ const ProfilePageAdmin = () => {
       <div className="bg"></div>
 
       <article className="infoUser">
-        <article className="siglaInfoUser">{sigla}</article>
+        <article className="siglaInfoUser">{sessionStorage.getItem('sigla')}</article>
         <section>
-          <span>{infoUserLogin?.name}</span>
+          <span>{sessionStorage.getItem('name')}</span>
           <span className="anunciante">Anuciante</span>
         </section>
         <p>
-          {infoUserLogin?.description}
+          {sessionStorage.getItem('description')}
         </p>
         <button onClick={event => {
           event.preventDefault();
@@ -93,19 +105,24 @@ const ProfilePageAdmin = () => {
       <ul>
         {
           adversaments!.map((e: any) => {
-            if (e.user.id === infoUserLogin?.id) {
+            if (e.user.id === sessionStorage.getItem('idAdmin')) {
               return (
                 <Cards
                   src={e.images[0]}
                   marca={e.brand}
                   descricao={e.description}
                   km={e.mileage}
-                  name={infoUserLogin!.name}
+                  name={sessionStorage.getItem('name')!}
                   ano={e.year}
                   preco={e.price}
-                  siglaNanme={sigla!}
+                  siglaNanme={sessionStorage.getItem('sigla')!}
                   idAds={e.id}
                 >
+                  {e.published ?
+                    <span className="ativo">Ativo</span>
+                    :
+                    <span className="inativo">Inativo</span>
+                  }
                   <div className="btnAdmin">
                     <button onClick={() => {
                       setOpenUpateAdForm(true)
@@ -118,7 +135,7 @@ const ProfilePageAdmin = () => {
                 </Cards>
               )
             } else {
-              return null;
+              return <p>Sem Anúncios</p>;
             }
           })
         }

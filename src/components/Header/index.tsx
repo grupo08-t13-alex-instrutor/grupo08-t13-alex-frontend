@@ -11,28 +11,28 @@ import { siglaNameUtils } from "../../utils";
 
 const Header = () => {
     const navigate = useNavigate()
-    const { infoUserLogin } = useContext(User)
+    const { infoUserLogin, getUseInfoData } = useContext(User)
     const [openMenu, setOpenMenu] = useState(false)
     const [editAddress, setEditAddress] = useState<boolean>(false);
     const [editUser, setEditUser] = useState<boolean>(false);
     const [sigla, setSigla] = useState<string>()
+    const [name, setNAme] = useState<string>()
 
     const callBackSiglaNameUtils = async () => {
-        const res = await instanceAxios.get(`user/${infoUserLogin!.id}`)
+        const res = await instanceAxios.get(`user/${localStorage.getItem("id")}`)
 
         const result = await siglaNameUtils(res.data.name)
-
+        setNAme(res.data.name)
         setSigla(result)
     }
 
     useEffect(() => {
         callBackSiglaNameUtils()
 
-    }, [infoUserLogin])
+    }, [infoUserLogin, localStorage.getItem("token")])
 
     return (
         <>
-
             <HeaderStyled>
                 <img src={MotorsShop} alt="Logo Motors Shop" onClick={() => navigate("/homepage")} />
                 <button className="invisible-options" onClick={(event) => {
@@ -50,7 +50,7 @@ const Header = () => {
                                 <span className="profile-picture">
                                     <p>{sigla}</p>
                                 </span>
-                                <p>{infoUserLogin?.name}</p>
+                                <p>{name}</p>
                             </div>
                         </button>
                         :
@@ -74,7 +74,7 @@ const Header = () => {
                     {localStorage.getItem("token") ?
                         <>
                             <button className="atention" onClick={() => {
-                                localStorage.removeItem("token")
+                                localStorage.clear()
                                 setOpenMenu(!openMenu);
                                 navigate("/homepage");
                             }}>
@@ -93,7 +93,7 @@ const Header = () => {
                     }
                 </div>
             </MenuStyled >
-            <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"}>
+            <MenuDesktopStyled height={openMenu ? "auto" : "0"} padding={openMenu ? "16px 22px" : "0"} >
                 <button onClick={event => {
                     setEditUser(!editUser)
                 }}>Editar Perfil</button>

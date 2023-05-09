@@ -20,17 +20,13 @@ const MainPhotoAdComponent = () => {
             callBAckGetAdAmount()
         }, [])
     }
-
     return (
         <>
             <MainPhotoAdDiv>
-
                 <img
                     src={linkImage}
                     alt="car-image"
                 />
-
-
             </MainPhotoAdDiv>
         </>
     );

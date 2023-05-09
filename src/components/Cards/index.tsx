@@ -12,7 +12,7 @@ const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNan
 
   return (
     <Li
-      key={idAds}
+      key={idAds!}
     >
       {children}
 

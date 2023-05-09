@@ -17,7 +17,7 @@ form{
   
   .SHOW , .HIDDEN{
     position: absolute;
-    bottom: 11.5rem;
+    bottom: 12.3rem;
     cursor: pointer;
     font-weight: bolder;
     color: ${(props) => props.theme.gray2};
@@ -29,12 +29,14 @@ form{
     width: 50%;
     min-width: 287px;
     max-width: 356px;
-    background-color: ${(props) => props.theme.gray10};
     padding: 12px 28px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    position: relative;
+    -webkit-box-pack: center;
     justify-content: center;
+    background-color: ${(props) => props.theme.gray10};
 
     .form-inputs {
       position: relative;

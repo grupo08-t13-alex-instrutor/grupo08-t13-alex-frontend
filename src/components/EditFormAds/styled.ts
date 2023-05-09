@@ -4,8 +4,8 @@ import styled from "styled-components";
 const SectionBgForm = styled.section`
 
 width: 100vw;
-height: 310vh;
-position: absolute;
+height: 100%;
+position: relative;
 top: 0;
 z-index: 10;
 background-color: rgba(0, 0, 0, 0.5);
@@ -18,11 +18,13 @@ form{
     display: flex;
     flex-direction: column;
     width: 24rem;
+    height: 38rem;
     padding: 0.5rem;
     gap: 0.5rem;
     margin-top: 1rem;
     border-radius: 4px;
-    height: 39rem;
+    background-color: rgb(255, 255, 255);
+    overflow-y: auto;
     background-color: ${props => props.theme.whiteFixed};
 
     input{

@@ -29,6 +29,23 @@ li{
     max-width: 278px;
     position: relative;
     padding-bottom: 3rem;
+    position: relative;
+
+    .ativo,.inativo{
+        position: absolute;
+        top: 0.5rem;
+        left: 1rem;
+        color: ${props => props.theme.whiteFixed};
+        padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+    }
+
+    .inativo{
+        background: ${props => props.theme.gray4};
+    }
+
+    .ativo{
+        background: ${props => props.theme.brand1};
+    }
 
     .btnAdmin{
 
@@ -133,7 +150,7 @@ article {
     flex-direction: column;
     align-items: flex-start;
     width: 76%;
-    top: 14%;
+    top: 6.5%;
     padding: 1rem;
     right: 11.5%;
     position: absolute;

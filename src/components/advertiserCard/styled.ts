@@ -6,25 +6,28 @@ left: 12px;
 width: 351px;
 height: 398px;
 border-radius: 4px;
-/* background-color: ${(props) => props.theme.gray10}; */
 text-align: center;
 font-style: normal;
 
     .container{
         display: flex;
         flex-direction: column;
+        -webkit-box-align: center;
         align-items: center;
         padding: 40px 28px;
         gap: 28px;
         border-radius: 4px;
-        background-color: ${(props) => props.theme.gray10};
-
         position: absolute;
-        width: 351px;
-        height: 398px;
-        left: 12px;
-        top: 100px;
+        width: 104%;
+        height: 68%;
+        left: -77%;
+        top: 14%;
         text-align: center;
+
+        background-color: ${(props) => {
+        return props.theme.whiteFixed;
+    }};
+
     }
     .userIdent{
         display: flex;
@@ -44,7 +47,27 @@ font-style: normal;
             top: 40px;
             align-items: center;
             text-align: center;
-            background-color: ${(props) => props.theme.brand1};
+            background-color: ${(props) => {
+        const colorsRandom = [
+            props.theme.random1,
+            props.theme.random2,
+            props.theme.random3,
+            props.theme.random4,
+            props.theme.random5,
+            props.theme.random6,
+            props.theme.random7,
+            props.theme.random8,
+            props.theme.random9,
+            props.theme.random10,
+            props.theme.random11,
+            props.theme.random12,
+        ];
+
+        const randomColorIndex = Math.floor(Math.random() * 12);
+
+        const color = colorsRandom[randomColorIndex];
+        return color
+    }};
             border-radius: 50%;
             padding: none;
             margin-bottom: 20px;
@@ -68,7 +91,6 @@ font-style: normal;
 
         width: 206px;
         height: 48px;
-        /* background-color: ${(props) => props.theme.grey0}; */
         background-color: #0B0D0D ;
         border: 1.5px solid #0B0D0D;
         border-radius: 4px;
