@@ -5,8 +5,8 @@ export const Tag = styled.span`
   margin: 20px 10px 20px 0;
   border-radius: 4px;
   box-sizing: border-box;
-  background-color: #edeafd;
-  color: #4529e6;
+  background-color: ${ props => props.theme.brand4 };
+  color: ${ props => props.theme.brand1 };
 `;
 
 export const ButtonBlue = styled.button`
@@ -14,20 +14,20 @@ export const ButtonBlue = styled.button`
   min-height: 38px;
   padding: 10px 20px;
   border-radius: 4px;
-  border: 1.5px solid #4529e6;
-  background: #4529e6;
+  border: 1.5px solid ${ props => props.theme.brand1 };
+  background: ${ props => props.theme.brand1 };
 
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 0px;
-  color: #ffffff;
-
+  color: ${ props => props.theme.whiteFixed };
+  
   @media (min-width: 720px) {
     :hover {
-      color: #4529E6;
-      border-color: #4529E6;
-      background-color: #EDEAFD;
+      color: ${ props => props.theme.brand1 };
+      border-color: ${ props => props.theme.brand1 };
+      background-color: ${ props => props.theme.brand4 };
     }
   }
 `;
@@ -39,7 +39,7 @@ export const TitleAdContainer = styled.div`
   padding: 25px 15px;
   margin: 10px !important;
   border-radius: 4px;
-  background: #fdfdfd;
+  background: ${ props => props.theme.gray10 };
   box-sizing: border-box;
 
   div {

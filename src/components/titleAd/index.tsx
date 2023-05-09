@@ -1,24 +1,35 @@
 import { useContext, useEffect, useState } from "react"
 import { TitleAdContainer, Tag, ButtonBlue } from "./styled"
-import { User } from "../../context"
-import { useLocation } from "react-router-dom"
+import { IAdResponse, User } from "../../context"
+import { NavigateFunction, useLocation, useNavigate } from "react-router-dom"
+import { iUserInfoUserLogin } from "../../interfaces/register/index"
+import { iCarInformation } from "../../interfaces/ads"
 
-interface iCarInformation {
-    name: string
-    year: string
-    mileage: string
-    price: string
+const buyer = async ( 
+    getAdsAmount: () => Promise<IAdResponse>, 
+    infoUserLogin: iUserInfoUserLogin | undefined,
+    navigate: NavigateFunction
+) => {
+    return infoUserLogin ?
+        await getAdsAmount()
+            .then( ({ user: { telephone } }) => {
+                const phoneAd = telephone.replace(/[()-]/g, "")
+                return window.open(`https://api.whatsapp.com/send?1=pt_BR&phone=${phoneAd}`)
+            })
+            .catch( err => console.log( err ))
+    :
+        navigate('/login')
 }
 
 const TitleAd = () => {
+    const { getAdsAmount, infoUserLogin } = useContext(User)
+    const navigate = useNavigate();
 
-    const { getAdsAmount, } = useContext(User)
-
-    const [infoCar, setInfoCar] = useState({
-        model: null,
-        year: null,
-        mileage: null,
-        price: null
+    const [infoCar, setInfoCar] = useState<iCarInformation>({
+        model: '',
+        year: '',
+        mileage: 0,
+        price: 0
     })
 
     const location = useLocation()
@@ -51,7 +62,7 @@ const TitleAd = () => {
                     <p>{`R$ ${infoCar.price}`}</p>
                 </div>
             </div>
-            <ButtonBlue>Comprar</ButtonBlue>
+            <ButtonBlue onClick={ () => buyer( getAdsAmount, infoUserLogin, navigate ) }>Comprar</ButtonBlue>
         </TitleAdContainer>
     )
 }

@@ -11,3 +11,10 @@ export interface iAdRequest {
     description: string
     images: iImageRequest[]
 }
+
+export interface iCarInformation {
+    model: string
+    year: string
+    mileage: number
+    price: number
+}

@@ -45,7 +45,7 @@ export interface IAdResponse {
     description: string;
     published: boolean;
     createdAt: Date;
-    updatedAt: Date;
+    // updatedAt: Date;
     images: iImageResponse[];
     user: iUserAdResponse;
 }
@@ -56,7 +56,7 @@ export interface UserProviderData {
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
-    getAdsAmount: () => void,
+    getAdsAmount: () => Promise<IAdResponse>,
     getUseInfoData: () => Promise<any>,
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
@@ -202,7 +202,7 @@ function ContextDadosUser({ children }: iInfoUser) {
         await instanceAxios.patch(`forgot/pass/${tokenRecoverPassword}`, passwordData);
     }
 
-    const getAdsAmount = async () => {
+    const getAdsAmount = async (): Promise<IAdResponse> => {
         const response = await instanceAxios.get(`ads/${oneAd}`);
         return response.data
     }
