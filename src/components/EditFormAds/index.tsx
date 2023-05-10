@@ -1,13 +1,14 @@
 import SectionBgForm from "./styled";
 import * as yup from "yup";
 import Remove from "../../assets/svg/x.svg";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { iAdRequest } from "../../interfaces/ads";
 import instanceAxios from "../../services";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Options } from "../ModalOptions";
+import { User } from "../../context";
 
 interface iDataResponse {
   id: string;
@@ -48,6 +49,8 @@ const adRequestSchema = yup.object().shape({
 });
 
 const EditFormAds = ({ setOpenUpateAdForm, id, adversaments, setAdversaments, brands }: a) => {
+
+  const { getAdsAmount, oneAd, setOneAd } = useContext(User)
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<iAdRequest>({
     mode: "onSubmit",

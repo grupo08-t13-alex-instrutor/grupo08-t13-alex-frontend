@@ -47,16 +47,19 @@ const ProfilePageAdmin = () => {
 
   const callBackSiglaNameUtils = async () => {
 
-    const result = await siglaNameUtils(infoUserLogin!.name)
+    if (localStorage.getItem("id")) {
+      const result = await siglaNameUtils(infoUserLogin!.name)
 
-    const resUser = await instanceAxios.get(`user/${infoUserLogin!.id}`)
+      const resUser = await instanceAxios.get(`user/${infoUserLogin!.id}`)
 
-    sessionStorage.setItem('sigla', result)
-    sessionStorage.setItem('name', resUser.data.name)
-    sessionStorage.setItem('idAdmin', resUser.data.id)
-    sessionStorage.setItem('description', resUser.data.description)
+      sessionStorage.setItem('sigla', result)
+      sessionStorage.setItem('name', resUser.data.name)
+      sessionStorage.setItem('idAdmin', resUser.data.id)
+      sessionStorage.setItem('description', resUser.data.description)
 
-    setSigla(result);
+      setSigla(result);
+    }
+
   };
 
   if (location.pathname === "/profile/admin") {
@@ -122,7 +125,7 @@ const ProfilePageAdmin = () => {
       </article >
       <h5>Anúncios</h5>
       <ul>
-        {adversaments.length > 0 ? adversaments!.map((e: any) => {
+        {adversaments ? adversaments!.map((e: any) => {
           if (e.user.id === infoUserLogin?.id) {
             return (
               <Cards

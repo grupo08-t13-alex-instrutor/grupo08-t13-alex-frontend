@@ -121,7 +121,7 @@ export const Homepage = () => {
             }
 
             <span>
-              <strong>{pageNumber}</strong> de {totalPage}
+              <strong>{pageNumber + 1}</strong> de {totalPage}
             </span>
 
             {pageNumber + 1 === totalPage ?
