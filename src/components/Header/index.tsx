@@ -19,11 +19,14 @@ const Header = () => {
     const [name, setNAme] = useState<string>()
 
     const callBackSiglaNameUtils = async () => {
-        const res = await instanceAxios.get(`user/${localStorage.getItem("id")}`)
+        if (localStorage.getItem("id")) {
 
-        const result = await siglaNameUtils(res.data.name)
-        setNAme(res.data.name)
-        setSigla(result)
+            const res = await instanceAxios.get(`user/${localStorage.getItem("id")}`)
+
+            const result = await siglaNameUtils(res.data.name)
+            setNAme(res.data.name)
+            setSigla(result)
+        }
     }
 
     useEffect(() => {

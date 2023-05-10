@@ -18,7 +18,7 @@ export const Homepage = () => {
   const [filters, setFilters] = useState({});
   const [totalPage, setTotalPage] = useState();
   const [filtered, setFiltered] = useState<object[]>([]);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(0);
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads?page=${pageNumber}`);
@@ -76,7 +76,7 @@ export const Homepage = () => {
                   </Cards>
                 );
               })
-            ) : adversaments.length > 0 ? (
+            ) : adversaments ? (
               adversaments.map((e: any) => {
                 let siglaName = "";
 
@@ -114,7 +114,7 @@ export const Homepage = () => {
           </Ul>
 
           <div id="page">
-            {pageNumber === 1 ?
+            {pageNumber === 0 ?
               null
               :
               <span id="anterior" onClick={() => setPageNumber(pageNumber - 1)}>{'<'} Anterior</span>
@@ -124,7 +124,7 @@ export const Homepage = () => {
               <strong>{pageNumber}</strong> de {totalPage}
             </span>
 
-            {pageNumber === totalPage ?
+            {pageNumber + 1 === totalPage ?
               null
               :
               <span id="seguinte" onClick={() => setPageNumber(pageNumber + 1)}> Seguinte {'>'} </span>

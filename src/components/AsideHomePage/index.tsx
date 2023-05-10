@@ -11,8 +11,6 @@ interface iProps {
 }
 
 const AsideHomePage = ({
-  setFilters,
-  filters,
   adversaments,
   setFiltered,
   setAdversaments,
