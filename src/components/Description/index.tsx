@@ -14,7 +14,7 @@ export const Description = () => {
   const location = useLocation()
 
   const callBAckGetAdAmount = async () => {
-    const { description } = await getAdsAmount()
+    const { description } =  getAdsAmount()
     setInfoCar({
       description: description
     })
