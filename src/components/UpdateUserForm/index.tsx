@@ -98,6 +98,7 @@ const UpdateUserForm = ({ setEditUser, editUser }: iChildren) => {
         <button className="deletedUser" onClick={() => {
           deleteUser()
           localStorage.removeItem("token")
+          localStorage.removeItem("id")
           navigate("/login")
           }}>Exluir perfil</button>
         <button className="submit">Salvar alteracões</button>

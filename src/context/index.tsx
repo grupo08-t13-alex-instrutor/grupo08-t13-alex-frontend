@@ -97,6 +97,7 @@ function ContextDadosUser({ children }: iInfoUser) {
         const response = await instanceAxios.post("login", data);
 
         localStorage.removeItem("token")
+        localStorage.removeItem("id")
 
         localStorage.setItem("token", response.data.token);
 

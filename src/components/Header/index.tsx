@@ -159,6 +159,7 @@ const Header = () => {
                 <button
                     onClick={(event) => {
                         localStorage.removeItem("token");
+                        localStorage.removeItem("id");
                         setOpenMenu(!openMenu);
                         navigate("/homepage");
                     }}
