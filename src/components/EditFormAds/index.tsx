@@ -19,6 +19,7 @@ interface iDataResponse {
 }
 
 interface a {
+  openUpateAdForm: boolean;
   setOpenUpateAdForm: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;
   adversaments: never[];
@@ -49,6 +50,7 @@ const adRequestSchema = yup.object().shape({
 });
 
 const EditFormAds = ({
+  openUpateAdForm,
   setOpenUpateAdForm,
   id,
   adversaments,
@@ -91,12 +93,13 @@ const EditFormAds = ({
     const data = await (await instanceAxios.get(`ads/${id}`)).data;
     setAdData(data);
   };
+  console.log(adData);
 
   useEffect(() => {
     setData();
     setSearchBrand(adData.brand);
     setSearchModel(adData.model);
-  }, [setOpenUpateAdForm]);
+  }, [openUpateAdForm]);
 
   useEffect(() => {
     if (!brands) {
@@ -215,7 +218,7 @@ const EditFormAds = ({
 
         <p>informações do veículo</p>
 
-        <label htmlFor="">Marca</label>
+        {/* <label htmlFor="">Marca</label>
         <input
           type="text"
           id="brand"
@@ -232,7 +235,7 @@ const EditFormAds = ({
             // model.innerText = "";
             getModels(searchBrand);
           }}
-        />
+        /> */}
         {openBrandOptions ? (
           <Options
             options={brands}
@@ -244,7 +247,7 @@ const EditFormAds = ({
           <></>
         )}
 
-        <label htmlFor="">Modelo</label>
+        {/* <label htmlFor="">Modelo</label>
         <input
           type="text"
           id="model"
@@ -262,7 +265,7 @@ const EditFormAds = ({
             setOpenModelOptions(!openModelOptions);
           }}
           onChange={(event) => setSearchModel(event.target.value)}
-        />
+        /> */}
         {openModelOptions ? (
           <Options
             options={models}
@@ -280,8 +283,8 @@ const EditFormAds = ({
             <input
               type="text"
               id="year"
-              {...register("year", { value: year })}
-              value={adData.year}
+              {...register("year")}
+              placeholder={adData.year}
               disabled
             />
           </fieldset>
@@ -290,7 +293,7 @@ const EditFormAds = ({
             <input
               type="text"
               id="fuel"
-              {...register("fuel", { value: fuel })}
+              {...register("fuel")}
               value={adData.fuel}
               disabled
             />
@@ -391,7 +394,7 @@ const EditFormAds = ({
           >
             Excluir Anúncio
           </button>
-          <button className="save" onClick={editAd}>
+          <button type="submit" className="save">
             Salvar alterações
           </button>
         </div>

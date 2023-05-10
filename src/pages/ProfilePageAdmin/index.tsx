@@ -37,24 +37,27 @@ const ProfilePageAdmin = () => {
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads`);
-    localStorage.setItem('adversamentsPageAdmin', JSON.stringify(responseAdversaments.data))
+    localStorage.setItem(
+      "adversamentsPageAdmin",
+      JSON.stringify(responseAdversaments.data)
+    );
 
-    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
+    const adverSamentsSession = JSON.parse(
+      localStorage.getItem("adversamentsPageAdmin")!
+    );
 
     setAdversaments(adverSamentsSession);
   };
 
-
   const callBackSiglaNameUtils = async () => {
+    const result = await siglaNameUtils(infoUserLogin!.name);
 
-    const result = await siglaNameUtils(infoUserLogin!.name)
+    const resUser = await instanceAxios.get(`user/${infoUserLogin!.id}`);
 
-    const resUser = await instanceAxios.get(`user/${infoUserLogin!.id}`)
-
-    sessionStorage.setItem('sigla', result)
-    sessionStorage.setItem('name', resUser.data.name)
-    sessionStorage.setItem('idAdmin', resUser.data.id)
-    sessionStorage.setItem('description', resUser.data.description)
+    sessionStorage.setItem("sigla", result);
+    sessionStorage.setItem("name", resUser.data.name);
+    sessionStorage.setItem("idAdmin", resUser.data.id);
+    sessionStorage.setItem("description", resUser.data.description);
 
     setSigla(result);
   };
@@ -67,13 +70,14 @@ const ProfilePageAdmin = () => {
   }
 
   useEffect(() => {
-    callBackSiglaNameUtils()
-    getAdversaments()
+    callBackSiglaNameUtils();
+    getAdversaments();
 
-    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
-    setAdversaments(adverSamentsSession)
-  }, [localStorage.getItem("token")])
-
+    const adverSamentsSession = JSON.parse(
+      localStorage.getItem("adversamentsPageAdmin")!
+    );
+    setAdversaments(adverSamentsSession);
+  }, [localStorage.getItem("token")]);
 
   return (
     <Section className="profile">
@@ -94,6 +98,7 @@ const ProfilePageAdmin = () => {
         <ModalContainer>
           <EditFormAds
             id={adId}
+            openUpateAdForm={openUpateAdForm}
             setOpenUpateAdForm={setOpenUpateAdForm}
             adversaments={adversaments}
             setAdversaments={setAdversaments}
@@ -106,63 +111,71 @@ const ProfilePageAdmin = () => {
       <div className="bg"></div>
 
       <article className="infoUser">
-        <article className="siglaInfoUser">{sessionStorage.getItem('sigla')}</article>
+        <article className="siglaInfoUser">
+          {sessionStorage.getItem("sigla")}
+        </article>
         <section>
-          <span>{sessionStorage.getItem('name')}</span>
+          <span>{sessionStorage.getItem("name")}</span>
           <span className="anunciante">Anuciante</span>
         </section>
-        <p>
-          {sessionStorage.getItem('description')}
-        </p>
-        <button onClick={event => {
-          event.preventDefault();
-          getBrands();
-          setOpenRegisterAdForm(!openRegisterAdForm);
-        }}>Criar anuncio</button>
-      </article >
+        <p>{sessionStorage.getItem("description")}</p>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            getBrands();
+            setOpenRegisterAdForm(!openRegisterAdForm);
+          }}
+        >
+          Criar anuncio
+        </button>
+      </article>
       <h5>Anúncios</h5>
       <ul>
-        {adversaments.length > 0 ? adversaments!.map((e: any) => {
-          if (e.user.id === infoUserLogin?.id) {
-            return (
-              <Cards
-                src={e.images[0]}
-                marca={e.brand}
-                descricao={e.description}
-                km={e.mileage}
-                name={infoUserLogin!.name}
-                ano={e.year}
-                preco={e.price}
-                siglaNanme={sigla!}
-                idAds={e.id}
-              >
-                <div className="btnAdmin">
-                  <button
-                    onClick={() => {
-                      setOpenUpateAdForm(true);
-                      setAdId(e.id);
-                    }}
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigate("/ad");
-                    }}
-                  >
-                    Ver detalhes
-                  </button>
-                </div>
-              </Cards>
-            );
-          } else {
-            return null;
-          }
-        }) : (<p>Sem Anúncios</p>)}
+        {adversaments.length > 0 ? (
+          adversaments!.map((e: any) => {
+            if (e.user.id === infoUserLogin?.id) {
+              return (
+                <Cards
+                  src={e.images[0]}
+                  marca={e.brand}
+                  descricao={e.description}
+                  km={e.mileage}
+                  name={infoUserLogin!.name}
+                  ano={e.year}
+                  preco={e.price}
+                  siglaNanme={sigla!}
+                  idAds={e.id}
+                >
+                  <div className="btnAdmin">
+                    <button
+                      onClick={() => {
+                        setOpenUpateAdForm(true);
+                        setAdId(e.id);
+                      }}
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate("/ad");
+                      }}
+                    >
+                      Ver detalhes
+                    </button>
+                  </div>
+                </Cards>
+              );
+            } else {
+              return null;
+            }
+          })
+        ) : (
+          <p>Sem Anúncios</p>
+        )}
       </ul>
       <FooterHomePage />
-    </Section >
+    </Section>
   );
-}
+};
 
-export default ProfilePageAdmin
+export default ProfilePageAdmin;
