@@ -122,7 +122,7 @@ const ProfilePageAdmin = () => {
       </article >
       <h5>Anúncios</h5>
       <ul>
-        {adversaments.length > 0 ? adversaments!.map((e: any) => {
+        {adversaments ? adversaments!.map((e: any) => {
           if (e.user.id === infoUserLogin?.id) {
             return (
               <Cards
