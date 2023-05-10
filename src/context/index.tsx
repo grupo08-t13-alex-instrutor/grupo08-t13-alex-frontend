@@ -73,7 +73,8 @@ export interface UserProviderData {
     idUser: string,
     oneAd: string | undefined,
     idAdressUser: string,
-    tokenRecoverPassword: string
+    tokenRecoverPassword: string,
+    dataAdress: any
 }
 
 export const User = createContext<UserProviderData>({} as UserProviderData);
@@ -242,7 +243,8 @@ function ContextDadosUser({ children }: iInfoUser) {
                 comments,
                 setComments,
                 stateRenderComments,
-                setStateRenderComments
+                setStateRenderComments,
+                dataAdress
             }}
         >
             {children}

@@ -19,7 +19,7 @@ const UpdateUserForm = ({ setEditUser, editUser }: iChildren) => {
   const { updateUser, infoUserLogin, deleteUser, setInfoUserLogin } = useContext(User)
   const navigate = useNavigate()
   const [userUpdate, setUserUpdate] = useState({})
-
+  console.log("USER INFO", infoUserLogin)
   const {
     register,
     handleSubmit,
