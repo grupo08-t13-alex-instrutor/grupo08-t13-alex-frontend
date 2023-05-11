@@ -222,6 +222,7 @@ const EditFormAds = ({
     } catch (error) {
       toast.error("Algo deu errado!");
     }
+    console.log(data);
   };
 
   return (
