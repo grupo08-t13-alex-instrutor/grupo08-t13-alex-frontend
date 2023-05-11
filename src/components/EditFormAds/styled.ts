@@ -29,7 +29,7 @@ form{
 
     input{
         padding: 0.2rem;
-        color: ${props => props.theme.gray3};
+        color: ${props => props.theme.gray0};
         border: 2px solid ${props => props.theme.gray3};
         border-radius: 4px;
         font-size: 14.5px;

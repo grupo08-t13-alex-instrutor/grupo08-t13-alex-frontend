@@ -13,6 +13,8 @@ interface iChildren {
     openRegisterAdForm: boolean,
     setOpenRegisterAdForm: React.Dispatch<React.SetStateAction<boolean>>,
     brands: string[] | null
+    adversaments: any,
+    setAdversaments: React.Dispatch<React.SetStateAction<any>>
 }
 
 interface iDataResponse {
@@ -45,8 +47,8 @@ const adRequestSchema = yup.object().shape({
     images: yup.array(imageRequestSerializer).max(250).required({ images: 'Este campo é obrigatório!' }),
 });
 
-const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: iChildren ) => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<iAdRequest>({ 
+const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands, adversaments, setAdversaments }: iChildren) => {
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<iAdRequest>({
         mode: "onSubmit",
         resolver: yupResolver(
             adRequestSchema,
@@ -54,8 +56,8 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: 
                 stripUnknown: true
             }
         )
-    });    
-    
+    });
+
     const [searchBrand, setSearchBrand] = useState<string>("");
     const [searchModel, setSearchModel] = useState<string>('');
     const [galleryImages, setGalleryImages] = useState([
@@ -74,70 +76,76 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: 
     const [openModelOptions, setOpenModelOptions] = useState(false);
 
     useEffect(
-        ()=> {   
-            if( !brands ) {
+        () => {
+            if (!brands) {
                 return
             }
 
             let res: string[] = []
-            for( const brand of brands ){
-                if( brand.startsWith( searchBrand ) ){
-                    res.push( brand );                 
+            for (const brand of brands) {
+                if (brand.startsWith(searchBrand)) {
+                    res.push(brand);
                 }
             }
-            return setFilterBrands( res );
+            return setFilterBrands(res);
         },
         [searchBrand]
     )
-    
 
-    const getModels = async ( brand: string ) => {
+
+    const getModels = async (brand: string) => {
         const { data } = await axios.get(`https://kenzie-kars.herokuapp.com/cars?brand=${brand}`)
-        setAllinformations( data );
-        
-        const res = data.map( (e: any) => e.name );
-        
-        setModels( res )
+        setAllinformations(data);
+
+        const res = data.map((e: any) => e.name);
+
+        setModels(res)
     }
 
     useEffect(
         () => {
             let list: string[] = []
-            for( const item of models ){
-                if( item.startsWith( searchModel )){
-                    list.push( item )
+            for (const item of models) {
+                if (item.startsWith(searchModel)) {
+                    list.push(item)
                 }
-            }            
-            setFilterModels( list )
+            }
+            setFilterModels(list)
         },
         [searchModel]
     )
 
     const setDetails = () => {
-        for( const item of allInformations ){
-            if( item.name === searchModel ){                
+        for (const item of allInformations) {
+            if (item.name === searchModel) {
                 const { year, fuel, value } = item
 
-                setYear( year )
-                setFuel( `${fuel}` )
-                setFipe( value )
+                setYear(year)
+                setFuel(`${fuel}`)
+                setFipe(value)
 
                 break
             }
         }
     }
-    
+
     const registerAd = async (data: iAdRequest) => {
         const token = localStorage.getItem('token');
-        
+
         await instanceAxios.post('/ads', data, {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             }
         })
-        .then( () => 'Cadastro realizado com sucesso' )
-        .catch( error => `Message: ${error.response.statusText}; Status: ${error.response.status}` )
+            .then((res) => {
+                console.log(res)
+                setAdversaments([...adversaments, res.data])
+                localStorage.removeItem("adversamentsPageAdmin")
+                localStorage.setItem("adversamentsPageAdmin", JSON.stringify([...adversaments, res.data]))
+
+            })
+            .catch(error => `Message: ${error.response.statusText}; Status: ${error.response.status}`)
 
         reset();
         setOpenRegisterAdForm(!openRegisterAdForm);
@@ -165,7 +173,7 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: 
         });
 
         setGalleryImages(updatedGalleryImages);
-    };    
+    };
 
     return (
         <ContainerRegisterFormAd>
@@ -174,61 +182,61 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: 
                 <button onClick={event => {
                     event.preventDefault()
                     reset();
-                    setOpenRegisterAdForm( !openRegisterAdForm )
+                    setOpenRegisterAdForm(!openRegisterAdForm)
                 }}>
                     <img src={Remove} />
                 </button>
             </HeaderRegisterFormAd>
-            <FormRegisterFormAd onSubmit={ handleSubmit(registerAd) }>
+            <FormRegisterFormAd onSubmit={handleSubmit(registerAd)}>
                 <span>Informações do veículo</span>
 
                 <label htmlFor="brand">Marca</label>
-                <input 
-                    type="text" 
-                    id="brand" 
-                    placeholder={ "chevrolet" }                    
+                <input
+                    type="text"
+                    id="brand"
+                    placeholder={"chevrolet"}
                     value={searchBrand}
-                    { ...register("brand") } 
-                    onClick={ () => setOpenBrandOptions(!openBrandOptions) }
-                    onChange={ (event)=> setSearchBrand(event.target.value) }
+                    {...register("brand")}
+                    onClick={() => setOpenBrandOptions(!openBrandOptions)}
+                    onChange={(event) => setSearchBrand(event.target.value)}
                 />
-                { openBrandOptions ? <Options options={ brands } filter={ filterBrands } id="brand" setState={ setSearchBrand } /> : <></> }
+                {openBrandOptions ? <Options options={brands} filter={filterBrands} id="brand" setState={setSearchBrand} /> : <></>}
 
                 <label htmlFor="model">Modelo</label>
-                <input 
-                    type="text" 
-                    id="model" 
-                    placeholder="bolt ev premier 203cv (elétrico)" 
+                <input
+                    type="text"
+                    id="model"
+                    placeholder="bolt ev premier 203cv (elétrico)"
                     value={searchModel}
-                    { ...register("model") } 
-                    onClick={ (event) => {
+                    {...register("model")}
+                    onClick={(event) => {
                         event.preventDefault();
-                        getModels( searchBrand )
+                        getModels(searchBrand)
                         setOpenModelOptions(!openModelOptions)
                     }}
-                    onChange={ (event) => setSearchModel(event.target.value) }
+                    onChange={(event) => setSearchModel(event.target.value)}
                 />
-                { openModelOptions ? <Options options={ models } filter={ filterModels } id="model" setState={ setSearchModel } /> : <></> }
+                {openModelOptions ? <Options options={models} filter={filterModels} id="model" setState={setSearchModel} /> : <></>}
 
                 <div>
                     <fieldset>
                         <label htmlFor="year">Ano</label>
-                        <input type="text" id="year" { ...register("year", { value: year }) } value={year} disabled />
+                        <input type="text" id="year" {...register("year", { value: year })} value={year} disabled />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="fuel">Combustível</label>
-                        <input type="text" id="fuel" { ...register("fuel", { value: fuel }) } value={fuel} disabled />
+                        <input type="text" id="fuel" {...register("fuel", { value: fuel })} value={fuel} disabled />
                     </fieldset>
                 </div>
 
                 <div>
                     <fieldset>
                         <label htmlFor="mileage">Quilometragem</label>
-                        <input type="text" onClick={ setDetails } id="mileage" { ...register("mileage") } placeholder="10000"/>
+                        <input type="text" onClick={setDetails} id="mileage" {...register("mileage")} placeholder="10000" />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="color">Cor</label>
-                        <input type="text" id="color" { ...register("color") } placeholder="branco"/>
+                        <input type="text" id="color" {...register("color")} placeholder="branco" />
                     </fieldset >
                 </div >
 
@@ -239,30 +247,30 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands }: 
                     </fieldset>
                     <fieldset>
                         <label htmlFor="price">Preço</label>
-                        <input type="text" id="price" { ...register("price") } placeholder="300000"/>
+                        <input type="text" id="price" {...register("price")} placeholder="300000" />
                     </fieldset >
                 </div >
 
                 <div className="description">
                     <label htmlFor="description">Descrição</label>
-                    <textarea id="description" { ...register("description") } placeholder="Informe as características do veículo"></textarea>
+                    <textarea id="description" {...register("description")} placeholder="Informe as características do veículo"></textarea>
                 </div>
 
                 <div className="addImageGalery">
 
-                    {galleryImages.map( (image, index) => (
+                    {galleryImages.map((image, index) => (
                         <React.Fragment key={image.id}>
                             <label htmlFor={`image-${image.id - 1}`}>{image.label}</label>
                             <input
                                 placeholder="Insira o link da imagem do veículo"
                                 id={`image-${image.id}`}
-                                { ...register(`images.${index}.link`) }
+                                {...register(`images.${index}.link`)}
                                 onSubmit={event => handleChangeImage(event, image.id)}
                             />
                         </React.Fragment>
                     ))}
 
-                    <button onClick={ handleAddImageField }>
+                    <button onClick={handleAddImageField}>
                         Adicionar campo para imagem da galeria
                     </button>
                 </div>

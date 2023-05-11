@@ -15,14 +15,14 @@ import { ModalContainer } from "../../components/Header/styled";
 import axios from "axios";
 
 const ProfilePageAdmin = () => {
+  const { setOneAd, getUseInfoData } = useContext(User)
+
   const navigate = useNavigate();
   const location = useLocation();
-  const [adversaments, setAdversaments] = useState([]);
+  const [adversaments, setAdversaments] = useState<any>([]);
   const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
   const [openUpateAdForm, setOpenUpateAdForm] = useState(false);
-  const [sigla, setSigla] = useState<string>();
   const [brands, setBrands] = useState<string[] | null>(null);
-  const { infoUserLogin } = useContext(User);
   const [adId, setAdId] = useState("");
 
   const getBrands = async () => {
@@ -37,29 +37,31 @@ const ProfilePageAdmin = () => {
 
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads`);
-    localStorage.setItem('adversamentsPageAdmin', JSON.stringify(responseAdversaments.data))
+    localStorage.setItem(
+      "adversamentsPageAdmin",
+      JSON.stringify(responseAdversaments.data)
+    );
 
-    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
+    const adverSamentsSession = JSON.parse(
+      localStorage.getItem("adversamentsPageAdmin")!
+    );
 
     setAdversaments(adverSamentsSession);
+    getUseInfoData()
   };
-
 
   const callBackSiglaNameUtils = async () => {
 
     if (localStorage.getItem("id")) {
-      const result = await siglaNameUtils(infoUserLogin!.name)
 
-      const resUser = await instanceAxios.get(`user/${infoUserLogin!.id}`)
+      const resUser = await instanceAxios.get(`user/${localStorage.getItem("id")}`)
+      const result = await siglaNameUtils(resUser.data.name)
 
       sessionStorage.setItem('sigla', result)
       sessionStorage.setItem('name', resUser.data.name)
       sessionStorage.setItem('idAdmin', resUser.data.id)
       sessionStorage.setItem('description', resUser.data.description)
-
-      setSigla(result);
     }
-
   };
 
   if (location.pathname === "/profile/admin") {
@@ -70,13 +72,14 @@ const ProfilePageAdmin = () => {
   }
 
   useEffect(() => {
-    callBackSiglaNameUtils()
-    getAdversaments()
+    callBackSiglaNameUtils();
+    getAdversaments();
 
-    const adverSamentsSession = JSON.parse(localStorage.getItem('adversamentsPageAdmin')!)
-    setAdversaments(adverSamentsSession)
-  }, [localStorage.getItem("token")])
-
+    const adverSamentsSession = JSON.parse(
+      localStorage.getItem("adversamentsPageAdmin")!
+    );
+    setAdversaments(adverSamentsSession);
+  }, [localStorage.getItem("token")]);
 
   return (
     <Section className="profile">
@@ -86,6 +89,8 @@ const ProfilePageAdmin = () => {
           <RegisterFormAds
             openRegisterAdForm={openRegisterAdForm}
             setOpenRegisterAdForm={setOpenRegisterAdForm}
+            adversaments={adversaments}
+            setAdversaments={setAdversaments}
             brands={brands}
           />
         </ModalContainer>
@@ -97,6 +102,7 @@ const ProfilePageAdmin = () => {
         <ModalContainer>
           <EditFormAds
             id={adId}
+            openUpateAdForm={openUpateAdForm}
             setOpenUpateAdForm={setOpenUpateAdForm}
             adversaments={adversaments}
             setAdversaments={setAdversaments}
@@ -109,34 +115,38 @@ const ProfilePageAdmin = () => {
       <div className="bg"></div>
 
       <article className="infoUser">
-        <article className="siglaInfoUser">{sessionStorage.getItem('sigla')}</article>
+        <article className="siglaInfoUser">
+          {sessionStorage.getItem("sigla")}
+        </article>
         <section>
-          <span>{sessionStorage.getItem('name')}</span>
+          <span>{sessionStorage.getItem("name")}</span>
           <span className="anunciante">Anuciante</span>
         </section>
-        <p>
-          {sessionStorage.getItem('description')}
-        </p>
-        <button onClick={event => {
-          event.preventDefault();
-          getBrands();
-          setOpenRegisterAdForm(!openRegisterAdForm);
-        }}>Criar anuncio</button>
-      </article >
+        <p>{sessionStorage.getItem("description")}</p>
+        <button
+          onClick={(event) => {
+            event.preventDefault();
+            getBrands();
+            setOpenRegisterAdForm(!openRegisterAdForm);
+          }}
+        >
+          Criar anuncio
+        </button>
+      </article>
       <h5>Anúncios</h5>
       <ul>
         {adversaments ? adversaments!.map((e: any) => {
-          if (e.user.id === infoUserLogin?.id) {
+          if (e.user.id === sessionStorage.getItem("idAdmin")) {
             return (
               <Cards
                 src={e.images[0]}
                 marca={e.brand}
                 descricao={e.description}
                 km={e.mileage}
-                name={infoUserLogin!.name}
+                name={sessionStorage.getItem('name')!}
                 ano={e.year}
                 preco={e.price}
-                siglaNanme={sigla!}
+                siglaNanme={sessionStorage.getItem('sigla')!}
                 idAds={e.id}
               >
                 <div className="btnAdmin">
@@ -151,11 +161,13 @@ const ProfilePageAdmin = () => {
                   <button
                     onClick={() => {
                       navigate("/ad");
+                      setOneAd(e.id)
                     }}
                   >
                     Ver detalhes
                   </button>
                 </div>
+                {e.published ? <span className="ativo">ativo</span> : <span className="inativo">inativo</span>}
               </Cards>
             );
           } else {
@@ -164,8 +176,8 @@ const ProfilePageAdmin = () => {
         }) : (<p>Sem Anúncios</p>)}
       </ul>
       <FooterHomePage />
-    </Section >
+    </Section>
   );
-}
+};
 
-export default ProfilePageAdmin
+export default ProfilePageAdmin;

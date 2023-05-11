@@ -12,8 +12,10 @@ import instanceAxios from "../../services";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export const Homepage = () => {
+  
   const navigate = useNavigate();
   const location = useLocation();
+
   const [adversaments, setAdversaments] = useState<any[]>([]);
   const [filters, setFilters] = useState({});
   const [totalPage, setTotalPage] = useState();
@@ -23,7 +25,7 @@ export const Homepage = () => {
   const getAdversaments = async () => {
     const responseAdversaments = await instanceAxios.get(`ads?page=${pageNumber}`);
     setPageNumber(responseAdversaments.data.page)
-    setTotalPage(responseAdversaments.data.totalPage)
+    setTotalPage(responseAdversaments.data.totalPage + 1)
     setAdversaments(responseAdversaments.data.ads);
   }
 
@@ -93,6 +95,7 @@ export const Homepage = () => {
                       idAmount={e.user.id!}
                       src={e.images[0]}
                       marca={e.brand}
+                      key={e.id!}
                       descricao={e.description}
                       km={e.mileage}
                       name={e.user.name}
@@ -134,11 +137,6 @@ export const Homepage = () => {
         </div>
       </Section>
       <FooterHomePage />
-      <div className="editAdsModal">
-        <div>
-          <h1>teste</h1>
-        </div>
-      </div>
     </SectionHome>
   );
 }

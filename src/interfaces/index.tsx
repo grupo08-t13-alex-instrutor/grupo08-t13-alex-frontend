@@ -13,6 +13,7 @@ export interface IcardData {
     children: ReactNode,
     idAmount?: string,
     idAds?: string,
+    key?: string,
     onClick?: () => void,
 }
 

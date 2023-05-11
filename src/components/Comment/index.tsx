@@ -9,21 +9,23 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as  yup from "yup"
 import { useForm } from "react-hook-form";
 
-const timeComment = (createdAt: string) => {
+export const timeComment = (createdAt: string): string => {
     const startData = new Date(createdAt.replace('T', " ").replace("Z", ''))
     const nowData = new Date()
 
     const days = nowData.getDay() - startData.getDay()
-    if (days && days >= 0) { return days > 1 ? <> há ${days} dias </> : <>há {days} dia</> };
+    if (days && days >= 0) { return days > 1 ? `há ${days} dias ` : `há {days} dia` };
 
     const hours = nowData.getHours() - startData.getHours()
-    if (hours && hours >= 0) { return hours > 1 ? <>há {hours} horas</> : <>há {hours} hora</> };
+    if (hours && hours >= 0) { return hours > 1 ? `há ${hours} horas` : `há ${hours} hora` };
 
     const minutes = nowData.getMinutes() - startData.getMinutes()
-    if (minutes && minutes >= 0) { return minutes > 1 ? <>há {minutes} minutos</> : <> há {minutes} minuto </> };
+    if (minutes && minutes >= 0) { return minutes > 1 ? `há ${minutes} minutos` : `há ${minutes} minuto ` };
 
     const seconds = nowData.getSeconds() - startData.getSeconds()
-    if (seconds && seconds >= 0) { return <>há {seconds} segundos</> };
+    if (seconds && seconds >= 0) { return `há ${seconds} segundos` };
+
+    return `há 1 segundo`
 }
 
 export const description = yup.object().shape({
@@ -40,10 +42,8 @@ const Comment = () => {
     const [idCommentValue, setIdCommentVAlue] = useState("")
 
     const getCommentsAboutAd = async () => {
-
         const res = await instanceAxios.get(`comments/${oneAd}`)
         setComments(res.data.comments)
-
     }
 
     const {
@@ -56,23 +56,23 @@ const Comment = () => {
     });
 
     const onSubmitFunction = async (data: any) => {
-      
-        const commentsReq = await instanceAxios.patch(`comments/${idCommentValue}`, data)
+        if (localStorage.getItem("token")) {
+            const commentsReq = await instanceAxios.patch(`comments/${idCommentValue}`, data)
+            const filterComment = comments!.filter(e => e.comment.id !== idCommentValue);
 
+            setComments([...filterComment, { comment: { id: commentsReq.data.id, description: commentsReq.data.description, createdAt: await commentsReq.data.createdAt }, user: { name: commentsReq.data.user.name, id: commentsReq.data.user.id } }])
 
-        const filterComment = comments!.filter(e => e.id !== idCommentValue);
+            setModelEdistdescription(false)
 
+            reset();
 
-        setComments([...filterComment, { comment: { id: commentsReq.data.id, description: commentsReq.data.description, createdAt: await commentsReq.data.createdAt }, user: { name: commentsReq.data.user.name, id: commentsReq.data.user.id } }])
+        }
 
-        setModelEdistdescription(false)
-
-        reset();
     };
 
     useEffect(() => {
         getCommentsAboutAd()
-    }, [oneAd, localStorage.getItem("token"), setOneAd(oneAd) ])
+    }, [timeComment])
 
     return (
         <Section>
@@ -107,6 +107,7 @@ const Comment = () => {
                                     const { comment: { description, createdAt, id: idComment }, user: { name, id } } = data
                                     let siglaName = ""
 
+
                                     if (name.includes(" ")) {
                                         const siglaNameSplit = name.split(" ")
                                         siglaName = siglaNameSplit[0][0] + siglaNameSplit[1][0]
@@ -115,7 +116,7 @@ const Comment = () => {
                                     }
 
                                     return (
-                                        <CardComment bgcolor={"color"} key={data.id}>
+                                        <CardComment bgcolor={"color"} key={data.id!}>
                                             <div className="headerComment">
                                                 <span className="img">{siglaName}</span>
                                                 <p>{name}</p>
@@ -134,7 +135,7 @@ const Comment = () => {
                                                     }}
                                                     />
 
-                                                    <AiFillEdit className="edit" onClick={async () => {
+                                                    <AiFillEdit className="edit" onClick={() => {
                                                         setIdCommentVAlue(idComment)
                                                         setModelEdistdescription(true)
                                                     }} />

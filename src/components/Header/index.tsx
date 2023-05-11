@@ -107,6 +107,11 @@ const Header = () => {
                 {!infoUserLogin?.buyer ? <button onClick={() => navigate("/profile/admin")}>Meus Anúncios</button> : ""}
                 <button onClick={event => {
                     localStorage.removeItem("token")
+                    localStorage.removeItem("adversamentsPageAdmin")
+                    localStorage.removeItem("id")
+                    localStorage.removeItem("adversamentsPageUser")
+                    localStorage.removeItem("idAds")
+                    
                     setOpenMenu(!openMenu);
                     navigate("/homepage");
                 }}>

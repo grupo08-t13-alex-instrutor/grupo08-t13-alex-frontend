@@ -33,8 +33,8 @@ li{
 
     .ativo,.inativo{
         position: absolute;
-        top: 0.5rem;
-        left: 1rem;
+        top: 0.3rem;
+        left: 0.8rem;
         color: ${props => props.theme.whiteFixed};
         padding: 0.1rem 0.5rem 0.1rem 0.5rem;
     }

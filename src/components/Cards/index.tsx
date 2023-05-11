@@ -4,15 +4,15 @@ import { IcardData } from "../../interfaces";
 import Li from "./styled";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNanme, onClick, idAmount, idAds }: IcardData) => {
+const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNanme, onClick, idAmount, idAds, key }: IcardData) => {
 
-  const { setIdUser, setOneAd } = useContext(User)
+  const { setIdUser, setOneAd, getUseInfoData } = useContext(User)
   const location = useLocation()
   const navigate = useNavigate()
 
   return (
     <Li
-      key={idAds!}
+      key={key!}
     >
       {children}
 
@@ -20,6 +20,7 @@ const Cards = ({ children, src, marca, descricao, km, name, ano, preco, siglaNan
         <img className="imgCard" src={src} alt="" onClick={() => {
           setOneAd(idAds!)
           navigate("/ad")
+          getUseInfoData()
         }} />
       </div>
       <section>

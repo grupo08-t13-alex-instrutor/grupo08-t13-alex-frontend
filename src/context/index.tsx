@@ -61,7 +61,7 @@ export interface UserProviderData {
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
     setInfoUserLogin: Dispatch<SetStateAction<iUserInfoUserLogin | undefined>>,
-    setOneAd: Dispatch<SetStateAction<string | undefined>>,
+    setOneAd: Dispatch<SetStateAction<string>>,
     deleteUser: () => void,
     comments: any[] | undefined,
     stateRenderComments: number,
@@ -86,7 +86,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     const [infoUserLogin, setInfoUserLogin] = useState<iUserInfoUserLogin>()
     const [idAdressUser, setIdAdressUser] = useState("")
     const [dataAdress, setDataAdress] = useState({})
-    const [oneAd, setOneAd] = useState<string | undefined>()
+    const [oneAd, setOneAd] = useState<string>(localStorage.getItem("idAds")!)
     const [tokenRecoverPassword, setTokenRecoverPassword] = useState("")
     const [idUser, setIdUser] = useState<string>("")
     const [comments, setComments] = useState<any[]>()
@@ -107,6 +107,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     }
 
     const token = localStorage.getItem("token");
+    localStorage.setItem("idAds", oneAd!)
 
     const registerUser = async (data: iUserRegisterReq) => {
         const {
@@ -164,6 +165,7 @@ function ContextDadosUser({ children }: iInfoUser) {
 
     const getUseInfoData = async () => {
         if (token) {
+            instanceAxios.defaults.headers.authorization = `Bearer ${token}`;
             const responseUser = await instanceAxios.get("user");
             setInfoUserLogin(responseUser.data)
             localStorage.setItem("id", responseUser.data.id)
@@ -203,7 +205,7 @@ function ContextDadosUser({ children }: iInfoUser) {
     }
 
     const getAdsAmount = async () => {
-        const response = await instanceAxios.get(`ads/${oneAd}`);
+        const response = await instanceAxios.get(`ads/${localStorage.getItem("idAds")}`);
         return response.data
     }
 

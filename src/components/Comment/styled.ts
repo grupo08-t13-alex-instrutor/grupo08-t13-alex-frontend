@@ -13,6 +13,17 @@ export const Section = styled.section`
 
     #modal{
         left: 0;
+
+        form{
+            button{
+                padding: 0.5rem;
+                color: ${(props) => props.theme.whiteFixed};
+                background-color:${(props) => props.theme.brand1};
+                font-size: 1.2rem;
+                border-radius: 4px;
+                font-weight: bold;
+            }
+        }
     }
 
     form{

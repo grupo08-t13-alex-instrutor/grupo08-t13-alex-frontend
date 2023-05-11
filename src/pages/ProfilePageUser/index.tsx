@@ -68,7 +68,7 @@ const ProfilePageUser = () => {
             <h5>Anúncios</h5>
             <ul>
                 {
-                    adversaments.map((e: any) => {
+                    adversaments ? adversaments.map((e: any) => {
                         if (e.user.id === sessionStorage.getItem('id') && e.published === true) {
                             return (
                                 <Cards
@@ -85,10 +85,8 @@ const ProfilePageUser = () => {
 
                                 </Cards>
                             )
-                        } else {
-                            return null;
                         }
-                    })
+                    }) : (<p>Sem Anúncios</p>)
                 }
 
             </ul>
