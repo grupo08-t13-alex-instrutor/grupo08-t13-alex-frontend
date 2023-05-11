@@ -8,6 +8,7 @@ import instanceAxios from "../../services";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Options } from "../ModalOptions";
+import { toast } from "react-toastify";
 
 interface iDataResponse {
   id: string;
@@ -93,7 +94,6 @@ const EditFormAds = ({
     const data = await (await instanceAxios.get(`ads/${id}`)).data;
     setAdData(data);
   };
-  console.log(adData);
 
   useEffect(() => {
     setData();
@@ -205,7 +205,23 @@ const EditFormAds = ({
   };
 
   const editAd = async (data: any) => {
-    console.log("aaaaaa", data);
+    data.published = published;
+
+    try {
+      await instanceAxios.patch(
+        `ads/${id}`,
+        { data },
+        {
+          headers: {
+            "Content-Type": "applicatio/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      toast.success("Sucesso!");
+    } catch (error) {
+      toast.error("Algo deu errado!");
+    }
   };
 
   return (
@@ -218,24 +234,20 @@ const EditFormAds = ({
 
         <p>informações do veículo</p>
 
-        {/* <label htmlFor="">Marca</label>
+        <label htmlFor="">Marca</label>
         <input
           type="text"
           id="brand"
+          // defaultValue={adData.brand}
+          value="teste"
           placeholder={adData.brand}
-          value={searchBrand}
           {...register("brand")}
           onClick={() => setOpenBrandOptions(!openBrandOptions)}
           onChange={(event) => {
             setSearchBrand(event.target.value);
-            // const model = document.querySelector("#model");
-            // console.log(model);
-            // model?.value = "";
-            // model.placeholder = "";
-            // model.innerText = "";
             getModels(searchBrand);
           }}
-        /> */}
+        />
         {openBrandOptions ? (
           <Options
             options={brands}
@@ -247,25 +259,23 @@ const EditFormAds = ({
           <></>
         )}
 
-        {/* <label htmlFor="">Modelo</label>
+        <label htmlFor="">Modelo</label>
         <input
           type="text"
           id="model"
           placeholder={adData.model}
-          value={searchModel}
-          {...register("model")}
+          defaultValue={adData.model}
           onClick={(event) => {
             event.preventDefault();
-            // console.log(event.target.value);
-            // event.target.value = "";
-            // event.target.placeholder = "";
-            // event.target.innerText = "";
-
-            // getModels(searchBrand);
+            getModels(searchBrand);
             setOpenModelOptions(!openModelOptions);
           }}
-          onChange={(event) => setSearchModel(event.target.value)}
-        /> */}
+          {...register("model")}
+          onChange={(event) => {
+            setSearchModel(event.target.value);
+            event.target.value = searchModel;
+          }}
+        />
         {openModelOptions ? (
           <Options
             options={models}
@@ -283,6 +293,7 @@ const EditFormAds = ({
             <input
               type="text"
               id="year"
+              defaultValue={adData.year}
               {...register("year")}
               placeholder={adData.year}
               disabled
@@ -293,8 +304,9 @@ const EditFormAds = ({
             <input
               type="text"
               id="fuel"
+              defaultValue={adData.fuel}
+              placeholder={adData.fuel}
               {...register("fuel")}
-              value={adData.fuel}
               disabled
             />
           </fieldset>
@@ -307,6 +319,7 @@ const EditFormAds = ({
               type="text"
               onClick={setDetails}
               id="mileage"
+              defaultValue={adData.mileage}
               {...register("mileage")}
               placeholder={adData.mileage}
             />
@@ -316,6 +329,7 @@ const EditFormAds = ({
             <input
               type="text"
               id="color"
+              defaultValue={adData.color}
               {...register("color")}
               placeholder={adData.color}
             />
@@ -332,6 +346,7 @@ const EditFormAds = ({
             <input
               type="text"
               id="price"
+              defaultValue={adData.price}
               {...register("price")}
               placeholder={adData.price}
             />
@@ -342,6 +357,7 @@ const EditFormAds = ({
           <label htmlFor="">Descrição</label>
           <textarea
             id="description"
+            defaultValue={adData.description}
             {...register("description")}
             placeholder={adData.description}
           ></textarea>
