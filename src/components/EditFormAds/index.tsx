@@ -238,8 +238,7 @@ const EditFormAds = ({
         <input
           type="text"
           id="brand"
-          // defaultValue={adData.brand}
-          value="teste"
+          defaultValue={adData.brand}
           placeholder={adData.brand}
           {...register("brand")}
           onClick={() => setOpenBrandOptions(!openBrandOptions)}
