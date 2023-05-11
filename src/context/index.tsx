@@ -45,7 +45,6 @@ export interface IAdResponse {
     description: string;
     published: boolean;
     createdAt: Date;
-    updatedAt: Date;
     images: iImageResponse[];
     user: iUserAdResponse;
 }
@@ -56,7 +55,7 @@ export interface UserProviderData {
     sessionUser: (data: IBodySession) => void,
     updateUser: (data: iUserUpate) => void,
     patchAdressUser: (data: iAddressUpdate) => Promise<any>,
-    getAdsAmount: () => any, // troca de promise<any> para any em teste
+    getAdsAmount: () => any,
     getUseInfoData: () => Promise<any>,
     setIdUser: Dispatch<SetStateAction<string>>,
     setTokenRecoverPassword: Dispatch<SetStateAction<string>>,
