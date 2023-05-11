@@ -22,7 +22,7 @@ const ProfilePageAdmin = () => {
   const [adversaments, setAdversaments] = useState<any>([]);
   const [openRegisterAdForm, setOpenRegisterAdForm] = useState(false);
   const [openUpateAdForm, setOpenUpateAdForm] = useState(false);
-  const [brands, setBrands] = useState<string[] | null>(null);
+  const [brands, setBrands] = useState<any>(null);
   const [adId, setAdId] = useState("");
 
   const getBrands = async () => {
@@ -63,7 +63,7 @@ const ProfilePageAdmin = () => {
       sessionStorage.setItem('description', resUser.data.description)
     }
   };
-
+  console.log(adversaments)
   if (location.pathname === "/profile/admin") {
     useEffect(() => {
       callBackSiglaNameUtils();
@@ -170,11 +170,12 @@ const ProfilePageAdmin = () => {
                 {e.published ? <span className="ativo">ativo</span> : <span className="inativo">inativo</span>}
               </Cards>
             );
-          } else {
-            return null;
           }
-        }) : (<p>Sem Anúncios</p>)}
+        }) : null}
       </ul>
+
+      {!adversaments[0] ? <p id="semAds">Sem Anúncios</p> : null}
+
       <FooterHomePage />
     </Section>
   );

@@ -16,6 +16,13 @@ h5{
     margin-top: 13rem;
 }
 
+#semAds{
+    margin-left: 3rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+
 ul{
     display: flex;
     flex-direction: row;

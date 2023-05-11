@@ -139,7 +139,6 @@ const RegisterFormAds = ({ openRegisterAdForm, setOpenRegisterAdForm, brands, ad
             }
         })
             .then((res) => {
-                console.log(res)
                 setAdversaments([...adversaments, res.data])
                 localStorage.removeItem("adversamentsPageAdmin")
                 localStorage.setItem("adversamentsPageAdmin", JSON.stringify([...adversaments, res.data]))

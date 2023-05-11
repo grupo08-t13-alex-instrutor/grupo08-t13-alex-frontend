@@ -86,7 +86,7 @@ const ProfilePageUser = () => {
                                 </Cards>
                             )
                         }
-                    }) : (<p>Sem Anúncios</p>)
+                    }) : null
                 }
 
             </ul>

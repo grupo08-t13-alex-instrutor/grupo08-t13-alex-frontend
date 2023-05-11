@@ -5,19 +5,19 @@ import { NavigateFunction, useLocation, useNavigate } from "react-router-dom"
 import { iUserInfoUserLogin } from "../../interfaces/register/index"
 import { iCarInformation } from "../../interfaces/ads"
 
-const buyer = async ( 
-    getAdsAmount: () => Promise<IAdResponse>, 
+const buyer = async (
+    getAdsAmount: () => Promise<IAdResponse>,
     infoUserLogin: iUserInfoUserLogin | undefined,
     navigate: NavigateFunction
 ) => {
     return infoUserLogin ?
         await getAdsAmount()
-            .then( ({ user: { telephone } }) => {
+            .then(({ user: { telephone } }) => {
                 const phoneAd = telephone.replace(/[()-]/g, "")
                 return window.open(`https://api.whatsapp.com/send?1=pt_BR&phone=${phoneAd}`)
             })
-            .catch( err => console.log( err ))
-    :
+            .catch(err => err)
+        :
         navigate('/login')
 }
 
@@ -37,10 +37,10 @@ const TitleAd = () => {
     const callBAckGetAdAmount = async () => {
         const { model, year, mileage, price } = await getAdsAmount()
         setInfoCar({
-                model: model,
-                year: year,
-                mileage: mileage,
-                price: price
+            model: model,
+            year: year,
+            mileage: mileage,
+            price: price
         })
     }
 
@@ -62,7 +62,7 @@ const TitleAd = () => {
                     <p>{`R$ ${infoCar.price}`}</p>
                 </div>
             </div>
-            <ButtonBlue onClick={ () => buyer( getAdsAmount, infoUserLogin, navigate ) }>Comprar</ButtonBlue>
+            <ButtonBlue onClick={() => buyer(getAdsAmount, infoUserLogin, navigate)}>Comprar</ButtonBlue>
         </TitleAdContainer>
     )
 }

@@ -7,6 +7,8 @@ import { iAdRequest } from "../../interfaces/ads";
 import instanceAxios from "../../services";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Options } from "../ModalOptions";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 interface iDataResponse {
   id: string;
@@ -23,7 +25,7 @@ interface a {
   id: string;
   adversaments: any[];
   setAdversaments: React.Dispatch<React.SetStateAction<any[]>>;
-  brands: string[] | null;
+  brands?: any[];
 }
 
 const imageRequestSerializer = yup.object().shape({
@@ -74,11 +76,20 @@ const EditFormAds = ({
     { id: 3, label: "2ª Imagem da galeria", value: "" },
   ]);
 
+  const [searchBrand, setSearchBrand] = useState<string>("");
+  const [searchModel, setSearchModel] = useState<string>("");
+  const [filterBrands, setFilterBrands] = useState<any>(null);
+  const [allInformations, setAllinformations] = useState<iDataResponse[]>([]);
   const [year, setYear] = useState<string>("2022");
   const [fuel, setFuel] = useState<number>(3);
   const [fipe, setFipe] = useState<number>(282045);
-  const [published, setPublished] = useState(true);
   const [adData, setAdData] = useState<any>({});
+  const [models, setModels] = useState<string[]>([]);
+  const [filterModels, setFilterModels] = useState<string[]>([]);
+  const [openBrandOptions, setOpenBrandOptions] = useState(false);
+  const [openModelOptions, setOpenModelOptions] = useState(false);
+  const [published, setPublished] = useState(true);
+
 
   if (openUpateAdForm) {
     const setData = async () => {
@@ -86,203 +97,330 @@ const EditFormAds = ({
       setAdData(data);
     };
 
-    setData()
-  }
+    useEffect(() => {
+      setData();
+      setSearchBrand(adData.brand);
+      setSearchModel(adData.model);
+    }, [openUpateAdForm]);
 
-  const registerAd = async (data: iAdRequest) => {
-    const token = localStorage.getItem("token");
+    useEffect(() => {
+      if (!brands) {
+        return;
+      }
 
-    const resGetAdId = await instanceAxios.get(`ads/${id}`);
-
-    setAdData(resGetAdId.data)
-    setFuel(resGetAdId.data.fuel)
-    setYear(resGetAdId.data.year)
-
-    await instanceAxios
-      .patch(
-        `ads/${id}`,
-        { ...resGetAdId.data, ...data, published: published },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      let res: string[] = [];
+      for (const brand of brands) {
+        if (brand.startsWith(searchBrand)) {
+          res.push(brand);
         }
-      )
-      .then((res) => {
-        const newAds = adversaments.filter((e: any) => e.id !== id)
-        setAdversaments([...newAds, res.data])
+      }
+      return setFilterBrands(res);
+    }, [searchBrand]);
 
-      })
-      .catch(
-        (error) =>
-          `Message: ${error.response.statusText}; Status: ${error.response.status}`
-      );
+    const getModels = async (brand: string) => {
+      const { data } = await axios.get(
+        `https://kenzie-kars.herokuapp.com/cars?brand=${brand}`)
 
-    reset();
-    setOpenUpateAdForm(false);
-  };
+      setAllinformations(data);
 
-  const handleAddImageField = () => {
-    const newImageField = {
-      id: galleryImages.length + 1,
-      label: `${galleryImages.length}ª Imagem da galeria`,
-      value: "",
+      const res = data.map((e: any) => e.name);
+
+      setModels(res);
     };
 
-    setGalleryImages([...galleryImages, newImageField]);
-  };
-
-  const handleChangeImage = (
-    event: React.FormEvent<HTMLInputElement>,
-    id: number
-  ) => {
-    event.preventDefault();
-
-    const { value }: any = event.target;
-
-    const updatedGalleryImages = galleryImages.map((image) => {
-      if (image.id === id) {
-        return { ...image, value };
+    useEffect(() => {
+      let list: string[] = [];
+      for (const item of models) {
+        if (item.startsWith(searchModel)) {
+          list.push(item);
+        }
       }
-      return image;
-    });
+      setFilterModels(list);
+    }, [searchModel]);
 
-    setGalleryImages(updatedGalleryImages);
-  };
+    const setDetails = () => {
+      for (const item of allInformations) {
+        if (item.name === searchModel) {
+          const { year, fuel, value } = item;
 
-  return (
-    <SectionBgForm onClick={() => null}>
-      <form action="" onSubmit={handleSubmit(registerAd)}>
-        <div>
-          <span>Editar de anuncio</span>
-          <img src={Remove} onClick={() => setOpenUpateAdForm(false)} />
-        </div>
+          setData()
+        }
+      }
+    }
 
-        <p>informações do veículo</p>
+    const registerAd = async (data: iAdRequest) => {
+      const token = localStorage.getItem("token");
 
-        <div>
-          <fieldset>
-            <label htmlFor="">Ano</label>
-            <input
-              type="text"
-              id="year"
-              {...register("year")}
-              value={year}
-              disabled
-            />
-          </fieldset>
-          <fieldset>
-            <label htmlFor="">Combustível</label>
-            <input
-              type="text"
-              id="fuel"
-              {...register("fuel")}
-              value={fuel}
-              disabled
-            />
-          </fieldset>
-        </div>
+      const resGetAdId = await instanceAxios.get(`ads/${id}`);
 
-        <div>
-          <fieldset>
-            <label htmlFor="">Quilometragem</label>
-            <input
-              type="text"
-              id="mileage"
-              {...register("mileage")}
-              placeholder={adData.mileage}
-            />
-          </fieldset>
-          <fieldset>
-            <label htmlFor="">Cor</label>
-            <input
-              type="text"
-              id="color"
-              {...register("color")}
-              placeholder={adData.color}
-            />
-          </fieldset>
-        </div>
+      setAdData(resGetAdId.data)
+      setFuel(resGetAdId.data.fuel)
+      setYear(resGetAdId.data.year)
 
-        <div>
-          <fieldset>
-            <label htmlFor="">Preço tabela FIPE</label>
-            <input type="text" id="priceFIPE" value={fipe} disabled />
-          </fieldset>
-          <fieldset>
-            <label htmlFor="">Preço</label>
-            <input
-              type="text"
-              id="price"
-              {...register("price")}
-              placeholder={adData.price}
-            />
-          </fieldset>
-        </div>
+      await instanceAxios
+        .patch(
+          `ads/${id}`,
+          { ...resGetAdId.data, ...data, published: published },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          const newAds = adversaments.filter((e: any) => e.id !== id)
+          setAdversaments([...newAds, res.data])
 
-        <div className="description">
-          <label htmlFor="">Descrição</label>
-          <textarea
-            id="description"
-            {...register("description")}
-            placeholder={adData.description}
-          ></textarea>
-        </div>
+        })
+        .catch(
+          (error) =>
+            `Message: ${error.response.statusText}; Status: ${error.response.status}`
+        );
 
-        <div className="yesOrNo">
-          <span>Publicado</span>
+      reset();
+      setOpenUpateAdForm(false);
+    };
+
+    const handleAddImageField = () => {
+      const newImageField = {
+        id: galleryImages.length + 1,
+        label: `${galleryImages.length}ª Imagem da galeria`,
+        value: "",
+      };
+
+      setGalleryImages([...galleryImages, newImageField]);
+    };
+
+    const handleChangeImage = (
+      event: React.FormEvent<HTMLInputElement>,
+      id: number
+    ) => {
+      event.preventDefault();
+
+      const { value }: any = event.target;
+
+      const updatedGalleryImages = galleryImages.map((image) => {
+        if (image.id === id) {
+          return { ...image, value };
+        }
+        return image;
+      });
+
+      setGalleryImages(updatedGalleryImages);
+    };
+
+    // const editAd = async (data: any) => {
+    //   data.published = published;
+
+    //   try {
+    //     await instanceAxios.patch(
+    //       `ads/${id}`,
+    //       { data },
+    //       {
+    //         headers: {
+    //           "Content-Type": "applicatio/json",
+    //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //         },
+    //       }
+    //     );
+    //     toast.success("Sucesso!");
+    //   } catch (error) {
+    //     toast.error("Algo deu errado!");
+    //   }
+    // };
+
+    return (
+      <SectionBgForm onClick={() => null}>
+        <form action="" onSubmit={handleSubmit(registerAd)}>
           <div>
-            <button type="button" onClick={() => setPublished(true)}>
-              Sim
-            </button>
-            <button
-              className="no"
-              type="button"
-              onClick={() => setPublished(false)}
-            >
-              Não
+            <span>Editar de anuncio</span>
+            <img src={Remove} onClick={() => setOpenUpateAdForm(false)} />
+          </div>
+
+          <p>informações do veículo</p>
+
+          <label htmlFor="">Marca</label>
+          <input
+            type="text"
+            id="brand"
+            placeholder={adData.brand}
+            {...register("brand")}
+            onClick={() => setOpenBrandOptions(!openBrandOptions)}
+            onChange={(event) => {
+              setSearchBrand(event.target.value);
+              getModels(searchBrand);
+            }}
+          />
+          {openBrandOptions ? (
+            <Options
+              options={brands}
+              filter={filterBrands}
+              id="brand"
+              setState={setSearchBrand}
+            />
+          ) : (
+            <></>
+          )}
+
+          <label htmlFor="">Modelo</label>
+          <input
+            type="text"
+            id="model"
+            placeholder={adData.model}
+            onClick={(event) => {
+              event.preventDefault();
+              getModels(searchBrand);
+              setOpenModelOptions(!openModelOptions);
+            }}
+            {...register("model")}
+            onChange={(event) => {
+              setSearchModel(event.target.value);
+              event.target.value = searchModel;
+            }}
+          />
+          {openModelOptions ? (
+            <Options
+              options={models}
+              filter={filterModels}
+              id="model"
+              setState={setSearchModel}
+            />
+          ) : (
+            <></>
+          )}
+
+          <div>
+            <fieldset>
+              <label htmlFor="">Ano</label>
+              <input
+                type="text"
+                id="year"
+                defaultValue={adData.year}
+                {...register("year")}
+                value={year}
+                disabled
+              />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Combustível</label>
+              <input
+                type="text"
+                id="fuel"
+                defaultValue={adData.fuel}
+                placeholder={adData.fuel}
+                {...register("fuel")}
+                value={fuel}
+                disabled
+              />
+            </fieldset>
+          </div>
+
+          <div>
+            <fieldset>
+              <label htmlFor="">Quilometragem</label>
+              <input
+                type="text"
+                id="mileage"
+                defaultValue={adData.mileage}
+                {...register("mileage")}
+                placeholder={adData.mileage}
+              />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Cor</label>
+              <input
+                type="text"
+                id="color"
+                defaultValue={adData.color}
+                {...register("color")}
+                placeholder={adData.color}
+              />
+            </fieldset>
+          </div>
+
+          <div>
+            <fieldset>
+              <label htmlFor="">Preço tabela FIPE</label>
+              <input type="text" id="priceFIPE" value={fipe} disabled />
+            </fieldset>
+            <fieldset>
+              <label htmlFor="">Preço</label>
+              <input
+                type="text"
+                id="price"
+                defaultValue={adData.price}
+                {...register("price")}
+                placeholder={adData.price}
+              />
+            </fieldset>
+          </div>
+
+          <div className="description">
+            <label htmlFor="">Descrição</label>
+            <textarea
+              id="description"
+              defaultValue={adData.description}
+              {...register("description")}
+              placeholder={adData.description}
+            ></textarea>
+          </div>
+
+          <div className="yesOrNo">
+            <span>Publicado</span>
+            <div>
+              <button type="button" onClick={() => setPublished(true)}>
+                Sim
+              </button>
+              <button
+                className="no"
+                type="button"
+                onClick={() => setPublished(false)}
+              >
+                Não
+              </button>
+            </div>
+          </div>
+
+          <div className="addImageGalery">
+            {galleryImages.map((image: any, index: any) => (
+              <React.Fragment key={image.id}>
+                <label htmlFor={`image-${image.id}`}>{image.label}</label>
+                <input
+                  id={`image-${image.id}`}
+                  value={image.value}
+                  {...register(`images.${index}.link`)}
+                  onChange={(event) => handleChangeImage(event, image.id)}
+                />
+              </React.Fragment>
+            ))}
+
+            <button type="button" onClick={handleAddImageField}>
+              Adicionar campo para imagem da galeria
             </button>
           </div>
-        </div>
 
-        <div className="addImageGalery">
-          {galleryImages.map((image: any, index: any) => (
-            <React.Fragment key={image.id}>
-              <label htmlFor={`image-${image.id}`}>{image.label}</label>
-              <input
-                id={`image-${image.id}`}
-                value={image.value}
-                {...register(`images.${index}.link`)}
-                onChange={(event) => handleChangeImage(event, image.id)}
-              />
-            </React.Fragment>
-          ))}
+          <div className="alteration">
+            <button
+              type="button"
+              onClick={async () => {
+                await instanceAxios.delete(`ads/${id}`);
+                const newAds = adversaments.filter((e: any) => e.id !== id);
+                setAdversaments(newAds);
+                localStorage.setItem("adversamentsPageAdmin", JSON.stringify(newAds))
+                setOpenUpateAdForm(false);
+              }}
+            >
+              Excluir Anúncio
+            </button>
+            <button type="submit" className="save" >
+              Salvar alterações
+            </button>
+          </div>
+        </form>
+      </SectionBgForm>
+    );
+  }
+}
 
-          <button type="button" onClick={handleAddImageField}>
-            Adicionar campo para imagem da galeria
-          </button>
-        </div>
-
-        <div className="alteration">
-          <button
-            type="button"
-            onClick={async () => {
-              await instanceAxios.delete(`ads/${id}`);
-              const newAds = adversaments.filter((e: any) => e.id !== id);
-              setAdversaments(newAds);
-              setOpenUpateAdForm(false);
-            }}
-          >
-            Excluir Anúncio
-          </button>
-          <button type="submit" className="save" >
-            Salvar alterações
-          </button>
-        </div>
-      </form>
-    </SectionBgForm>
-  );
-};
-
-export default EditFormAds;
+export default EditFormAds
